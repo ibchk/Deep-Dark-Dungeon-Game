@@ -31,3 +31,4 @@ public class DeepDarkDungeonGame extends ApplicationAdapter {
 		img.dispose();
 	}
 }
+
