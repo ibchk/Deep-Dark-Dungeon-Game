@@ -14,10 +14,6 @@ public class GameScreen implements Screen {
     float y;
     DeepDarkDungeonGame game;
 
-    public  GameScreen (DeepDarkDungeonGame game) {
-        this.game = game;
-
-    }
     @Override
     public void show() {
         img = new Texture("badlogic.jpg");
