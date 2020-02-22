@@ -9,6 +9,7 @@ import ee.taltech.deepdarkdungeon.Models.Warrior;
 
 public class GameScreen implements Screen {
 
+    private Texture background;
     private Texture warriorTexture;
     private Texture warrior2Texture;
     private SpriteBatch batch;
@@ -18,6 +19,7 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         batch = new SpriteBatch();
+        background = new Texture(Gdx.files.internal("playerchoosebackgroung.jpg"));
         warriorTexture = new Texture(Gdx.files.internal("warrior.png"));
         warrior2Texture = new Texture(Gdx.files.internal("warrior2.png"));
         warrior = new Warrior(warriorTexture, 0, 0, 200, 277);
@@ -26,9 +28,10 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(135/255f, 206/255f, 235/255f, 1);
+        Gdx.gl.glClearColor(135 / 255f, 206 / 255f, 235 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
+        batch.draw(background, 0, 0);
         warrior.draw(batch);
         warrior2.draw(batch);
         batch.end();

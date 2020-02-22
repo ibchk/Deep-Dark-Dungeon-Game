@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import ee.taltech.deepdarkdungeon.DeepDarkDungeonGame;
 import ee.taltech.deepdarkdungeon.View.GameScreen;
+import ee.taltech.deepdarkdungeon.Screens.SingleGameChooseScreen;
 
 public class MainMenuScreen implements Screen {
     private static final int PLAY_BUTTON_WIDTH = 330;
@@ -56,7 +57,7 @@ public class MainMenuScreen implements Screen {
         if (Gdx.input.getX() < PLAY_BUTTON_START + PLAY_BUTTON_WIDTH && Gdx.input.getX() > PLAY_BUTTON_START && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > PLAY_BUTTON_Y) {
             game.batch.draw(PLAYBUTTONACTIVE, PLAY_BUTTON_START, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
-                game.setScreen(new GameScreen());
+                game.setScreen(new SingleGameChooseScreen(game));
             }
         } else {
             game.batch.draw(PLAYBUTTONINACTIVE, PLAY_BUTTON_START, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
