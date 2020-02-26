@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ee.taltech.deepdarkdungeon.DeepDarkDungeonGame;
 import ee.taltech.deepdarkdungeon.Models.Warrior;
-import ee.taltech.deepdarkdungeon.View.GameScreen;
+import ee.taltech.deepdarkdungeon.Screens.GameScreen;
 
 public class SingleGameChooseScreen implements Screen{
     private static final int PLAY_BUTTON_WIDTH = 330;

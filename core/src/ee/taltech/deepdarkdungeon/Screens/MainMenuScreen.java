@@ -6,7 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import ee.taltech.deepdarkdungeon.DeepDarkDungeonGame;
-import ee.taltech.deepdarkdungeon.View.GameScreen;
+import ee.taltech.deepdarkdungeon.Screens.GameScreen;
 import ee.taltech.deepdarkdungeon.Screens.SingleGameChooseScreen;
 
 public class MainMenuScreen implements Screen {
