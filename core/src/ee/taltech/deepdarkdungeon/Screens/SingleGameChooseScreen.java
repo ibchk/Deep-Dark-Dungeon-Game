@@ -7,8 +7,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ee.taltech.deepdarkdungeon.DeepDarkDungeonGame;
-import ee.taltech.deepdarkdungeon.Models.Warrior;
-import ee.taltech.deepdarkdungeon.Screens.GameScreen;
+import ee.taltech.deepdarkdungeon.Models.*;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class SingleGameChooseScreen implements Screen{
     private static final int PLAY_BUTTON_WIDTH = 330;
@@ -27,10 +30,7 @@ public class SingleGameChooseScreen implements Screen{
     private Texture startButton;
     private Texture background;
     private Texture warriorTexture;
-    private Texture warrior2Texture;
     private SpriteBatch batch;
-    private Warrior warrior;
-    private Warrior warrior2;
     private Texture backButton;
 
     public SingleGameChooseScreen(DeepDarkDungeonGame game){
@@ -44,9 +44,26 @@ public class SingleGameChooseScreen implements Screen{
         background = new Texture(Gdx.files.internal("playerchoosebackgroung.jpg"));
         startButton = new Texture(Gdx.files.internal("startbutton.png"));
         warriorTexture = new Texture(Gdx.files.internal("warrior.png"));
-        warrior2Texture = new Texture(Gdx.files.internal("warrior2.png"));
-        warrior = new Warrior(warriorTexture, 0, 0, 200, 277);
-        warrior2 = new Warrior(warrior2Texture, 200, 0, 200, 277);
+    }
+
+    //Далее я создаю персонажей чтобы закинуть их в игру, это нужно будет структурировать,
+    // так как мы не знаем какие персонажи будут выбраны и сколько их будет и в какой последовательности.
+    GameObject goodCharacter1 = new GoodCharacter1(0, 0, 200, 277);
+    GameObject goodCharacter2 = new GoodCharacter2(500, 0, 200, 277);
+    GameObject goodCharacter3 = new GoodCharacter3(0, 0, 200, 277);
+    GameObject goodCharacter4 = new GoodCharacter4(500, 0, 200, 277);
+    GameObject badCharacter1 = new BadCharacter1(0, 0, 200, 277);
+    GameObject badCharacter2 = new BadCharacter2(500, 0, 200, 277);
+    GameObject badCharacter3 = new BadCharacter3(0, 0, 200, 277);
+    GameObject badCharacter4 = new BadCharacter4(500, 0, 200, 277);
+
+
+    public List<GameObject> listOfGoodCharacters(GameObject char1, GameObject char2, GameObject char3, GameObject char4) {
+        return Arrays.asList(char1, char2, char3, char4);
+    }
+
+    public List<GameObject> listOfBadCharacters(GameObject char1, GameObject char2, GameObject char3, GameObject char4) {
+        return Arrays.asList(char1, char2, char3, char4);
     }
 
     @Override
@@ -58,7 +75,9 @@ public class SingleGameChooseScreen implements Screen{
         batch.draw(startButton, PLAY_BUTTON_START, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
         if (Gdx.input.getX() < PLAY_BUTTON_START + PLAY_BUTTON_WIDTH && Gdx.input.getX() > PLAY_BUTTON_START && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > PLAY_BUTTON_Y) {
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
-                game.setScreen(new GameScreen());
+                game.setScreen(new GameScreen(Arrays.asList(goodCharacter1, goodCharacter2,
+                        goodCharacter3, goodCharacter4), Arrays.asList(badCharacter1,
+                        badCharacter2, badCharacter3, badCharacter4))); // Тут я закидываю два листа и персонажами которые будут в игре. первый лист
             }
         }
         batch.draw(backButton, EXIT_BUTTON_START, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
