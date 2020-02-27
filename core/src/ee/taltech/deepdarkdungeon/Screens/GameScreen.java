@@ -7,8 +7,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ee.taltech.deepdarkdungeon.Models.GameObject;
-import ee.taltech.deepdarkdungeon.Models.GoodCharacter1;
-import ee.taltech.deepdarkdungeon.Models.GoodCharacter2;
 
 import java.util.List;
 
@@ -50,9 +48,12 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         batch.draw(background, 0, 0);
-        batch.draw(goodCharacter1.getPicture(), 0, 0); // рисует персанажа
-        batch.draw(goodCharacter2.getPicture(), 500, 0);
-        font.draw(batch, goodCharacter1.getPower() + "", 50, 300); // Вызывает текст, тут например power персанажа
+        batch.draw(goodCharacter1.getPicture(), 0, 0); // рисует персанажа (картинка)
+        batch.draw(goodCharacter2.getPicture(), 200, 0);
+        batch.draw(goodCharacter3.getPicture(), 400, 0);
+        batch.draw(goodCharacter4.getPicture(), 600, 0);
+        batch.draw(badCharacter1.getPicture(), 1000, 0);
+        font.draw(batch, goodCharacter1.getPower() + "", 200, 500); // Вызывает текст, тут например power персанажа
         batch.end();
     }
 
