@@ -4,26 +4,42 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import ee.taltech.deepdarkdungeon.Models.Warrior;
+import ee.taltech.deepdarkdungeon.Models.GameObject;
+
+import java.util.List;
 
 public class GameScreen implements Screen {
 
+    BitmapFont font = new BitmapFont();
     private Texture background;
-    private Texture warriorTexture;
-    private Texture warrior2Texture;
     private SpriteBatch batch;
-    private Warrior warrior;
-    private Warrior warrior2;
+    private GameObject goodCharacter1;
+    private GameObject goodCharacter2;
+    private GameObject goodCharacter3;
+    private GameObject goodCharacter4;
+    private GameObject badCharacter1;
+    private GameObject badCharacter2;
+    private GameObject badCharacter3;
+    private GameObject badCharacter4;
+
+    public GameScreen(List<GameObject> goodCharacters, List<GameObject> badCharacters) {
+        goodCharacter1 = goodCharacters.get(0);
+        goodCharacter2 = goodCharacters.get(1);
+        goodCharacter3 = goodCharacters.get(2);
+        goodCharacter4 = goodCharacters.get(3);
+        badCharacter1 = badCharacters.get(0);
+        badCharacter1 = badCharacters.get(1);
+        badCharacter1 = badCharacters.get(2);
+        badCharacter1 = badCharacters.get(3);
+    }
 
     @Override
     public void show() {
         batch = new SpriteBatch();
         background = new Texture(Gdx.files.internal("playerchoosebackgroung.jpg"));
-        warriorTexture = new Texture(Gdx.files.internal("warrior.png"));
-        warrior2Texture = new Texture(Gdx.files.internal("warrior2.png"));
-        warrior = new Warrior(warriorTexture, 0, 0, 200, 277);
-        warrior2 = new Warrior(warrior2Texture, 200, 0, 200, 277);
+
     }
 
     @Override
@@ -32,8 +48,12 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         batch.draw(background, 0, 0);
-        warrior.draw(batch);
-        warrior2.draw(batch);
+        batch.draw(goodCharacter1.getPicture(), 0, 0); // рисует персанажа (картинка)
+        batch.draw(goodCharacter2.getPicture(), 200, 0);
+        batch.draw(goodCharacter3.getPicture(), 400, 0);
+        batch.draw(goodCharacter4.getPicture(), 600, 0);
+        batch.draw(badCharacter1.getPicture(), 1000, 0);
+        font.draw(batch, goodCharacter1.getPower() + "", 200, 500); // Вызывает текст, тут например power персанажа
         batch.end();
     }
 
@@ -59,7 +79,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        warriorTexture.dispose();
         batch.dispose();
     }
 }
