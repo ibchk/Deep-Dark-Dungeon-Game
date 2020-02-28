@@ -3,6 +3,10 @@ package ee.taltech.deepdarkdungeon.Models;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import ee.taltech.deepdarkdungeon.Models.characterClasses.Archer;
+import ee.taltech.deepdarkdungeon.Models.characterClasses.Magic;
+import ee.taltech.deepdarkdungeon.Models.characterClasses.Paladin;
+import ee.taltech.deepdarkdungeon.Models.characterClasses.Warrior;
 
 import java.awt.*;
 
@@ -29,11 +33,11 @@ public abstract class GameObject {
 
     public abstract String getName();
 
-
+    public enum CharacterClass {PALADIN, WARIOR, MAGIC, ARCHER}
     public enum CharacterType {GOOD1, GOOD2, GOOD3, GOOD4, BAD1, BAD2, BAD3, BAD4}
 
-    public GameObject createCharacter(Texture texture, String name, CharacterType characterType, int power, int health, double x, double y, double width, double height) {
-        GameObject object;
+    public GameObject createCharacter(Texture texture, String name, CharacterType characterType, CharacterClass characterClass, int power, int health, double x, double y, double width, double height) {
+        GameObject object = null;
         switch (characterType) {
             case BAD1:
             case BAD2:
@@ -45,7 +49,18 @@ public abstract class GameObject {
             case GOOD2:
             case GOOD3:
             case GOOD4:
-                object = new GoodCharacter(texture, name, characterType, power, health, x, y, width, height);
+                if (characterClass == CharacterClass.WARIOR) {
+                    object = new Warrior(name, health, power, x, y, width, height, characterClass, characterType);
+                }
+                if (characterClass == CharacterClass.PALADIN) {
+                    object = new Paladin(name, health, power, x, y, width, height, characterClass, characterType);
+                }
+                if (characterClass == CharacterClass.MAGIC) {
+                    object = new Magic(name, health, power, x, y, width, height, characterClass, characterType);
+                }
+                if (characterClass == CharacterClass.ARCHER) {
+                    object = new Archer(name, health, power, x, y, width, height, characterClass, characterType);
+                }
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + characterType);

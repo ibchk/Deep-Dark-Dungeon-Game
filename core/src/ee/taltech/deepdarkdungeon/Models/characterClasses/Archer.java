@@ -1,10 +1,9 @@
-package ee.taltech.deepdarkdungeon.Models;
+package ee.taltech.deepdarkdungeon.Models.characterClasses;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import ee.taltech.deepdarkdungeon.Models.GameObject;
 
-public class GoodCharacter extends GameObject {
-
+public class Archer extends GameObject {
     String name;
     int health;
     int power;
@@ -12,65 +11,63 @@ public class GoodCharacter extends GameObject {
     double y;
     double width;
     double height;
+    CharacterClass characterClass;
     CharacterType characterType;
     Texture picture;
 
-
-    public GoodCharacter(Texture texture, String name, CharacterType characterType, int power, int health, double x, double y, double width, double height) {
+    public Archer(String name, int health, int power, double x, double y, double width, double height, CharacterClass characterClass, CharacterType characterType) {
+        this.name = "Warrior";
+        this.health = 100;
+        this.power = 20;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.characterClass = characterClass;
         this.characterType = characterType;
-        this.power = power;
-        this.health = health;
-        this.name = name;
-        picture = texture;
-
     }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
     @Override
     public Texture getPicture() {
-        return picture;
+        return null;
     }
 
     @Override
     public CharacterType getCharacterType() {
-        return characterType;
+        return null;
     }
 
     @Override
     public double getX() {
-        return x;
+        return 0;
     }
 
     @Override
     public double getY() {
-        return y;
+        return 0;
     }
 
     @Override
     public double getWidth() {
-        return width;
+        return 0;
     }
 
     @Override
     public double getHeight() {
-        return height;
+        return 0;
     }
 
     @Override
     public int getPower() {
-        return power;
+        return 0;
     }
 
     @Override
     public int getHealth() {
-        return health;
+        return 0;
+    }
+
+    @Override
+    public String getName() {
+        return null;
     }
 }
