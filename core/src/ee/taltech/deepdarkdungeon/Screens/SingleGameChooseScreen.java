@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ee.taltech.deepdarkdungeon.DeepDarkDungeonGame;
 import ee.taltech.deepdarkdungeon.Models.*;
+import ee.taltech.deepdarkdungeon.Models.BadCgaracterClasses.SkeletonWarrior;
+import ee.taltech.deepdarkdungeon.Models.characterClasses.Warrior;
 
 import java.util.Arrays;
 import java.util.List;
@@ -45,14 +47,14 @@ public class SingleGameChooseScreen implements Screen {
 
     //Далее я создаю персонажей чтобы закинуть их в игру, это нужно будет структурировать,
     // так как мы не знаем какие персонажи будут выбраны и сколько их будет и в какой последовательности.
-    GameObject goodCharacter1 = new GoodCharacter(new Texture(Gdx.files.internal("GoodCharacter1.png")), "Char1", GameObject.CharacterType.GOOD1, 100, 1000, 0, 0, 200, 277);
-    GameObject goodCharacter2 = new GoodCharacter(new Texture(Gdx.files.internal("GoodCharacter2.png")), "Char2", GameObject.CharacterType.GOOD2, 100, 1000, 200, 0, 200, 277);
-    GameObject goodCharacter3 = new GoodCharacter(new Texture(Gdx.files.internal("GoodCharacter3.png")), "Char3", GameObject.CharacterType.GOOD3, 100, 1000, 400, 0, 200, 277);
-    GameObject goodCharacter4 = new GoodCharacter(new Texture(Gdx.files.internal("GoodCharacter4.png")), "Char4", GameObject.CharacterType.GOOD4, 100, 1000, 600, 0, 200, 277);
-    GameObject badCharacter1 = new BadCharacter(new Texture(Gdx.files.internal("BadCharacter1.png")), "BadChar1", GameObject.CharacterType.BAD1, 100, 1000, 1000, 0, 200, 277);
-    GameObject badCharacter2 = new BadCharacter(new Texture(Gdx.files.internal("BadCharacter2.png")), "BadChar2", GameObject.CharacterType.BAD2, 100, 1000, 1200, 0, 200, 277);
-    GameObject badCharacter3 = new BadCharacter(new Texture(Gdx.files.internal("BadCharacter3.png")), "BadChar3", GameObject.CharacterType.BAD3, 100, 1000, 1400, 0, 200, 277);
-    GameObject badCharacter4 = new BadCharacter(new Texture(Gdx.files.internal("BadCharacter4.png")), "BadChar4", GameObject.CharacterType.BAD4, 100, 1000, 1600, 0, 200, 277);
+    GameObject goodCharacter1 = new Warrior(new Texture(Gdx.files.internal("GoodCharacter2.png")), "Char1",  100, 1000, 0, 0, 200, 277,  GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD3);
+    GameObject goodCharacter2 = new Warrior(new Texture(Gdx.files.internal("GoodCharacter2.png")), "Char2", 100, 1000, 200, 0, 200, 277, GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD3);
+    GameObject goodCharacter3 = new Warrior(new Texture(Gdx.files.internal("GoodCharacter2.png")), "Char3", 100, 1000, 400, 0, 200, 277, GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD3);
+    GameObject goodCharacter4 = new Warrior(new Texture(Gdx.files.internal("GoodCharacter2.png")), "Char4", 100, 1000, 600, 0, 200, 277, GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD4);
+    GameObject badCharacter1 = new SkeletonWarrior(new Texture(Gdx.files.internal("BadCharacter1.png")), "BadChar1", 100, 1000, 1000, 0, 200, 277, GameObject.BadCharacterClass.SKELETON_WARRIOR, GameObject.CharacterType.BAD1);
+    GameObject badCharacter2 = new SkeletonWarrior(new Texture(Gdx.files.internal("BadCharacter1.png")), "BadChar2", 100, 1000, 1200, 0, 200, 277, GameObject.BadCharacterClass.SKELETON_WARRIOR, GameObject.CharacterType.BAD1);
+    GameObject badCharacter3 = new SkeletonWarrior(new Texture(Gdx.files.internal("BadCharacter1.png")), "BadChar3",100, 1000, 1400, 0, 200, 277, GameObject.BadCharacterClass.SKELETON_WARRIOR, GameObject.CharacterType.BAD1);
+    GameObject badCharacter4 = new SkeletonWarrior(new Texture(Gdx.files.internal("BadCharacter1.png")), "BadChar4", 100, 1000, 1600, 0, 200, 277, GameObject.BadCharacterClass.SKELETON_WARRIOR, GameObject.CharacterType.BAD1);
 
     @Override
     public void render(float delta) {

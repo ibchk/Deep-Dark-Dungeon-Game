@@ -15,8 +15,8 @@ public class Magic extends GameObject {
     CharacterType characterType;
     Texture picture;
 
-    public Magic(String name, int health, int power, double x, double y, double width, double height, CharacterClass characterClass, CharacterType characterType) {
-        this.name = "Warrior";
+    public Magic(Texture picture, String name, int health, int power, double x, double y, double width, double height, CharacterClass characterClass, CharacterType characterType) {
+        this.name = "Magic";
         this.health = 100;
         this.power = 20;
         this.x = x;
@@ -25,6 +25,7 @@ public class Magic extends GameObject {
         this.height = height;
         this.characterClass = characterClass;
         this.characterType = characterType;
+        this.picture = picture;
     }
     @Override
     public Texture getPicture() {
