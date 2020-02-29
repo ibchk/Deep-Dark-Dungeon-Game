@@ -30,9 +30,9 @@ public class GameScreen implements Screen {
         goodCharacter3 = goodCharacters.get(2);
         goodCharacter4 = goodCharacters.get(3);
         badCharacter1 = badCharacters.get(0);
-        badCharacter1 = badCharacters.get(1);
-        badCharacter1 = badCharacters.get(2);
-        badCharacter1 = badCharacters.get(3);
+        badCharacter2 = badCharacters.get(1);
+        badCharacter3 = badCharacters.get(2);
+        badCharacter4 = badCharacters.get(3);
     }
 
     @Override
