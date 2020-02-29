@@ -13,10 +13,10 @@ public class SkeletonWarrior extends GameObject {
     double width;
     double height;
     BadCharacterClass badCharacterClass;
-    CharacterType characterType;
+    BadCharacterType characterType;
     Texture picture;
 
-    public SkeletonWarrior (int health, int power, double x, double y, double width, double height, BadCharacterClass badCharacterClass, CharacterType characterType) {
+    public SkeletonWarrior (int health, int power, double x, double y, double width, double height, BadCharacterClass badCharacterClass, BadCharacterType badCharacterType) {
         this.name = "Skeleton Warrior";
         this.health = 50;
         this.power = 10;
@@ -25,7 +25,7 @@ public class SkeletonWarrior extends GameObject {
         this.width = width;
         this.height = height;
         this.badCharacterClass = badCharacterClass;
-        this.characterType = characterType;
+        this.characterType = badCharacterType;
     }
 
     @Override

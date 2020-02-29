@@ -13,10 +13,10 @@ public class Zombie extends GameObject {
     double width;
     double height;
     BadCharacterClass badCharacterClass;
-    CharacterType characterType;
+    BadCharacterType characterType;
     Texture picture;
 
-    public Zombie (int health, int power, double x, double y, double width, double height, BadCharacterClass badCharacterClass, CharacterType characterType) {
+    public Zombie (int health, int power, double x, double y, double width, double height, BadCharacterClass badCharacterClass, BadCharacterType badCharacterType) {
         this.name = "Zombie";
         this.health = 100;
         this.power = 15;
@@ -25,7 +25,7 @@ public class Zombie extends GameObject {
         this.width = width;
         this.height = height;
         this.badCharacterClass = badCharacterClass;
-        this.characterType = characterType;
+        this.characterType = badCharacterType;
     }
 
     @Override

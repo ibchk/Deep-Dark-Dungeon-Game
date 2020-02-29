@@ -13,10 +13,10 @@ public class Necromancer extends GameObject {
     double width;
     double height;
     BadCharacterClass badCharacterClass;
-    CharacterType characterType;
+    BadCharacterType characterType;
     Texture picture;
 
-    public Necromancer (int health, int power, double x, double y, double width, double height, BadCharacterClass badCharacterClass, CharacterType characterType) {
+    public Necromancer (int health, int power, double x, double y, double width, double height, BadCharacterClass badCharacterClass, BadCharacterType badCharacterType) {
         this.name = "Necromancer";
         this.health = 150;
         this.power = 40;
@@ -25,7 +25,7 @@ public class Necromancer extends GameObject {
         this.width = width;
         this.height = height;
         this.badCharacterClass = badCharacterClass;
-        this.characterType = characterType;
+        this.characterType = badCharacterType;
     }
 
     @Override

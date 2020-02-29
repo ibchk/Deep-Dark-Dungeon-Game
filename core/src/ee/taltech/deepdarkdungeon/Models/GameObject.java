@@ -39,7 +39,8 @@ public abstract class GameObject {
 
     public enum CharacterClass {PALADIN, WARIOR, MAGIC, ARCHER}
     public enum BadCharacterClass {ZOMBIE, SKELETON_WARRIOR, SKELETON_ARCHER, NECROMANCER}
-    public enum CharacterType {GOOD1, GOOD2, GOOD3, GOOD4, BAD1, BAD2, BAD3, BAD4}
+    public enum CharacterType {GOOD1, GOOD2, GOOD3, GOOD4}
+    public enum BadCharacterType {BAD1, BAD2, BAD3, BAD4}
 
     public GameObject createCharacter(Texture texture, String name, CharacterType characterType, CharacterClass characterClass, int power, int health, double x, double y, double width, double height) {
         GameObject object = null;
@@ -69,28 +70,28 @@ public abstract class GameObject {
         return object;
     }
 
-    public GameObject createBadCharacter(Texture texture, String name, CharacterType characterType, BadCharacterClass badCharacterClass, int power, int health, double x, double y, double width, double height) {
+    public GameObject createBadCharacter(Texture texture, String name, BadCharacterType badCharacterType, BadCharacterClass badCharacterClass, int power, int health, double x, double y, double width, double height) {
         GameObject object = null;
-        switch (characterType) {
+        switch (badCharacterType) {
             case BAD1:
             case BAD2:
             case BAD3:
             case BAD4:
                 if (badCharacterClass == BadCharacterClass.ZOMBIE) {
-                    object = new Zombie(health, power, x, y, width, height, badCharacterClass, characterType);
+                    object = new Zombie(health, power, x, y, width, height, badCharacterClass, badCharacterType);
                 }
                 if (badCharacterClass == BadCharacterClass.SKELETON_WARRIOR) {
-                    object = new SkeletonWarrior(health, power, x, y, width, height, badCharacterClass, characterType);
+                    object = new SkeletonWarrior(health, power, x, y, width, height, badCharacterClass, badCharacterType);
                 }
                 if (badCharacterClass == BadCharacterClass.SKELETON_ARCHER) {
-                    object = new SkeletonArcher(health, power, x, y, width, height, badCharacterClass, characterType);
+                    object = new SkeletonArcher(health, power, x, y, width, height, badCharacterClass, badCharacterType);
                 }
                 if (badCharacterClass == BadCharacterClass.NECROMANCER) {
-                    object = new Necromancer(health, power, x, y, width, height, badCharacterClass, characterType);
+                    object = new Necromancer(health, power, x, y, width, height, badCharacterClass, badCharacterType);
                 }
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + characterType);
+                throw new IllegalStateException("Unexpected value: " + badCharacterType);
         }
         this.bounds = new Rectangle((int) x, (int) y, (int) width, (int) height);
         this.object = new Sprite(getPicture());
