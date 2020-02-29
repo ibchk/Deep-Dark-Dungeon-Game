@@ -48,12 +48,15 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         batch.draw(background, 0, 0);
-        batch.draw(goodCharacter1.getPicture(), 0, 0); // рисует персанажа (картинка)
-        batch.draw(goodCharacter2.getPicture(), 200, 0);
-        batch.draw(goodCharacter3.getPicture(), 400, 0);
-        batch.draw(goodCharacter4.getPicture(), 600, 0);
-        batch.draw(badCharacter1.getPicture(), 1000, 0);
-        font.draw(batch, goodCharacter1.getPower() + "", 200, 500); // Вызывает текст, тут например power персанажа
+        batch.draw(goodCharacter1.getPicture(), 0, 100); // рисует персанажа (картинка)
+        batch.draw(goodCharacter2.getPicture(), 200, 100);
+        batch.draw(goodCharacter3.getPicture(), 400, 100);
+        batch.draw(goodCharacter4.getPicture(), 600, 100);
+        batch.draw(badCharacter1.getPicture(), 1100, 100);
+        batch.draw(badCharacter2.getPicture(), 1300, 100);
+        batch.draw(badCharacter3.getPicture(), 1500, 100);
+        batch.draw(badCharacter4.getPicture(), 1700, 100);
+        //font.draw(batch, goodCharacter1.getPower() + "", 200, 500); // Вызывает текст, тут например power персанажа
         batch.end();
     }
 

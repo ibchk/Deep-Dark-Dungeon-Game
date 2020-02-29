@@ -15,7 +15,8 @@ public class Warrior extends GameObject {
     CharacterType characterType;
     Texture picture;
 
-    public Warrior(String name, int health, int power, double x, double y, double width, double height, CharacterClass characterClass, CharacterType characterType) {
+    public Warrior(Texture picture, String name, int health, int power, double x, double y, double width, double height, CharacterClass characterClass, CharacterType characterType) {
+        this.picture = picture;
         this.name = "Warrior";
         this.health = 100;
         this.power = 20;
@@ -29,46 +30,46 @@ public class Warrior extends GameObject {
 
     @Override
     public Texture getPicture() {
-        return null;
+        return picture;
     }
 
     @Override
     public CharacterType getCharacterType() {
-        return null;
+        return characterType;
     }
 
     @Override
     public double getX() {
-        return 0;
+        return x;
     }
 
     @Override
     public double getY() {
-        return 0;
+        return y;
     }
 
     @Override
     public double getWidth() {
-        return 0;
+        return width;
     }
 
     @Override
     public double getHeight() {
-        return 0;
+        return height;
     }
 
     @Override
     public int getPower() {
-        return 0;
+        return power;
     }
 
     @Override
     public int getHealth() {
-        return 0;
+        return health;
     }
 
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 }
