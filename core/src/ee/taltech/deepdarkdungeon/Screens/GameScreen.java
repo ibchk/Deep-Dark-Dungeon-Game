@@ -13,6 +13,7 @@ import java.util.List;
 public class GameScreen implements Screen {
 
     BitmapFont font = new BitmapFont();
+    private Texture vboiButton;
     private Texture background;
     private SpriteBatch batch;
     private GameObject goodCharacter1;
@@ -39,7 +40,7 @@ public class GameScreen implements Screen {
     public void show() {
         batch = new SpriteBatch();
         background = new Texture(Gdx.files.internal("playerchoosebackgroung.jpg"));
-
+        vboiButton = new Texture(Gdx.files.internal("buttonVBOI.png"));
     }
 
     @Override
@@ -48,6 +49,7 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         batch.draw(background, 0, 0);
+        batch.draw(vboiButton, 850, 50);
         batch.draw(goodCharacter1.getPicture(), 0, 100); // рисует персанажа (картинка)
         batch.draw(goodCharacter2.getPicture(), 200, 100);
         batch.draw(goodCharacter3.getPicture(), 400, 100);
