@@ -16,26 +16,100 @@ import java.awt.*;
 
 public abstract class GameObject {
 
-    Rectangle bounds;
-    Sprite object;
+    public BadCharacterClass badCharacterClass;
+    public Rectangle bounds;
+    public Sprite object;
+    public Texture texture;
+    public String name;
+    public CharacterType characterType;
+    public CharacterClass characterClass;
+    public int power;
+    public int health;
+    public double x;
+    public double y;
+    public double width;
+    public double height;
 
-    public abstract Texture getPicture();
+    public Texture getTexture() {
+        return texture;
+    }
 
-    public abstract CharacterType getCharacterType();
+    public void setTexture(Texture texture) {
+        this.texture = texture;
+    }
 
-    public abstract double getX();
+    public String getName() {
+        return name;
+    }
 
-    public abstract double getY();
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public abstract double getWidth();
+    public CharacterType getCharacterType() {
+        return characterType;
+    }
 
-    public abstract double getHeight();
+    public void setCharacterType(CharacterType characterType) {
+        this.characterType = characterType;
+    }
 
-    public abstract int getPower();
+    public CharacterClass getCharacterClass() {
+        return characterClass;
+    }
 
-    public abstract int getHealth();
+    public void setCharacterClass(CharacterClass characterClass) {
+        this.characterClass = characterClass;
+    }
 
-    public abstract String getName();
+    public int getPower() {
+        return power;
+    }
+
+    public void setPower(int power) {
+        this.power = power;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public double getWidth() {
+        return width;
+    }
+
+    public void setWidth(double width) {
+        this.width = width;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
+    }
+
 
     public enum CharacterClass {PALADIN, WARIOR, MAGIC, ARCHER}
     public enum BadCharacterClass {ZOMBIE, SKELETON_WARRIOR, SKELETON_ARCHER, NECROMANCER}
@@ -65,7 +139,7 @@ public abstract class GameObject {
                 throw new IllegalStateException("Unexpected value: " + characterType);
         }
         this.bounds = new Rectangle((int) x, (int) y, (int) width, (int) height);
-        this.object = new Sprite(getPicture());
+        this.object = new Sprite(getTexture());
         return object;
     }
 
@@ -93,7 +167,7 @@ public abstract class GameObject {
                 throw new IllegalStateException("Unexpected value: " + badCharacterType);
         }
         this.bounds = new Rectangle((int) x, (int) y, (int) width, (int) height);
-        this.object = new Sprite(getPicture());
+        this.object = new Sprite(getTexture());
         return object;
     }
 
