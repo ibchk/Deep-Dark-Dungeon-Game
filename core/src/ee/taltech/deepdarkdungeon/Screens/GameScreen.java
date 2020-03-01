@@ -59,14 +59,14 @@ public class GameScreen implements Screen {
         batch.begin();
         batch.draw(background, 0, 0);
         batch.draw(vboiButton, VBOI_X, VBOI_Y, VBOI_WIDTH, VBOI_HEIGTH);
-        batch.draw(goodCharacter1.getPicture(), 0, 100); // рисует персанажа (картинка)
-        batch.draw(goodCharacter2.getPicture(), 200, 100);
-        batch.draw(goodCharacter3.getPicture(), 400, 100);
-        batch.draw(goodCharacter4.getPicture(), 600, 100);
-        batch.draw(badCharacter1.getPicture(), 1100, 100);
-        batch.draw(badCharacter2.getPicture(), 1300, 100);
-        batch.draw(badCharacter3.getPicture(), 1500, 100);
-        batch.draw(badCharacter4.getPicture(), 1700, 100);
+        batch.draw(goodCharacter1.getTexture(), 0, 100); // рисует персанажа (картинка)
+        batch.draw(goodCharacter2.getTexture(), 200, 100);
+        batch.draw(goodCharacter3.getTexture(), 400, 100);
+        batch.draw(goodCharacter4.getTexture(), 600, 100);
+        batch.draw(badCharacter1.getTexture(), 1100, 100);
+        batch.draw(badCharacter2.getTexture(), 1300, 100);
+        batch.draw(badCharacter3.getTexture(), 1500, 100);
+        batch.draw(badCharacter4.getTexture(), 1700, 100);
         //Gdx.input.getX() < PLAY_BUTTON_START + PLAY_BUTTON_WIDTH && Gdx.input.getX() > PLAY_BUTTON_START && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > PLAY_BUTTON_Y)
         if (stepCount % 2 == 1) {
             font.draw(batch, "Your turn!" + stepCount, 100, 1000); // Вызывает текст, тут например power персанажа

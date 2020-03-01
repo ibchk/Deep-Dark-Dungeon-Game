@@ -5,16 +5,6 @@ import ee.taltech.deepdarkdungeon.Models.GameObject;
 
 public class Zombie extends GameObject {
 
-    String name;
-    int health;
-    int power;
-    double x;
-    double y;
-    double width;
-    double height;
-    BadCharacterClass badCharacterClass;
-    CharacterType characterType;
-    Texture picture;
 
     public Zombie (Texture picture, String name, int health, int power, double x, double y, double width, double height, BadCharacterClass badCharacterClass, CharacterType badCharacterType) {
         this.name = "Zombie";
@@ -24,7 +14,7 @@ public class Zombie extends GameObject {
         this.y = y;
         this.width = width;
         this.height = height;
-        this.picture = picture;
+        this.texture = picture;
         this.badCharacterClass = badCharacterClass;
         this.characterType = badCharacterType;
     }
