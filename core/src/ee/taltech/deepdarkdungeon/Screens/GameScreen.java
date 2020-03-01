@@ -16,7 +16,7 @@ public class GameScreen implements Screen {
     private static final int VBOI_X = 850;
     private static final int VBOI_Y = 50;
     private static final int VBOI_HEIGTH = 80;
-    private static final int VBOI_WIDTH = 201;
+    private static final int VBOI_WIDTH = 200;
 
     DeepDarkDungeonGame game;
     BitmapFont font = new BitmapFont();
