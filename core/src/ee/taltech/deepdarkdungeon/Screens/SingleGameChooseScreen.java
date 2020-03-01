@@ -21,26 +21,28 @@ import ee.taltech.deepdarkdungeon.Models.characterClasses.Warrior;
 import java.util.*;
 
 public class SingleGameChooseScreen implements Screen {
-    private static final int PLAY_BUTTON_WIDTH = 300;
-    private static final int PLAY_BUTTON_HEIGHT = 150;
+    private static final int PLAY_BUTTON_WIDTH = 250;
+    private static final int PLAY_BUTTON_HEIGHT = 78;
     private static final int PLAY_BUTTON_Y = 100;
     private static final int PLAY_BUTTON_START = 1400;
-    private static final int BACK_BUTTON_WIDTH = 250;
-    private static final int BACK_BUTTON_HEIGHT = 120;
+    private static final int BACK_BUTTON_WIDTH = 206;
+    private static final int BACK_BUTTON_HEIGHT = 78;
     private static final int BACK_BUTTON_Y = 100;
     private static final int BACK_BUTTON_START = 200;
 
     DeepDarkDungeonGame game;
     Stage stage;
     private Texture startButton;
+    private Texture startButton2;
     private Texture background;
     private Texture warriorTexture;
     private SpriteBatch batch;
     private Texture backButton;
-    private Texture nextButton;
+    private Texture backButton2;
     private Texture previousCharacterButton;
+    private Texture previousCharacterButton2;
     private Texture nextCharacterButton;
-    TextButton.TextButtonStyle buttonStyle;
+    private Texture nextCharacterButton2;
     GameObject goodCharacter1;
     GameObject goodCharacter2;
     GameObject goodCharacter3;
@@ -74,14 +76,18 @@ public class SingleGameChooseScreen implements Screen {
 
     @Override
     public void show() {
-        batch = new SpriteBatch();
-        nextButton = new Texture(Gdx.files.internal("nextButton.png"));
-        backButton = new Texture(Gdx.files.internal("backbutton.png"));
         background = new Texture(Gdx.files.internal("playerchoosebackgroung.jpg"));
+        batch = new SpriteBatch();
+        backButton = new Texture(Gdx.files.internal("backbutton.png"));
+        backButton2 = new Texture(Gdx.files.internal("backbutton2.png"));
         startButton = new Texture(Gdx.files.internal("startbutton.png"));
+        startButton2 = new Texture(Gdx.files.internal("startbutton2.png"));
         warriorTexture = new Texture(Gdx.files.internal("warrior.png"));
         previousCharacterButton = new Texture(Gdx.files.internal("previousCharacterButton.png"));
+        previousCharacterButton2 = new Texture(Gdx.files.internal("previousCharacterButton2.png"));
         nextCharacterButton = new Texture(Gdx.files.internal("nextCharacterButton.png"));
+        nextCharacterButton2 = new Texture(Gdx.files.internal("nextCharacterButton2.png"));
+
     }
 
     //Далее я создаю персонажей чтобы закинуть их в игру, это нужно будет структурировать,
@@ -100,6 +106,7 @@ public class SingleGameChooseScreen implements Screen {
         batch.draw(nextCharacterButton, 500, 670, 45, 63);
         batch.draw(previousCharacterButton, 215, 670, 45, 63);
         if (Gdx.input.getX() < 500 + 45 && Gdx.input.getX() > 500 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < 670 + 63 + 34 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > 670) {
+            batch.draw(nextCharacterButton2, 500, 670, 45, 63);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 neededCharacter1++;
                 if (neededCharacter1 == 4) {
@@ -109,6 +116,7 @@ public class SingleGameChooseScreen implements Screen {
             }
         }
         if (Gdx.input.getX() < 215 + 45 && Gdx.input.getX() > 215 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < 670 + 63 + 34 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > 670) {
+            batch.draw(previousCharacterButton2, 215, 670, 45, 63);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 if (neededCharacter1 == 0) {
                     neededCharacter1 = 4;
@@ -123,6 +131,7 @@ public class SingleGameChooseScreen implements Screen {
         batch.draw(nextCharacterButton, 884, 670, 45, 63);
         batch.draw(previousCharacterButton, 599, 670, 45, 63);
         if (Gdx.input.getX() < 884 + 45 && Gdx.input.getX() > 884 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < 670 + 63 + 34 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > 670) {
+            batch.draw(nextCharacterButton2, 884, 670, 45, 63);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 neededCharacter2++;
                 if (neededCharacter2 == 4) {
@@ -132,6 +141,7 @@ public class SingleGameChooseScreen implements Screen {
             }
         }
         if (Gdx.input.getX() < 599 + 45 && Gdx.input.getX() > 599 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < 670 + 63 + 34 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > 670) {
+            batch.draw(previousCharacterButton2, 599, 670, 45, 63);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 if (neededCharacter2 == 0) {
                     neededCharacter2 = 4;
@@ -146,6 +156,7 @@ public class SingleGameChooseScreen implements Screen {
         batch.draw(nextCharacterButton, 1268, 670, 45, 63);
         batch.draw(previousCharacterButton, 983, 670, 45, 63);
         if (Gdx.input.getX() < 1268 + 45 && Gdx.input.getX() > 1268 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < 670 + 63 + 34 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > 670) {
+            batch.draw(nextCharacterButton2, 1268, 670, 45, 63);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 neededCharacter3++;
                 if (neededCharacter3 == 4) {
@@ -155,6 +166,7 @@ public class SingleGameChooseScreen implements Screen {
             }
         }
         if (Gdx.input.getX() < 983 + 45 && Gdx.input.getX() > 983 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < 670 + 63 + 34 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > 670) {
+            batch.draw(previousCharacterButton2, 983, 670, 45, 63);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 if (neededCharacter3 == 0) {
                     neededCharacter3 = 4;
@@ -169,6 +181,7 @@ public class SingleGameChooseScreen implements Screen {
         batch.draw(nextCharacterButton, 1652, 670, 45, 63);
         batch.draw(previousCharacterButton, 1367, 670, 45, 63);
         if (Gdx.input.getX() < 1652 + 45 && Gdx.input.getX() > 1652 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < 670 + 63 + 34 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > 670) {
+            batch.draw(nextCharacterButton2, 1652, 670, 45, 63);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 neededCharacter4++;
                 if (neededCharacter4 == 4) {
@@ -178,6 +191,7 @@ public class SingleGameChooseScreen implements Screen {
             }
         }
         if (Gdx.input.getX() < 1367 + 45 && Gdx.input.getX() > 1367 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < 670 + 63 + 34 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > 670) {
+            batch.draw(previousCharacterButton2, 1367, 670, 45, 63);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 if (neededCharacter4 == 0) {
                     neededCharacter4 = 4;
@@ -187,8 +201,10 @@ public class SingleGameChooseScreen implements Screen {
             }
         } // Forth character choose ended.
 
+        //Game start button:
         batch.draw(startButton, PLAY_BUTTON_START, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
         if (Gdx.input.getX() < PLAY_BUTTON_START + PLAY_BUTTON_WIDTH && Gdx.input.getX() > PLAY_BUTTON_START && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > PLAY_BUTTON_Y) {
+            batch.draw(startButton2, PLAY_BUTTON_START, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 game.setScreen(new GameScreen(Arrays.asList(characters.get(neededCharacter1 % 4)
                         , characters.get(neededCharacter2), characters.get(neededCharacter3 % 4)
@@ -197,8 +213,11 @@ public class SingleGameChooseScreen implements Screen {
                 // Тут я закидываю два листа и персонажами которые будут в игре. первый лист
             }
         }
+
+        //back button:
         batch.draw(backButton, BACK_BUTTON_START, BACK_BUTTON_Y, BACK_BUTTON_WIDTH, BACK_BUTTON_HEIGHT);
         if (Gdx.input.getX() < BACK_BUTTON_START + BACK_BUTTON_WIDTH && Gdx.input.getX() > BACK_BUTTON_START && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < BACK_BUTTON_Y + BACK_BUTTON_HEIGHT && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > BACK_BUTTON_Y) {
+            batch.draw(backButton2, BACK_BUTTON_START, BACK_BUTTON_Y, BACK_BUTTON_WIDTH, BACK_BUTTON_HEIGHT);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 game.setScreen(new MainMenuScreen(game));
             }

@@ -10,14 +10,14 @@ import ee.taltech.deepdarkdungeon.Screens.GameScreen;
 import ee.taltech.deepdarkdungeon.Screens.SingleGameChooseScreen;
 
 public class MainMenuScreen implements Screen {
-    private static final int PLAY_BUTTON_WIDTH = 330;
+    private static final int PLAY_BUTTON_WIDTH = 396;
     private static final int PLAY_BUTTON_HEIGHT = 150;
-    private static final int EXIT_BUTTON_WIDTH = 300;
+    private static final int EXIT_BUTTON_WIDTH = 396;
     private static final int EXIT_BUTTON_HEIGHT = 150;
     private static final int EXIT_BUTTON_Y = 100;
     private static final int PLAY_BUTTON_Y = 100;
-    private static final int EXIT_BUTTON_START = 600;
-    private static final int PLAY_BUTTON_START = 990;
+    private static final int EXIT_BUTTON_START = 500;
+    private static final int PLAY_BUTTON_START = 1024;
 
     DeepDarkDungeonGame game;
     Texture BACKGROUND;
@@ -29,10 +29,10 @@ public class MainMenuScreen implements Screen {
     public MainMenuScreen (DeepDarkDungeonGame game) {
         this.game = game;
         BACKGROUND = new Texture("backgroungformainscreen.png");
-        EXITBUTTONINACTIVE = new Texture("exit.png");
-        EXITBUTTONACTIVE = new Texture("exit-button-png.png");
-        PLAYBUTTONINACTIVE = new Texture("unnamed.png");
-        PLAYBUTTONACTIVE = new Texture("lets-go-button.png");
+        EXITBUTTONINACTIVE = new Texture("quitbutton.png");
+        EXITBUTTONACTIVE = new Texture("quitbutton2.png");
+        PLAYBUTTONINACTIVE = new Texture("playbutton.png");
+        PLAYBUTTONACTIVE = new Texture("playbutton2.png");
     }
 
     @Override
