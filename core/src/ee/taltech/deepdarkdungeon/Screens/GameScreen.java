@@ -60,14 +60,14 @@ public class GameScreen implements Screen {
         batch.begin();
         batch.draw(background, 0, 0);
         batch.draw(vboiButton, VBOI_X, VBOI_Y, VBOI_WIDTH, VBOI_HEIGTH);
-        batch.draw(goodCharacter1.getTexture(), 0, 100); // рисует персанажа (картинка)
-        batch.draw(goodCharacter2.getTexture(), 200, 100);
-        batch.draw(goodCharacter3.getTexture(), 400, 100);
-        batch.draw(goodCharacter4.getTexture(), 600, 100);
-        batch.draw(badCharacter1.getTexture(), 1100, 100);
-        batch.draw(badCharacter2.getTexture(), 1300, 100);
-        batch.draw(badCharacter3.getTexture(), 1500, 100);
-        batch.draw(badCharacter4.getTexture(), 1700, 100);
+        batch.draw(goodCharacter1.getTexture(), 0, 400, 200, 220); // рисует персанажа (картинка)
+        batch.draw(goodCharacter2.getTexture(), 200, 450, 200, 220);
+        batch.draw(goodCharacter3.getTexture(), 400, 400, 200, 220);
+        batch.draw(goodCharacter4.getTexture(), 600, 450, 200, 220);
+        batch.draw(badCharacter1.getTexture(), 1100, (int) badCharacter1.getY(), 200, 220);
+        batch.draw(badCharacter2.getTexture(), 1300, (int) badCharacter2.getY(), 200, 220);
+        batch.draw(badCharacter3.getTexture(), 1500, (int) badCharacter3.getY(), 200, 220);
+        batch.draw(badCharacter4.getTexture(), 1700, (int) badCharacter4.getY(), 200, 220);
         font.draw(batch, badCharacter1.getHealth() + "", 1200, 400);
         font.draw(batch, badCharacter2.getHealth() + "", 1400, 400);
         font.draw(batch, badCharacter3.getHealth() + "", 1600, 400);
