@@ -51,10 +51,10 @@ public class SingleGameChooseScreen implements Screen {
     GameObject goodCharacter2 = new Warrior(new Texture(Gdx.files.internal("GoodCharacter2.png")), "Char2", 100, 1000, 200, 0, 200, 277, GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD3);
     GameObject goodCharacter3 = new Warrior(new Texture(Gdx.files.internal("GoodCharacter2.png")), "Char3", 100, 1000, 400, 0, 200, 277, GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD3);
     GameObject goodCharacter4 = new Warrior(new Texture(Gdx.files.internal("GoodCharacter2.png")), "Char4", 100, 1000, 600, 0, 200, 277, GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD4);
-    GameObject badCharacter1 = new SkeletonWarrior(new Texture(Gdx.files.internal("BadCharacter1.png")), "BadChar1", 100, 1000, 1000, 0, 200, 277, GameObject.BadCharacterClass.SKELETON_WARRIOR, GameObject.CharacterType.BAD1);
-    GameObject badCharacter2 = new SkeletonWarrior(new Texture(Gdx.files.internal("BadCharacter1.png")), "BadChar2", 100, 1000, 1200, 0, 200, 277, GameObject.BadCharacterClass.SKELETON_WARRIOR, GameObject.CharacterType.BAD1);
-    GameObject badCharacter3 = new SkeletonWarrior(new Texture(Gdx.files.internal("BadCharacter1.png")), "BadChar3",100, 1000, 1400, 0, 200, 277, GameObject.BadCharacterClass.SKELETON_WARRIOR, GameObject.CharacterType.BAD1);
-    GameObject badCharacter4 = new SkeletonWarrior(new Texture(Gdx.files.internal("BadCharacter1.png")), "BadChar4", 100, 1000, 1600, 0, 200, 277, GameObject.BadCharacterClass.SKELETON_WARRIOR, GameObject.CharacterType.BAD1);
+    GameObject badCharacter1 = new SkeletonWarrior(new Texture(Gdx.files.internal("BadCharacter1.png")), "BadChar1", 100, 1000, 1100, 0, 200, 277, GameObject.BadCharacterClass.SKELETON_WARRIOR, GameObject.CharacterType.BAD1);
+    GameObject badCharacter2 = new SkeletonWarrior(new Texture(Gdx.files.internal("BadCharacter1.png")), "BadChar2", 100, 1000, 1300, 0, 200, 277, GameObject.BadCharacterClass.SKELETON_WARRIOR, GameObject.CharacterType.BAD1);
+    GameObject badCharacter3 = new SkeletonWarrior(new Texture(Gdx.files.internal("BadCharacter1.png")), "BadChar3",100, 1000, 1500, 0, 200, 277, GameObject.BadCharacterClass.SKELETON_WARRIOR, GameObject.CharacterType.BAD1);
+    GameObject badCharacter4 = new SkeletonWarrior(new Texture(Gdx.files.internal("BadCharacter1.png")), "BadChar4", 100, 1000, 1700, 0, 200, 277, GameObject.BadCharacterClass.SKELETON_WARRIOR, GameObject.CharacterType.BAD1);
 
     @Override
     public void render(float delta) {
