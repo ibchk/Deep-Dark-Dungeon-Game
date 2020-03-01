@@ -96,7 +96,7 @@ public class SingleGameChooseScreen implements Screen {
         batch.draw(background, 0, 0);
 
         // First char choose start:
-        batch.draw(characters.get(neededCharacter1).getPicture(), 284, 600, 200, 222);
+        batch.draw(characters.get(neededCharacter1).getTexture(), 284, 600, 200, 222);
         batch.draw(nextCharacterButton, 500, 670, 45, 63);
         batch.draw(previousCharacterButton, 215, 670, 45, 63);
         if (Gdx.input.getX() < 500 + 45 && Gdx.input.getX() > 500 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < 670 + 63 + 34 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > 670) {
@@ -105,7 +105,7 @@ public class SingleGameChooseScreen implements Screen {
                 if (neededCharacter1 == 4) {
                     neededCharacter1 = 0;
                 }
-                batch.draw(characters.get(neededCharacter1).getPicture(), 284, 600, 200, 222);
+                batch.draw(characters.get(neededCharacter1).getTexture(), 284, 600, 200, 222);
             }
         }
         if (Gdx.input.getX() < 215 + 45 && Gdx.input.getX() > 215 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < 670 + 63 + 34 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > 670) {
@@ -114,12 +114,12 @@ public class SingleGameChooseScreen implements Screen {
                     neededCharacter1 = 4;
                 }
                 neededCharacter1--;
-                batch.draw(characters.get(neededCharacter1).getPicture(), 284, 600, 200, 222);
+                batch.draw(characters.get(neededCharacter1).getTexture(), 284, 600, 200, 222);
             }
         } // First character choose ended.
 
         // Second char choose start:
-        batch.draw(characters.get(neededCharacter2).getPicture(), 668, 600, 200, 222);
+        batch.draw(characters.get(neededCharacter2).getTexture(), 668, 600, 200, 222);
         batch.draw(nextCharacterButton, 884, 670, 45, 63);
         batch.draw(previousCharacterButton, 599, 670, 45, 63);
         if (Gdx.input.getX() < 884 + 45 && Gdx.input.getX() > 884 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < 670 + 63 + 34 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > 670) {
@@ -128,7 +128,7 @@ public class SingleGameChooseScreen implements Screen {
                 if (neededCharacter2 == 4) {
                     neededCharacter2 = 0;
                 }
-                batch.draw(characters.get(neededCharacter2).getPicture(), 668, 600, 200, 222);
+                batch.draw(characters.get(neededCharacter2).getTexture(), 668, 600, 200, 222);
             }
         }
         if (Gdx.input.getX() < 599 + 45 && Gdx.input.getX() > 599 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < 670 + 63 + 34 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > 670) {
@@ -137,12 +137,12 @@ public class SingleGameChooseScreen implements Screen {
                     neededCharacter2 = 4;
                 }
                 neededCharacter2--;
-                batch.draw(characters.get(neededCharacter2).getPicture(), 668, 600, 200, 222);
+                batch.draw(characters.get(neededCharacter2).getTexture(), 668, 600, 200, 222);
             }
         } // Second character choose ended.
 
         // Third char choose start:
-        batch.draw(characters.get(neededCharacter3).getPicture(), 1052, 600, 200, 222);
+        batch.draw(characters.get(neededCharacter3).getTexture(), 1052, 600, 200, 222);
         batch.draw(nextCharacterButton, 1268, 670, 45, 63);
         batch.draw(previousCharacterButton, 983, 670, 45, 63);
         if (Gdx.input.getX() < 1268 + 45 && Gdx.input.getX() > 1268 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < 670 + 63 + 34 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > 670) {
@@ -151,7 +151,7 @@ public class SingleGameChooseScreen implements Screen {
                 if (neededCharacter3 == 4) {
                     neededCharacter3 = 0;
                 }
-                batch.draw(characters.get(neededCharacter3).getPicture(), 1052, 600, 200, 222);
+                batch.draw(characters.get(neededCharacter3).getTexture(), 1052, 600, 200, 222);
             }
         }
         if (Gdx.input.getX() < 983 + 45 && Gdx.input.getX() > 983 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < 670 + 63 + 34 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > 670) {
@@ -160,12 +160,12 @@ public class SingleGameChooseScreen implements Screen {
                     neededCharacter3 = 4;
                 }
                 neededCharacter3--;
-                batch.draw(characters.get(neededCharacter3).getPicture(), 1052, 600, 200, 222);
+                batch.draw(characters.get(neededCharacter3).getTexture(), 1052, 600, 200, 222);
             }
         } // Third character choose ended.
 
         // Forth char choose start:
-        batch.draw(characters.get(neededCharacter4).getPicture(), 1436, 600, 200, 222);
+        batch.draw(characters.get(neededCharacter4).getTexture(), 1436, 600, 200, 222);
         batch.draw(nextCharacterButton, 1652, 670, 45, 63);
         batch.draw(previousCharacterButton, 1367, 670, 45, 63);
         if (Gdx.input.getX() < 1652 + 45 && Gdx.input.getX() > 1652 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < 670 + 63 + 34 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > 670) {
@@ -174,7 +174,7 @@ public class SingleGameChooseScreen implements Screen {
                 if (neededCharacter4 == 4) {
                     neededCharacter4 = 0;
                 }
-                batch.draw(characters.get(neededCharacter4).getPicture(), 1436, 600, 200, 222);
+                batch.draw(characters.get(neededCharacter4).getTexture(), 1436, 600, 200, 222);
             }
         }
         if (Gdx.input.getX() < 1367 + 45 && Gdx.input.getX() > 1367 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < 670 + 63 + 34 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > 670) {
@@ -183,7 +183,7 @@ public class SingleGameChooseScreen implements Screen {
                     neededCharacter4 = 4;
                 }
                 neededCharacter4--;
-                batch.draw(characters.get(neededCharacter4).getPicture(), 1436, 600, 200, 222);
+                batch.draw(characters.get(neededCharacter4).getTexture(), 1436, 600, 200, 222);
             }
         } // Forth character choose ended.
 
@@ -193,7 +193,7 @@ public class SingleGameChooseScreen implements Screen {
                 game.setScreen(new GameScreen(Arrays.asList(characters.get(neededCharacter1 % 4)
                         , characters.get(neededCharacter2), characters.get(neededCharacter3 % 4)
                         , characters.get(neededCharacter4))
-                        , Arrays.asList(badCharacter1, badCharacter2, badCharacter3, badCharacter4)));
+                        , Arrays.asList(badCharacter1, badCharacter2, badCharacter3, badCharacter4), game));
                 // Тут я закидываю два листа и персонажами которые будут в игре. первый лист
             }
         }
