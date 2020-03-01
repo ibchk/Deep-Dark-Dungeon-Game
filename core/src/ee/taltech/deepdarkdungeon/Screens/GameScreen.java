@@ -49,7 +49,7 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         batch = new SpriteBatch();
-        background = new Texture(Gdx.files.internal("playerchoosebackgroung.jpg"));
+        background = new Texture(Gdx.files.internal("GameBackground.png"));
         vboiButton = new Texture(Gdx.files.internal("buttonVBOI.png"));
     }
 
