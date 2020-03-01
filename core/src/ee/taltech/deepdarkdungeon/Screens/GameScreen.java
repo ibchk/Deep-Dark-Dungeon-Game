@@ -38,7 +38,7 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         batch = new SpriteBatch();
-        background = new Texture(Gdx.files.internal("playerchoosebackgroung.jpg"));
+        background = new Texture(Gdx.files.internal("GameBackground.png"));
 
     }
 
@@ -47,7 +47,7 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(135 / 255f, 206 / 255f, 235 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
-        batch.draw(background, 0, 0);
+        batch.draw(background, 0, 0, 1920, 1080);
         batch.draw(goodCharacter1.getPicture(), 0, 100); // рисует персанажа (картинка)
         batch.draw(goodCharacter2.getPicture(), 200, 100);
         batch.draw(goodCharacter3.getPicture(), 400, 100);
