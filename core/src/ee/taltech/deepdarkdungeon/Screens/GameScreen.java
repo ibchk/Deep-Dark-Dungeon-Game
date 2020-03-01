@@ -82,7 +82,8 @@ public class GameScreen implements Screen {
                 }
             }
         } else if (stepCount % 2 == 0) {
-            font.draw(batch, "Monsters turn!" + stepCount, 100, 900); // Вызывает текст, тут например power персанажа
+            font.draw(batch, "Monsters turn!" + stepCount, 100, 900);// Вызывает текст, тут например power персанажа
+            // AI logic
             stepCount += 1;
         }
         if (Gdx.input.getX() > badCharacter1.getX() && Gdx.input.getX() < badCharacter1.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > badCharacter1.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < badCharacter1.getY() + 300) {
