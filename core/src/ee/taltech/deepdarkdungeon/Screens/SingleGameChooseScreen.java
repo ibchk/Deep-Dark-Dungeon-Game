@@ -67,7 +67,7 @@ public class SingleGameChooseScreen implements Screen {
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 game.setScreen(new GameScreen(Arrays.asList(goodCharacter1, goodCharacter2,
                         goodCharacter3, goodCharacter4), Arrays.asList(badCharacter1,
-                        badCharacter2, badCharacter3, badCharacter4))); // Тут я закидываю два листа и персонажами которые будут в игре. первый лист
+                        badCharacter2, badCharacter3, badCharacter4), game)); // Тут я закидываю два листа и персонажами которые будут в игре. первый лист
             }
         }
         batch.draw(backButton, EXIT_BUTTON_START, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
