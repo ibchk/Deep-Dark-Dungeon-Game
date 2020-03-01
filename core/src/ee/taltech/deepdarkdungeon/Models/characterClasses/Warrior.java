@@ -1,10 +1,9 @@
-package ee.taltech.deepdarkdungeon.Models;
+package ee.taltech.deepdarkdungeon.Models.characterClasses;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import ee.taltech.deepdarkdungeon.Models.GameObject;
 
-public class GoodCharacter extends GameObject {
-
+public class Warrior extends GameObject {
     String name;
     int health;
     int power;
@@ -12,26 +11,21 @@ public class GoodCharacter extends GameObject {
     double y;
     double width;
     double height;
+    CharacterClass characterClass;
     CharacterType characterType;
     Texture picture;
 
-
-    public GoodCharacter(Texture texture, String name, CharacterType characterType, int power, int health, double x, double y, double width, double height) {
+    public Warrior(Texture picture, String name, int health, int power, double x, double y, double width, double height, CharacterClass characterClass, CharacterType characterType) {
+        this.picture = picture;
+        this.name = "Warrior";
+        this.health = 100;
+        this.power = 20;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.characterClass = characterClass;
         this.characterType = characterType;
-        this.power = power;
-        this.health = health;
-        this.name = name;
-        picture = texture;
-
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 
     @Override
@@ -72,5 +66,10 @@ public class GoodCharacter extends GameObject {
     @Override
     public int getHealth() {
         return health;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 }
