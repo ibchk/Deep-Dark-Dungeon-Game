@@ -9,7 +9,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ee.taltech.deepdarkdungeon.DeepDarkDungeonGame;
 import ee.taltech.deepdarkdungeon.Models.GameObject;
+import ee.taltech.deepdarkdungeon.Models.GoodCharacter;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class GameScreen implements Screen {
@@ -18,6 +21,8 @@ public class GameScreen implements Screen {
     private static final int VBOI_HEIGTH = 80;
     private static final int VBOI_WIDTH = 201;
 
+    List<GameObject> heroes;
+    List<GameObject> monsters;
     DeepDarkDungeonGame game;
     boolean canbeattacked = false;
     BitmapFont font = new BitmapFont();
@@ -36,6 +41,8 @@ public class GameScreen implements Screen {
 
     public GameScreen(List<GameObject> goodCharacters, List<GameObject> badCharacters, DeepDarkDungeonGame game) {
         this.game = game;
+        heroes = goodCharacters;
+        monsters = badCharacters;
         goodCharacter1 = goodCharacters.get(0);
         goodCharacter2 = goodCharacters.get(1);
         goodCharacter3 = goodCharacters.get(2);
@@ -72,6 +79,10 @@ public class GameScreen implements Screen {
         font.draw(batch, badCharacter2.getHealth() + "", 1400, 400);
         font.draw(batch, badCharacter3.getHealth() + "", 1600, 400);
         font.draw(batch, badCharacter4.getHealth() + "", 1800, 400);
+        font.draw(batch, goodCharacter1.getHealth() + "", 80, 400);
+        font.draw(batch, goodCharacter2.getHealth() + "", 280, 400);
+        font.draw(batch, goodCharacter3.getHealth() + "", 480, 400);
+        font.draw(batch, goodCharacter4.getHealth() + "", 680, 400);
         //Gdx.input.getX() < PLAY_BUTTON_START + PLAY_BUTTON_WIDTH && Gdx.input.getX() > PLAY_BUTTON_START && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > PLAY_BUTTON_Y)
         if (stepCount % 2 == 1) {
             font.draw(batch, "Your turn!" + stepCount, 100, 1000); // Вызывает текст, тут например power персанажа
@@ -83,7 +94,35 @@ public class GameScreen implements Screen {
             }
         } else if (stepCount % 2 == 0) {
             font.draw(batch, "Monsters turn!" + stepCount, 100, 900);// Вызывает текст, тут например power персанажа
-            // AI logic
+            if (badCharacter1.getHealth() > 0) {
+                for (GameObject hero : heroes) {
+                    if (hero.getHealth() > 0) {
+                        hero.setHealth(hero.getHealth() - badCharacter1.getPower());
+                        break;
+                    }
+                }
+            } else if (badCharacter2.getHealth() > 0) {
+                for (GameObject hero : heroes) {
+                    if (hero.getHealth() > 0) {
+                        hero.setHealth(hero.getHealth() - badCharacter1.getPower());
+                        break;
+                    }
+                }
+            } else if (badCharacter3.getHealth() > 0) {
+                for (GameObject hero : heroes) {
+                    if (hero.getHealth() > 0) {
+                        hero.setHealth(hero.getHealth() - badCharacter3.getPower());
+                        break;
+                    }
+                }
+            } else if (badCharacter4.getHealth() > 0) {
+                for (GameObject hero : heroes) {
+                    if (hero.getHealth() > 0) {
+                        hero.setHealth(hero.getHealth() - badCharacter4.getPower());
+                        break;
+                    }
+                }
+            }
             stepCount += 1;
         }
         if (Gdx.input.getX() > badCharacter1.getX() && Gdx.input.getX() < badCharacter1.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > badCharacter1.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < badCharacter1.getY() + 300) {
