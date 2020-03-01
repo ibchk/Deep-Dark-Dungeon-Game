@@ -4,20 +4,10 @@ import com.badlogic.gdx.graphics.Texture;
 import ee.taltech.deepdarkdungeon.Models.GameObject;
 
 public class Paladin extends GameObject {
-    String name;
-    int health;
-    int power;
-    double x;
-    double y;
-    double width;
-    double height;
-    CharacterClass characterClass;
-    CharacterType characterType;
-    Texture picture;
 
     public Paladin(Texture picture, String name, int health, int power, double x, double y, double width, double height, CharacterClass characterClass, CharacterType characterType) {
         this.name = "Paladin";
-        this.picture = picture;
+        this.texture = picture;
         this.health = 100;
         this.power = 20;
         this.x = x;

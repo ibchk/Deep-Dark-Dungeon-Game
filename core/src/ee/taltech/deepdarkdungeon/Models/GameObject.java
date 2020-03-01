@@ -175,6 +175,4 @@ public abstract class GameObject {
         object.setBounds((float) bounds.getX(), (float) bounds.getY(), (float) bounds.getWidth(), (float) bounds.getHeight());
         object.draw(batch);
     }
-
-
 }
