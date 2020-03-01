@@ -27,48 +27,4 @@ public class Magic extends GameObject {
         this.characterType = characterType;
         this.picture = picture;
     }
-    @Override
-    public Texture getPicture() {
-        return null;
-    }
-
-    @Override
-    public CharacterType getCharacterType() {
-        return null;
-    }
-
-    @Override
-    public double getX() {
-        return 0;
-    }
-
-    @Override
-    public double getY() {
-        return 0;
-    }
-
-    @Override
-    public double getWidth() {
-        return 0;
-    }
-
-    @Override
-    public double getHeight() {
-        return 0;
-    }
-
-    @Override
-    public int getPower() {
-        return 0;
-    }
-
-    @Override
-    public int getHealth() {
-        return 0;
-    }
-
-    @Override
-    public String getName() {
-        return null;
-    }
 }
