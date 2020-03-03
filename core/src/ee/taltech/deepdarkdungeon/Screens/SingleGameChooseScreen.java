@@ -206,10 +206,16 @@ public class SingleGameChooseScreen implements Screen {
         if (Gdx.input.getX() < PLAY_BUTTON_START + PLAY_BUTTON_WIDTH && Gdx.input.getX() > PLAY_BUTTON_START && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > PLAY_BUTTON_Y) {
             batch.draw(startButton2, PLAY_BUTTON_START, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                game.setScreen(new GameScreen(Arrays.asList(characters.get(neededCharacter1 % 4)
-                        , characters.get(neededCharacter2), characters.get(neededCharacter3 % 4)
-                        , characters.get(neededCharacter4))
-                        , Arrays.asList(badCharacter1, badCharacter2, badCharacter3, badCharacter4), game));
+                List<GameObject> rightCharactersList = new ArrayList<>();
+                GameObject rightCharater1 = new Warrior(characters.get(neededCharacter1 % 4).getTexture(), characters.get(neededCharacter1 % 4).getName(), characters.get(neededCharacter1 % 4). health, characters.get(neededCharacter1 % 4).getPower(), goodCharacter1.getX(), goodCharacter1.getY(), characters.get(neededCharacter1 % 4).getWidth(), characters.get(neededCharacter1 % 4).getHeight(), characters.get(neededCharacter1 % 4).getCharacterClass(), characters.get(neededCharacter1 % 4).getCharacterType());
+                GameObject rightCharater2 = new Warrior(characters.get(neededCharacter2 % 4).getTexture(), characters.get(neededCharacter2 % 4).getName(), characters.get(neededCharacter2 % 4). health, characters.get(neededCharacter2 % 4).getPower(), goodCharacter2.getX(), goodCharacter2.getY(), characters.get(neededCharacter2 % 4).getWidth(), characters.get(neededCharacter2 % 4).getHeight(), characters.get(neededCharacter2 % 4).getCharacterClass(), characters.get(neededCharacter2 % 4).getCharacterType());
+                GameObject rightCharater3 = new Warrior(characters.get(neededCharacter3 % 4).getTexture(), characters.get(neededCharacter3 % 4).getName(), characters.get(neededCharacter3 % 4). health, characters.get(neededCharacter3 % 4).getPower(), goodCharacter3.getX(), goodCharacter3.getY(), characters.get(neededCharacter3 % 4).getWidth(), characters.get(neededCharacter3 % 4).getHeight(), characters.get(neededCharacter3 % 4).getCharacterClass(), characters.get(neededCharacter3 % 4).getCharacterType());
+                GameObject rightCharater4 = new Warrior(characters.get(neededCharacter4 % 4).getTexture(), characters.get(neededCharacter4 % 4).getName(), characters.get(neededCharacter4 % 4). health, characters.get(neededCharacter4 % 4).getPower(), goodCharacter4.getX(), goodCharacter4.getY(), characters.get(neededCharacter4 % 4).getWidth(), characters.get(neededCharacter4 % 4).getHeight(), characters.get(neededCharacter4 % 4).getCharacterClass(), characters.get(neededCharacter4 % 4).getCharacterType());
+                rightCharactersList.add(rightCharater1);
+                rightCharactersList.add(rightCharater2);
+                rightCharactersList.add(rightCharater3);
+                rightCharactersList.add(rightCharater4);
+                game.setScreen(new GameScreen(rightCharactersList, Arrays.asList(badCharacter1, badCharacter2, badCharacter3, badCharacter4), game));
                 // Тут я закидываю два листа и персонажами которые будут в игре. первый лист
             }
         }
