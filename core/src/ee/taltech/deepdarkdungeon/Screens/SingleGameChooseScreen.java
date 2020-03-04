@@ -16,7 +16,11 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import ee.taltech.deepdarkdungeon.DeepDarkDungeonGame;
 import ee.taltech.deepdarkdungeon.Models.*;
 import ee.taltech.deepdarkdungeon.Models.BadCgaracterClasses.SkeletonWarrior;
+import ee.taltech.deepdarkdungeon.Models.characterClasses.Archer;
+import ee.taltech.deepdarkdungeon.Models.characterClasses.Magic;
+import ee.taltech.deepdarkdungeon.Models.characterClasses.Paladin;
 import ee.taltech.deepdarkdungeon.Models.characterClasses.Warrior;
+import ee.taltech.deepdarkdungeon.Models.CharacterCreating;
 
 import java.util.*;
 
@@ -61,9 +65,9 @@ public class SingleGameChooseScreen implements Screen {
     public SingleGameChooseScreen(DeepDarkDungeonGame game) {
         this.game = game;
         goodCharacter1 = new Warrior(new Texture(Gdx.files.internal("GoodCharacter1.png")), "Char1", 100, 1000, 0, 450, 200, 277, GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD1);
-        goodCharacter2 = new Warrior(new Texture(Gdx.files.internal("GoodCharacter2.png")), "Char2", 100, 1000, 200, 400, 200, 277, GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD2);
-        goodCharacter3 = new Warrior(new Texture(Gdx.files.internal("GoodCharacter3.png")), "Char3", 100, 1000, 400, 450, 200, 277, GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD3);
-        goodCharacter4 = new Warrior(new Texture(Gdx.files.internal("GoodCharacter4.png")), "Char4", 100, 1000, 600, 400, 200, 277, GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD4);
+        goodCharacter2 = new Archer(new Texture(Gdx.files.internal("GoodCharacter2.png")), "Char2", 100, 1000, 200, 400, 200, 277, GameObject.CharacterClass.ARCHER, GameObject.CharacterType.GOOD2);
+        goodCharacter3 = new Magic(new Texture(Gdx.files.internal("GoodCharacter3.png")), "Char3", 100, 1000, 400, 450, 200, 277, GameObject.CharacterClass.MAGIC, GameObject.CharacterType.GOOD3);
+        goodCharacter4 = new Paladin(new Texture(Gdx.files.internal("GoodCharacter4.png")), "Char4", 100, 1000, 600, 400, 200, 277, GameObject.CharacterClass.PALADIN, GameObject.CharacterType.GOOD4);
         badCharacter1 = new SkeletonWarrior(new Texture(Gdx.files.internal("BadCharacter1.png")), "BadChar1", 100, 1000, 1100, 450, 200, 277, GameObject.BadCharacterClass.SKELETON_WARRIOR, GameObject.CharacterType.BAD1);
         badCharacter2 = new SkeletonWarrior(new Texture(Gdx.files.internal("BadCharacter2.png")), "BadChar2", 100, 1000, 1300, 400, 200, 277, GameObject.BadCharacterClass.SKELETON_WARRIOR, GameObject.CharacterType.BAD2);
         badCharacter3 = new SkeletonWarrior(new Texture(Gdx.files.internal("BadCharacter3.png")), "BadChar3", 100, 1000, 1500, 450, 200, 277, GameObject.BadCharacterClass.SKELETON_WARRIOR, GameObject.CharacterType.BAD3);
@@ -207,10 +211,10 @@ public class SingleGameChooseScreen implements Screen {
             batch.draw(startButton2, PLAY_BUTTON_START, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 List<GameObject> rightCharactersList = new ArrayList<>();
-                GameObject rightCharater1 = new Warrior(characters.get(neededCharacter1 % 4).getTexture(), characters.get(neededCharacter1 % 4).getName(), characters.get(neededCharacter1 % 4). health, characters.get(neededCharacter1 % 4).getPower(), goodCharacter1.getX(), goodCharacter1.getY(), characters.get(neededCharacter1 % 4).getWidth(), characters.get(neededCharacter1 % 4).getHeight(), characters.get(neededCharacter1 % 4).getCharacterClass(), characters.get(neededCharacter1 % 4).getCharacterType());
-                GameObject rightCharater2 = new Warrior(characters.get(neededCharacter2 % 4).getTexture(), characters.get(neededCharacter2 % 4).getName(), characters.get(neededCharacter2 % 4). health, characters.get(neededCharacter2 % 4).getPower(), goodCharacter2.getX(), goodCharacter2.getY(), characters.get(neededCharacter2 % 4).getWidth(), characters.get(neededCharacter2 % 4).getHeight(), characters.get(neededCharacter2 % 4).getCharacterClass(), characters.get(neededCharacter2 % 4).getCharacterType());
-                GameObject rightCharater3 = new Warrior(characters.get(neededCharacter3 % 4).getTexture(), characters.get(neededCharacter3 % 4).getName(), characters.get(neededCharacter3 % 4). health, characters.get(neededCharacter3 % 4).getPower(), goodCharacter3.getX(), goodCharacter3.getY(), characters.get(neededCharacter3 % 4).getWidth(), characters.get(neededCharacter3 % 4).getHeight(), characters.get(neededCharacter3 % 4).getCharacterClass(), characters.get(neededCharacter3 % 4).getCharacterType());
-                GameObject rightCharater4 = new Warrior(characters.get(neededCharacter4 % 4).getTexture(), characters.get(neededCharacter4 % 4).getName(), characters.get(neededCharacter4 % 4). health, characters.get(neededCharacter4 % 4).getPower(), goodCharacter4.getX(), goodCharacter4.getY(), characters.get(neededCharacter4 % 4).getWidth(), characters.get(neededCharacter4 % 4).getHeight(), characters.get(neededCharacter4 % 4).getCharacterClass(), characters.get(neededCharacter4 % 4).getCharacterType());
+                GameObject rightCharater1 = new CharacterCreating().createCharacter(characters, neededCharacter1,goodCharacter1);
+                GameObject rightCharater2 = new CharacterCreating().createCharacter(characters, neededCharacter2,goodCharacter2);
+                GameObject rightCharater3 = new CharacterCreating().createCharacter(characters, neededCharacter3,goodCharacter3);
+                GameObject rightCharater4 = new CharacterCreating().createCharacter(characters, neededCharacter4,goodCharacter4);
                 rightCharactersList.add(rightCharater1);
                 rightCharactersList.add(rightCharater2);
                 rightCharactersList.add(rightCharater3);
