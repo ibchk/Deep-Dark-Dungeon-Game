@@ -83,9 +83,8 @@ public class GameScreen implements Screen {
         font.draw(batch, goodCharacter2.getHealth() + "", 280, 400);
         font.draw(batch, goodCharacter3.getHealth() + "", 480, 400);
         font.draw(batch, goodCharacter4.getHealth() + "", 680, 400);
-        //Gdx.input.getX() < PLAY_BUTTON_START + PLAY_BUTTON_WIDTH && Gdx.input.getX() > PLAY_BUTTON_START && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > PLAY_BUTTON_Y)
         if (stepCount % 2 == 1) {
-            font.draw(batch, "Your turn!" + stepCount, 100, 1000); // Вызывает текст, тут например power персанажа
+            font.draw(batch, "Your turn !" + stepCount, 100, 1000); // Вызывает текст, тут например power персанажа
             if (Gdx.input.getX() < VBOI_X + VBOI_WIDTH && Gdx.input.getX() > VBOI_X && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() <= VBOI_Y + VBOI_HEIGTH && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() >= VBOI_Y) {
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                     batch.draw(goodCharacter2.getTexture(), 200, 800);
@@ -93,7 +92,7 @@ public class GameScreen implements Screen {
                 }
             }
         } else if (stepCount % 2 == 0) {
-            font.draw(batch, "Monsters turn!" + stepCount, 100, 900);// Вызывает текст, тут например power персанажа
+            font.draw(batch, "Monsters turn! " + stepCount, 100, 900);// Вызывает текст, тут например power персанажа
             if (badCharacter1.getHealth() > 0) {
                 for (GameObject hero : heroes) {
                     if (hero.getHealth() > 0) {
@@ -104,7 +103,7 @@ public class GameScreen implements Screen {
             } else if (badCharacter2.getHealth() > 0) {
                 for (GameObject hero : heroes) {
                     if (hero.getHealth() > 0) {
-                        hero.setHealth(hero.getHealth() - badCharacter1.getPower());
+                        hero.setHealth(hero.getHealth() - badCharacter2.getPower());
                         break;
                     }
                 }
@@ -127,32 +126,32 @@ public class GameScreen implements Screen {
         }
         if (Gdx.input.getX() > badCharacter1.getX() && Gdx.input.getX() < badCharacter1.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > badCharacter1.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < badCharacter1.getY() + 300) {
             batch.draw(goodCharacter1.getTexture(), 200, 500);
-            if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked) {
-                badCharacter1.setHealth(badCharacter1.getHealth() - goodCharacter1.getPower());
+            if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked && badCharacter1.getHealth() > 0) {
+                badCharacter1.setHealth(Math.max(badCharacter1.getHealth() - goodCharacter1.getPower(), 0)); //замени goodCharacter1 на персанажа который атакует в данный момент, эта строчка отвечает за нанесение урона монстру.
                 stepCount += 1;
                 canbeattacked = false;
             }
         }
         if (Gdx.input.getX() > badCharacter2.getX() && Gdx.input.getX() < badCharacter2.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > badCharacter2.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < badCharacter2.getY() + 300) {
             batch.draw(goodCharacter2.getTexture(), 200, 500);
-            if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked) {
-                badCharacter2.setHealth(badCharacter2.getHealth() - goodCharacter1.getPower());
+            if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked && badCharacter2.getHealth() > 0) {
+                badCharacter2.setHealth(Math.max(badCharacter2.getHealth() - goodCharacter1.getPower(), 0)); //замени goodCharacter1 на персанажа который атакует в данный момент, эта строчка отвечает за нанесение урона монстру.
                 stepCount += 1;
                 canbeattacked = false;
             }
         }
         if (Gdx.input.getX() > badCharacter3.getX() && Gdx.input.getX() < badCharacter3.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > badCharacter3.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < badCharacter3.getY() + 300) {
             batch.draw(goodCharacter3.getTexture(), 200, 500);
-            if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked) {
-                badCharacter3.setHealth(badCharacter3.getHealth() - goodCharacter1.getPower());
+            if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked && badCharacter3.getHealth() > 0) {
+                badCharacter3.setHealth(Math.max(badCharacter3.getHealth() - goodCharacter1.getPower(), 0)); //замени goodCharacter1 на персанажа который атакует в данный момент, эта строчка отвечает за нанесение урона монстру.
                 stepCount += 1;
                 canbeattacked = false;
             }
         }
         if (Gdx.input.getX() > badCharacter4.getX() && Gdx.input.getX() < badCharacter4.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > badCharacter4.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < badCharacter4.getY() + 300) {
             batch.draw(goodCharacter4.getTexture(), 200, 500);
-            if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked) {
-                badCharacter4.setHealth(badCharacter4.getHealth() - goodCharacter1.getPower());
+            if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked && badCharacter4.getHealth() > 0) {
+                badCharacter4.setHealth(Math.max(badCharacter4.getHealth() - goodCharacter1.getPower(), 0)); //замени goodCharacter1 на персанажа который атакует в данный момент, эта строчка отвечает за нанесение урона монстру.
                 stepCount += 1;
                 canbeattacked = false;
             }
