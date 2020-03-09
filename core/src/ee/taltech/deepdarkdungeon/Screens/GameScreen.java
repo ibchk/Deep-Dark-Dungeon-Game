@@ -94,7 +94,9 @@ public class GameScreen implements Screen {
         }
         if (canbeattacked) {
             font.draw(batch, "Your turn! " + stepCount, 100, 1000); // Вызывает текст, тут например power персанажа
-            font.draw(batch, "In last step " + message, 100, 900);
+            if (stepCount > 1) {
+                font.draw(batch, "In last step " + message, 100, 900);
+            }
             if (Gdx.input.getX() < VBOI_X + VBOI_WIDTH && Gdx.input.getX() > VBOI_X && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() <= VBOI_Y + VBOI_HEIGTH && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() >= VBOI_Y) {
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                     batch.draw(goodCharacter2.getTexture(), 200, 800);
@@ -106,9 +108,12 @@ public class GameScreen implements Screen {
             if (badCharacter1.getHealth() > 0) {
                 for (GameObject hero : heroes) {
                     if (hero.getHealth() > 0) {
-                        message = badCharacter1.getName() + " attached " + hero.getName() + "\n" + hero.getName() + " got " + badCharacter1.getPower() + " damage!";
+                        message = badCharacter1.getName() + " attached " + hero.getName() + "." + "\n" + hero.getName() + " got " + badCharacter1.getPower() + " damage!";
                         font.draw(batch, message, 100, 900);
                         hero.setHealth(Math.max(hero.getHealth() - badCharacter1.getPower(), 0));
+                        if (hero.getHealth() == 0) {
+                            message += "\n" + hero.getName() + " is dead!";
+                        }
                         stepCount ++;
                         canbeattacked = true;
                         wait = true;
@@ -118,9 +123,12 @@ public class GameScreen implements Screen {
             } else if (badCharacter2.getHealth() > 0) {
                 for (GameObject hero : heroes) {
                     if (hero.getHealth() > 0) {
-                        message = badCharacter2.getName() + " attached " + hero.getName() + "\n" + hero.getName() + " got " + badCharacter2.getPower() + " damage!";
+                        message = badCharacter2.getName() + " attached " + hero.getName() + "." + "\n" + hero.getName() + " got " + badCharacter2.getPower() + " damage!";
                         font.draw(batch, message, 100, 900);
                         hero.setHealth(Math.max(hero.getHealth() - badCharacter2.getPower(), 0));
+                        if (hero.getHealth() == 0) {
+                            message += "\n" + hero.getName() + " is dead!";
+                        }
                         stepCount ++;
                         canbeattacked = true;
                         wait = true;
@@ -130,9 +138,12 @@ public class GameScreen implements Screen {
             } else if (badCharacter3.getHealth() > 0) {
                 for (GameObject hero : heroes) {
                     if (hero.getHealth() > 0) {
-                        message = badCharacter3.getName() + " attached " + hero.getName() + "\n" + hero.getName() + " got " + badCharacter3.getPower() + " damage!";
+                        message = badCharacter3.getName() + " attached " + hero.getName() + "." + "\n" + hero.getName() + " got " + badCharacter3.getPower() + " damage!";
                         font.draw(batch, message, 100, 900);
                         hero.setHealth(Math.max(hero.getHealth() - badCharacter3.getPower(), 0));
+                        if (hero.getHealth() == 0) {
+                            message += "\n" + hero.getName() + " is dead!";
+                        }
                         stepCount ++;
                         canbeattacked = true;
                         wait = true;
@@ -142,9 +153,12 @@ public class GameScreen implements Screen {
             } else if (badCharacter4.getHealth() > 0) {
                 for (GameObject hero : heroes) {
                     if (hero.getHealth() > 0) {
-                        message = badCharacter4.getName() + " attached " + hero.getName() + "\n" + hero.getName() + " got " + badCharacter4.getPower() + " damage!";
+                        message = badCharacter4.getName() + " attached " + hero.getName() + "." + "\n" + hero.getName() + " got " + badCharacter4.getPower() + " damage!";
                         font.draw(batch, message, 100, 900);
                         hero.setHealth(Math.max(hero.getHealth() - badCharacter4.getPower(), 0));
+                        if (hero.getHealth() == 0) {
+                            message += "\n" + hero.getName() + " is dead!";
+                        }
                         stepCount ++;
                         canbeattacked = true;
                         wait = true;
