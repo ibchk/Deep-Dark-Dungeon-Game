@@ -62,6 +62,14 @@ public class MainMenuScreen implements Screen {
     private static final int MPBUTTON_X_END = 1425;
     private static final int MPBUTTON_Y_FORBUTTONCHANGE = 475;
 
+    private static final int MUSICBUTTON_Y_START = 10;
+    private static final int MUSICBUTTON_Y_END = 110;
+    private static final int MUSICBUTTON_X_START = 1788;
+    private static final int MUSICBUTTON_X_END = 1900;
+    private static final int MUSICBUTTON_Y_FORBUTTONCHANGE = 940;
+    private static final int MUSIC_BUTTON_WIDTH = 112;
+    private static final int MUSIC_BUTTON_HEIGHT = 100;
+
     DeepDarkDungeonGame game;
     Texture BACKGROUND;
     Texture PLAYBUTTONACTIVE;
@@ -74,6 +82,8 @@ public class MainMenuScreen implements Screen {
     Texture YESBUTTON;
     Texture BACKBUTTON;
     Texture MULTIPLAYERBUTTON;
+    Texture MUSICBUTTON1;
+    Texture MUSICBUTTON2;
     boolean wantingToExit = false;
     boolean wantingToPlay = false;
     PutMusic music;
@@ -92,6 +102,8 @@ public class MainMenuScreen implements Screen {
         STARTGAMEWINDOW = new Texture("gameStartWindow.png");
         BACKBUTTON = new Texture("backbutton2.png");
         MULTIPLAYERBUTTON = new Texture("multiplayerButton.png");
+        MUSICBUTTON1 = new Texture("musicButton1.png");
+        MUSICBUTTON2 = new Texture("musicButton2.png");
         music = new PutMusic("startMelody.mp3");
     }
 
@@ -150,6 +162,7 @@ public class MainMenuScreen implements Screen {
         } else {
             game.batch.draw(EXITBUTTONINACTIVE, EXIT_BUTTON_X_START, EXITBUTTON_Y_FORBUTTONCHANGE, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
         }
+
         // Animation associated with play button:
         if (!wantingToPlay && !wantingToExit && Gdx.input.getX() > PLAY_BUTTON_X_START && Gdx.input.getX() < PLAY_BUTTON_X_END && Gdx.input.getY() > PLAY_BUTTON_Y_START && Gdx.input.getY() < PLAY_BUTTON_Y_END) {
             game.batch.draw(PLAYBUTTONACTIVE, PLAY_BUTTON_X_START, PLAYBUTTON_Y_FORBUTTONCHANGE, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
@@ -158,6 +171,16 @@ public class MainMenuScreen implements Screen {
             }
         } else {
             game.batch.draw(PLAYBUTTONINACTIVE, PLAY_BUTTON_X_START, PLAYBUTTON_Y_FORBUTTONCHANGE, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
+        }
+
+        // Music pause or play
+        if (!wantingToPlay && !wantingToExit && Gdx.input.getX() > MUSICBUTTON_X_START && Gdx.input.getX() < MUSICBUTTON_X_END && Gdx.input.getY() > MUSICBUTTON_Y_START && Gdx.input.getY() < MUSICBUTTON_Y_END) {
+            game.batch.draw(MUSICBUTTON2, MUSICBUTTON_X_START, MUSICBUTTON_Y_FORBUTTONCHANGE, MUSIC_BUTTON_WIDTH, MUSIC_BUTTON_HEIGHT);
+            if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                music.changePlayOrStop();
+            }
+        } else {
+            game.batch.draw(MUSICBUTTON1, MUSICBUTTON_X_START, MUSICBUTTON_Y_FORBUTTONCHANGE, MUSIC_BUTTON_WIDTH, MUSIC_BUTTON_HEIGHT);
         }
         game.batch.end();
     }

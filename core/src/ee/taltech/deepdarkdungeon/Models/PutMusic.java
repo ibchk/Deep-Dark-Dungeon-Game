@@ -11,8 +11,14 @@ public class PutMusic {
         this.music = Gdx.audio.newMusic(Gdx.files.internal(music));
         this.music.setLooping(true);
         this.music.setVolume(0.2f);
+        this.music.play();
+    }
+
+    public void changePlayOrStop() {
         if (playing) {
-            this.music.play();
+            stopMusic();
+        } else {
+            playMusic();
         }
     }
 
@@ -22,9 +28,8 @@ public class PutMusic {
     }
 
     public void playMusic() {
-        if (playing) {
-            music.play();
-        }
+        playing = true;
+        music.play();
     }
 
     public void setMusic(String music) {
