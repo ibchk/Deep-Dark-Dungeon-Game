@@ -22,7 +22,7 @@ public class GameScreen implements Screen {
     List<GameObject> heroes;
     List<GameObject> monsters;
     DeepDarkDungeonGame game;
-    boolean canbeattacked = true;
+    boolean canbeattacked = false;
     boolean wait = false;
     String message;
     String messageForMonsters;
