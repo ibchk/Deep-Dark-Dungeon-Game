@@ -4,9 +4,11 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import ee.taltech.deepdarkdungeon.DeepDarkDungeonGame;
+import ee.taltech.deepdarkdungeon.Models.PutMusic;
 import ee.taltech.deepdarkdungeon.Screens.GameScreen;
 import ee.taltech.deepdarkdungeon.Screens.SingleGameChooseScreen;
 
@@ -74,6 +76,7 @@ public class MainMenuScreen implements Screen {
     Texture MULTIPLAYERBUTTON;
     boolean wantingToExit = false;
     boolean wantingToPlay = false;
+    PutMusic music;
 
     public MainMenuScreen(DeepDarkDungeonGame game) {
         this.game = game;
@@ -89,12 +92,14 @@ public class MainMenuScreen implements Screen {
         STARTGAMEWINDOW = new Texture("gameStartWindow.png");
         BACKBUTTON = new Texture("backbutton2.png");
         MULTIPLAYERBUTTON = new Texture("multiplayerButton.png");
+        music = new PutMusic("startMelody.mp3");
     }
 
     @Override
     public void show() {
 
     }
+
 
     @Override
     public void render(float delta) {
@@ -107,7 +112,7 @@ public class MainMenuScreen implements Screen {
             if (Gdx.input.getX() > YES2BUTTON_X_START && Gdx.input.getX() < YES2BUTTON_X_END && Gdx.input.getY() > YES2BUTTON_Y_START && Gdx.input.getY() < YES2BUTTON_Y_END) {
                 game.batch.draw(PLAYBUTTONACTIVE, YES2BUTTON_X_START, YES2BUTTON_Y_FORBUTTONCHANGE);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                    game.setScreen(new SingleGameChooseScreen(game));
+                    game.setScreen(new SingleGameChooseScreen(game, music));
                 }
             }
             if (Gdx.input.getX() > BACKBUTTON_X_START && Gdx.input.getX() < BACKBUTTON_X_END && Gdx.input.getY() > BACKBUTTON_Y_START && Gdx.input.getY() < BACKBUTTON_Y_END) {
@@ -127,6 +132,7 @@ public class MainMenuScreen implements Screen {
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                     Gdx.app.exit();
                 }
+
             }
             if (Gdx.input.getX() > NOBUTTON_X_START && Gdx.input.getX() < NOBUTTON_X_END && Gdx.input.getY() > NOBUTTON_Y_START && Gdx.input.getY() < NOBUTTON_Y_END) {
                 game.batch.draw(NOBUTTON, NOBUTTON_X_START, NOBUTTON_Y_FORBUTTONCHANGE);
@@ -178,6 +184,5 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void dispose() {
-
     }
 }
