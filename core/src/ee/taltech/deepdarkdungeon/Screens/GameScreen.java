@@ -3,12 +3,14 @@ package ee.taltech.deepdarkdungeon.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ee.taltech.deepdarkdungeon.DeepDarkDungeonGame;
 import ee.taltech.deepdarkdungeon.Models.GameObject;
+import ee.taltech.deepdarkdungeon.Models.PutMusic;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -39,8 +41,10 @@ public class GameScreen implements Screen {
     private GameObject badCharacter2;
     private GameObject badCharacter3;
     private GameObject badCharacter4;
+    PutMusic music;
 
-    public GameScreen(List<GameObject> goodCharacters, List<GameObject> badCharacters, DeepDarkDungeonGame game) {
+    public GameScreen(List<GameObject> goodCharacters, List<GameObject> badCharacters, DeepDarkDungeonGame game, PutMusic music) {
+        this.music = music;
         this.game = game;
         heroes = goodCharacters;
         monsters = badCharacters;
@@ -52,6 +56,7 @@ public class GameScreen implements Screen {
         badCharacter2 = badCharacters.get(1);
         badCharacter3 = badCharacters.get(2);
         badCharacter4 = badCharacters.get(3);
+        this.music.setMusic("gameMelody.mp3");
     }
 
     @Override

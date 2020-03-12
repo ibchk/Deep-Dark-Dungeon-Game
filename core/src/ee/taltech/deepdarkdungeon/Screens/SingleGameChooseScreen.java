@@ -3,6 +3,7 @@ package ee.taltech.deepdarkdungeon.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -71,8 +72,10 @@ public class SingleGameChooseScreen implements Screen {
     int neededCharacter3 = 0;
     int neededCharacter4 = 0;
     BitmapFont font = new BitmapFont();
+    PutMusic music;
 
-    public SingleGameChooseScreen(DeepDarkDungeonGame game) {
+    public SingleGameChooseScreen(DeepDarkDungeonGame game, PutMusic music) {
+        this.music = music;
         this.game = game;
         goodCharacter1 = new Warrior(new Texture(Gdx.files.internal("GoodCharacter1.png")), "Char1", 100, 1000, 0, 450, 200, 277, GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD1);
         goodCharacter2 = new Archer(new Texture(Gdx.files.internal("GoodCharacter2.png")), "Char2", 100, 1000, 200, 400, 200, 277, GameObject.CharacterClass.ARCHER, GameObject.CharacterType.GOOD2);
@@ -229,7 +232,7 @@ public class SingleGameChooseScreen implements Screen {
                 rightCharactersList.add(rightCharater2);
                 rightCharactersList.add(rightCharater3);
                 rightCharactersList.add(rightCharater4);
-                game.setScreen(new GameScreen(rightCharactersList, Arrays.asList(badCharacter1, badCharacter2, badCharacter3, badCharacter4), game));
+                game.setScreen(new GameScreen(rightCharactersList, Arrays.asList(badCharacter1, badCharacter2, badCharacter3, badCharacter4), game, music));
                 // Тут я закидываю два листа и персонажами которые будут в игре. первый лист
             }
         }
