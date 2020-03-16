@@ -3,7 +3,6 @@ package ee.taltech.deepdarkdungeon.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -11,17 +10,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ee.taltech.deepdarkdungeon.DeepDarkDungeonGame;
 import ee.taltech.deepdarkdungeon.Models.GameObject;
 import ee.taltech.deepdarkdungeon.Models.PutMusic;
-import javafx.beans.binding.When;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class GameScreen implements Screen {
     private static int WHOWILLATTACK = 0;
-    private static final int VBOI_X = 850;
-    private static final int VBOI_Y = 50;
-    private static final int VBOI_HEIGTH = 80;
-    private static final int VBOI_WIDTH = 201;
+    private static final int VBOI_X = 300;
+    private static final int VBOI_Y = 300;
+    private static final int VBOI_HEIGTH = 50;
+    private static final int VBOI_WIDTH = 50;
 
     List<GameObject> heroes;
     List<GameObject> monsters;
@@ -32,7 +30,8 @@ public class GameScreen implements Screen {
     String messageForMonsters;
     BitmapFont font = new BitmapFont();
     private long stepCount = 1;
-    private Texture vboiButton;
+    private Texture attackbutton;
+    private Texture attackbuttonacitve;
     private Texture background;
     private SpriteBatch batch;
     private GameObject goodCharacter1;
@@ -66,7 +65,8 @@ public class GameScreen implements Screen {
     public void show() {
         batch = new SpriteBatch();
         background = new Texture(Gdx.files.internal("GameBackground.png"));
-        vboiButton = new Texture(Gdx.files.internal("buttonVBOI.png"));
+        attackbutton = new Texture(Gdx.files.internal("atackButton1.png"));
+        attackbuttonacitve = new Texture(Gdx.files.internal("atackButton2.png"));
     }
 
     @Override
@@ -75,7 +75,7 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         batch.draw(background, 0, 0);
-        batch.draw(vboiButton, VBOI_X, VBOI_Y, VBOI_WIDTH, VBOI_HEIGTH);
+        batch.draw(attackbutton, VBOI_X, VBOI_Y, VBOI_WIDTH, VBOI_HEIGTH);
         batch.draw(goodCharacter1.getTexture(), 0, 400, 200, 220); // рисует персанажа (картинка)
         batch.draw(goodCharacter2.getTexture(), 200, 450, 200, 220);
         batch.draw(goodCharacter3.getTexture(), 400, 400, 200, 220);
@@ -118,15 +118,14 @@ public class GameScreen implements Screen {
             if (stepCount > 1) {
                 font.draw(batch, "In last step " + message, 100, 900);
             }
-            //TODO
-            if (Gdx.input.getX() < VBOI_X + VBOI_WIDTH && Gdx.input.getX() > VBOI_X && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() <= VBOI_Y + VBOI_HEIGTH && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() >= VBOI_Y) {
+            if (Gdx.input.getX() < VBOI_X + VBOI_WIDTH && Gdx.input.getX() > VBOI_X && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() <= VBOI_Y + VBOI_HEIGTH + 30  && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() >= VBOI_Y + 25) {
+                batch.draw(attackbuttonacitve, VBOI_X, VBOI_Y, VBOI_WIDTH, VBOI_HEIGTH);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                     canbeattacked = true;
                     batch.draw(goodCharacter2.getTexture(), 200, 800);
                 }
             }
             if (Gdx.input.getX() > badCharacter1.getX() && Gdx.input.getX() < badCharacter1.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > badCharacter1.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < badCharacter1.getY() + 300) {
-                batch.draw(goodCharacter1.getTexture(), 200, 500);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked && badCharacter1.getHealth() > 0) {
                     messageForMonsters = "You attacked " + badCharacter1.getName() + " with damage " + attacker.getPower(); //замени goodCharacter1 на персанажа который атакует в данный момент
                     badCharacter1.setHealth(Math.max(badCharacter1.getHealth() - attacker.getPower(), 0)); //замени goodCharacter1 на персанажа который атакует в данный момент, эта строчка отвечает за нанесение урона монстру.
@@ -136,7 +135,6 @@ public class GameScreen implements Screen {
                 }
             }
             if (Gdx.input.getX() > badCharacter2.getX() && Gdx.input.getX() < badCharacter2.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > badCharacter2.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < badCharacter2.getY() + 300) {
-                batch.draw(goodCharacter2.getTexture(), 200, 500);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked && badCharacter2.getHealth() > 0) {
                     messageForMonsters = "You attacked " + badCharacter2.getName() + " with damage " + attacker.getPower(); //замени goodCharacter1 на персанажа который атакует в данный момент
                     badCharacter2.setHealth(Math.max(badCharacter2.getHealth() - attacker.getPower(), 0)); //замени goodCharacter1 на персанажа который атакует в данный момент, эта строчка отвечает за нанесение урона монстру.
@@ -146,7 +144,6 @@ public class GameScreen implements Screen {
                 }
             }
             if (Gdx.input.getX() > badCharacter3.getX() && Gdx.input.getX() < badCharacter3.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > badCharacter3.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < badCharacter3.getY() + 300) {
-                batch.draw(goodCharacter3.getTexture(), 200, 500);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked && badCharacter3.getHealth() > 0) {
                     messageForMonsters = "You attacked " + badCharacter3.getName() + " with damage " + attacker.getPower(); //замени goodCharacter1 на персанажа который атакует в данный момент
                     badCharacter3.setHealth(Math.max(badCharacter3.getHealth() - attacker.getPower(), 0)); //замени goodCharacter1 на персанажа который атакует в данный момент, эта строчка отвечает за нанесение урона монстру.
@@ -156,7 +153,6 @@ public class GameScreen implements Screen {
                 }
             }
             if (Gdx.input.getX() > badCharacter4.getX() && Gdx.input.getX() < badCharacter4.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > badCharacter4.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < badCharacter4.getY() + 300) {
-                batch.draw(goodCharacter4.getTexture(), 200, 500);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked && badCharacter4.getHealth() > 0) {
                     messageForMonsters = "You attacked " + badCharacter4.getName() + " with damage " + attacker.getPower(); //замени goodCharacter1 на персанажа который атакует в данный момент
                     badCharacter4.setHealth(Math.max(badCharacter4.getHealth() - attacker.getPower(), 0)); //замени goodCharacter1 на персанажа который атакует в данный момент, эта строчка отвечает за нанесение урона монстру.
