@@ -145,6 +145,7 @@ public class SingleGameChooseScreen implements Screen {
     private Texture levelButtonLight;
     int levelButtonLight_X = 0;
     int levelButtonLight_Y = 0;
+    private String lvlPlaying;
     private Texture level1Button1;
     private Texture level1Button2;
     private Texture level2Button1;
@@ -179,6 +180,8 @@ public class SingleGameChooseScreen implements Screen {
         rightBadCharacters.add(badCharacter2);
         rightBadCharacters.add(badCharacter3);
         rightBadCharacters.add(badCharacter4);
+        prefs.putBoolean("level1", true);
+        prefs.putBoolean("level2", true);
         prefs.putBoolean("level3", false);
         prefs.putBoolean("level4", false);
         prefs.putBoolean("level5", false);
@@ -239,12 +242,13 @@ public class SingleGameChooseScreen implements Screen {
                 neededBadCharacter4 = 3;
                 levelButtonLight_X = 393;
                 levelButtonLight_Y = 273;
+                lvlPlaying = "level1";
             }
         }
 
         // Second lvl button and it's moves:
         batch.draw(level2ButtonLocked, 540, 280, 90, 97);
-        if (!prefs.getBoolean("level2")){
+        if (prefs.getBoolean("level1")){
             batch.draw(level2Button1, 540, 280, 90, 97);
             if (Gdx.input.getX() < 540 + 90 && Gdx.input.getX() > 540 && 673 < Gdx.input.getY() && Gdx.input.getY() < 770) {
                 batch.draw(level2Button2, 540, 280, 90, 97);
@@ -255,13 +259,14 @@ public class SingleGameChooseScreen implements Screen {
                     neededBadCharacter4 = 1;
                     levelButtonLight_X = 533;
                     levelButtonLight_Y = 273;
+                    lvlPlaying = "level2";
                 }
             }
         }
 
         // Third lvl button and it's moves:
         batch.draw(level3ButtonLocked, 680, 280, 90, 97);
-        if (!prefs.getBoolean("level3")) {
+        if (prefs.getBoolean("level2")) {
             batch.draw(level3Button1, 680, 280, 90, 97);
             if (Gdx.input.getX() < 680 + 90 && Gdx.input.getX() > 680 && 673 < Gdx.input.getY() && Gdx.input.getY() < 770) {
                 batch.draw(level3Button2, 680, 280, 90, 97);
@@ -272,13 +277,14 @@ public class SingleGameChooseScreen implements Screen {
                     neededBadCharacter4 = 3;
                     levelButtonLight_X = 673;
                     levelButtonLight_Y = 273;
+                    lvlPlaying = "level3";
                 }
             }
         }
 
         // Forth lvl button and it's moves:
         batch.draw(level4ButtonLocked, 820, 280, 90, 97);
-        if (!prefs.getBoolean("level4")) {
+        if (prefs.getBoolean("level3")) {
             batch.draw(level4Button1, 820, 280, 90, 97);
             if (Gdx.input.getX() < 820 + 90 && Gdx.input.getX() > 820 && 673 < Gdx.input.getY() && Gdx.input.getY() < 770) {
                 batch.draw(level4Button2, 820, 280, 90, 97);
@@ -289,13 +295,14 @@ public class SingleGameChooseScreen implements Screen {
                     neededBadCharacter4 = 2;
                     levelButtonLight_X = 813;
                     levelButtonLight_Y = 273;
+                    lvlPlaying = "level4";
                 }
             }
         }
 
         // Fifth lvl button and it's moves:
         batch.draw(level5ButtonLocked, 960, 280, 90, 97);
-        if (!prefs.getBoolean("level5")) {
+        if (prefs.getBoolean("level4")) {
             batch.draw(level5Button1, 960, 280, 90, 97);
             if (Gdx.input.getX() < 960 + 90 && Gdx.input.getX() > 960 && 673 < Gdx.input.getY() && Gdx.input.getY() < 770) {
                 batch.draw(level5Button2, 960, 280, 90, 97);
@@ -306,6 +313,7 @@ public class SingleGameChooseScreen implements Screen {
                     neededBadCharacter4 = 0;
                     levelButtonLight_X = 953;
                     levelButtonLight_Y = 273;
+                    lvlPlaying = "level5";
                 }
             }
         }
@@ -427,6 +435,7 @@ public class SingleGameChooseScreen implements Screen {
             batch.draw(backButton2, BACK_BUTTON_X_START, BACKBUTTON_Y_FORBUTTONCHANGE, BACK_BUTTON_WIDTH, BACK_BUTTON_HEIGHT);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 game.setScreen(new MainMenuScreen(game));
+                prefs.putBoolean(lvlPlaying, true);
             }
         }
         batch.end();
