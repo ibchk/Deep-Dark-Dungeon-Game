@@ -11,11 +11,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ee.taltech.deepdarkdungeon.DeepDarkDungeonGame;
 import ee.taltech.deepdarkdungeon.Models.GameObject;
 import ee.taltech.deepdarkdungeon.Models.PutMusic;
+import javafx.beans.binding.When;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class GameScreen implements Screen {
+    private static int WHOWILLATTACK = 0;
     private static final int VBOI_X = 850;
     private static final int VBOI_Y = 50;
     private static final int VBOI_HEIGTH = 80;
@@ -41,6 +43,7 @@ public class GameScreen implements Screen {
     private GameObject badCharacter2;
     private GameObject badCharacter3;
     private GameObject badCharacter4;
+    private GameObject attacker;
     PutMusic music;
 
     public GameScreen(List<GameObject> goodCharacters, List<GameObject> badCharacters, DeepDarkDungeonGame game, PutMusic music) {
@@ -98,10 +101,24 @@ public class GameScreen implements Screen {
             }
         }
         if (stepCount % 2 != 0) {
+            if (WHOWILLATTACK == 4) {
+                WHOWILLATTACK = 0;
+            }
+            if (WHOWILLATTACK == 0) {
+                attacker = goodCharacter1;
+            } else if (WHOWILLATTACK == 1) {
+                attacker = goodCharacter2;
+            } else if (WHOWILLATTACK == 2) {
+                attacker = goodCharacter3;
+            } else {
+                attacker = goodCharacter4;
+            }
             font.draw(batch, "Your turn! " + stepCount, 100, 1000); // Вызывает текст, тут например power персанажа
+            batch.draw(attacker.getTexture(), 40, 130, 200, 220);
             if (stepCount > 1) {
                 font.draw(batch, "In last step " + message, 100, 900);
             }
+            //TODO
             if (Gdx.input.getX() < VBOI_X + VBOI_WIDTH && Gdx.input.getX() > VBOI_X && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() <= VBOI_Y + VBOI_HEIGTH && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() >= VBOI_Y) {
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                     canbeattacked = true;
@@ -111,42 +128,47 @@ public class GameScreen implements Screen {
             if (Gdx.input.getX() > badCharacter1.getX() && Gdx.input.getX() < badCharacter1.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > badCharacter1.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < badCharacter1.getY() + 300) {
                 batch.draw(goodCharacter1.getTexture(), 200, 500);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked && badCharacter1.getHealth() > 0) {
-                    messageForMonsters = "You attacked " + badCharacter1.getName() + " with damage " + goodCharacter1.getPower(); //замени goodCharacter1 на персанажа который атакует в данный момент
-                    badCharacter1.setHealth(Math.max(badCharacter1.getHealth() - goodCharacter1.getPower(), 0)); //замени goodCharacter1 на персанажа который атакует в данный момент, эта строчка отвечает за нанесение урона монстру.
+                    messageForMonsters = "You attacked " + badCharacter1.getName() + " with damage " + attacker.getPower(); //замени goodCharacter1 на персанажа который атакует в данный момент
+                    badCharacter1.setHealth(Math.max(badCharacter1.getHealth() - attacker.getPower(), 0)); //замени goodCharacter1 на персанажа который атакует в данный момент, эта строчка отвечает за нанесение урона монстру.
                     stepCount += 1;
                     canbeattacked = false;
+                    WHOWILLATTACK++;
                 }
             }
             if (Gdx.input.getX() > badCharacter2.getX() && Gdx.input.getX() < badCharacter2.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > badCharacter2.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < badCharacter2.getY() + 300) {
                 batch.draw(goodCharacter2.getTexture(), 200, 500);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked && badCharacter2.getHealth() > 0) {
-                    messageForMonsters = "You attacked " + badCharacter2.getName() + " with damage " + goodCharacter1.getPower(); //замени goodCharacter1 на персанажа который атакует в данный момент
-                    badCharacter2.setHealth(Math.max(badCharacter2.getHealth() - goodCharacter1.getPower(), 0)); //замени goodCharacter1 на персанажа который атакует в данный момент, эта строчка отвечает за нанесение урона монстру.
+                    messageForMonsters = "You attacked " + badCharacter2.getName() + " with damage " + attacker.getPower(); //замени goodCharacter1 на персанажа который атакует в данный момент
+                    badCharacter2.setHealth(Math.max(badCharacter2.getHealth() - attacker.getPower(), 0)); //замени goodCharacter1 на персанажа который атакует в данный момент, эта строчка отвечает за нанесение урона монстру.
                     stepCount += 1;
                     canbeattacked = false;
+                    WHOWILLATTACK++;
                 }
             }
             if (Gdx.input.getX() > badCharacter3.getX() && Gdx.input.getX() < badCharacter3.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > badCharacter3.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < badCharacter3.getY() + 300) {
                 batch.draw(goodCharacter3.getTexture(), 200, 500);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked && badCharacter3.getHealth() > 0) {
-                    messageForMonsters = "You attacked " + badCharacter3.getName() + " with damage " + goodCharacter1.getPower(); //замени goodCharacter1 на персанажа который атакует в данный момент
-                    badCharacter3.setHealth(Math.max(badCharacter3.getHealth() - goodCharacter1.getPower(), 0)); //замени goodCharacter1 на персанажа который атакует в данный момент, эта строчка отвечает за нанесение урона монстру.
+                    messageForMonsters = "You attacked " + badCharacter3.getName() + " with damage " + attacker.getPower(); //замени goodCharacter1 на персанажа который атакует в данный момент
+                    badCharacter3.setHealth(Math.max(badCharacter3.getHealth() - attacker.getPower(), 0)); //замени goodCharacter1 на персанажа который атакует в данный момент, эта строчка отвечает за нанесение урона монстру.
                     stepCount += 1;
                     canbeattacked = false;
+                    WHOWILLATTACK++;
                 }
             }
             if (Gdx.input.getX() > badCharacter4.getX() && Gdx.input.getX() < badCharacter4.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > badCharacter4.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < badCharacter4.getY() + 300) {
                 batch.draw(goodCharacter4.getTexture(), 200, 500);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked && badCharacter4.getHealth() > 0) {
-                    messageForMonsters = "You attacked " + badCharacter4.getName() + " with damage " + goodCharacter1.getPower(); //замени goodCharacter1 на персанажа который атакует в данный момент
-                    badCharacter4.setHealth(Math.max(badCharacter4.getHealth() - goodCharacter1.getPower(), 0)); //замени goodCharacter1 на персанажа который атакует в данный момент, эта строчка отвечает за нанесение урона монстру.
+                    messageForMonsters = "You attacked " + badCharacter4.getName() + " with damage " + attacker.getPower(); //замени goodCharacter1 на персанажа который атакует в данный момент
+                    badCharacter4.setHealth(Math.max(badCharacter4.getHealth() - attacker.getPower(), 0)); //замени goodCharacter1 на персанажа который атакует в данный момент, эта строчка отвечает за нанесение урона монстру.
                     stepCount += 1;
                     canbeattacked = false;
+                    WHOWILLATTACK++;
                 }
             }
         } else if (stepCount % 2 == 0) {
             font.draw(batch, "Monsters turn! " + stepCount, 100, 1000);// Вызывает текст, тут например power персанажа
             font.draw(batch, messageForMonsters, 100, 950);
+            batch.draw(attacker.getTexture(), 40, 130, 200, 220);
             if (badCharacter1.getHealth() > 0) {
                 for (GameObject hero : heroes) {
                     if (hero.getHealth() > 0) {
