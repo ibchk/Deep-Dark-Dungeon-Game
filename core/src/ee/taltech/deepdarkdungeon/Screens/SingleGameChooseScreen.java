@@ -149,6 +149,16 @@ public class SingleGameChooseScreen implements Screen {
     private Texture level1Button2;
     private Texture level2Button1;
     private Texture level2Button2;
+    private Texture level2ButtonLocked;
+    private Texture level3Button1;
+    private Texture level3Button2;
+    private Texture level3ButtonLocked;
+    private Texture level4Button1;
+    private Texture level4Button2;
+    private Texture level4ButtonLocked;
+    private Texture level5Button1;
+    private Texture level5Button2;
+    private Texture level5ButtonLocked;
 
     public SingleGameChooseScreen(DeepDarkDungeonGame game, PutMusic music) {
         this.music = music;
@@ -190,6 +200,16 @@ public class SingleGameChooseScreen implements Screen {
         level1Button2 = new Texture(Gdx.files.internal("level1Button2.png"));
         level2Button1 = new Texture(Gdx.files.internal("level2Button.png"));
         level2Button2 = new Texture(Gdx.files.internal("level2Button2.png"));
+        level2ButtonLocked = new Texture(Gdx.files.internal("level2ButtonLocked.png"));
+        level3Button1 = new Texture(Gdx.files.internal("level3Button1.png"));
+        level3Button2 = new Texture(Gdx.files.internal("level3Button2.png"));
+        level3ButtonLocked = new Texture(Gdx.files.internal("level3ButtonLocked.png"));
+        level4Button1 = new Texture(Gdx.files.internal("level4Button1.png"));
+        level4Button2 = new Texture(Gdx.files.internal("level4Button2.png"));
+        level4ButtonLocked = new Texture(Gdx.files.internal("level4ButtonLocked.png"));
+        level5Button1 = new Texture(Gdx.files.internal("level5Button1.png"));
+        level5Button2 = new Texture(Gdx.files.internal("level5Button2.png"));
+        level5ButtonLocked = new Texture(Gdx.files.internal("level5ButtonLocked.png"));
     }
 
     //Далее я создаю персонажей чтобы закинуть их в игру, это нужно будет структурировать,
@@ -215,7 +235,63 @@ public class SingleGameChooseScreen implements Screen {
                 neededBadCharacter2 = 3;
                 neededBadCharacter3 = 3;
                 neededBadCharacter4 = 3;
-                levelButtonLight_X = 394;
+                levelButtonLight_X = 393;
+                levelButtonLight_Y = 273;
+            }
+        }
+
+        // Second lvl button and it's moves:
+        batch.draw(level2Button1, 540, 280, 90, 97);
+        if (Gdx.input.getX() < 540 + 90 && Gdx.input.getX() > 540 && 673 < Gdx.input.getY() && Gdx.input.getY() < 770) {
+            batch.draw(level2Button2, 540, 280, 90, 97);
+            if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                neededBadCharacter1 = 1;
+                neededBadCharacter2 = 1;
+                neededBadCharacter3 = 1;
+                neededBadCharacter4 = 1;
+                levelButtonLight_X = 533;
+                levelButtonLight_Y = 273;
+            }
+        }
+
+        // Third lvl button and it's moves:
+        batch.draw(level3Button1, 680, 280, 90, 97);
+        if (Gdx.input.getX() < 680 + 90 && Gdx.input.getX() > 680 && 673 < Gdx.input.getY() && Gdx.input.getY() < 770) {
+            batch.draw(level3Button2, 680, 280, 90, 97);
+            if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                neededBadCharacter1 = 0;
+                neededBadCharacter2 = 1;
+                neededBadCharacter3 = 2;
+                neededBadCharacter4 = 3;
+                levelButtonLight_X = 673;
+                levelButtonLight_Y = 273;
+            }
+        }
+
+        // Forth lvl button and it's moves:
+        batch.draw(level4Button1, 820, 280, 90, 97);
+        if (Gdx.input.getX() < 820 + 90 && Gdx.input.getX() > 820 && 673 < Gdx.input.getY() && Gdx.input.getY() < 770) {
+            batch.draw(level4Button2, 820, 280, 90, 97);
+            if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                neededBadCharacter1 = 2;
+                neededBadCharacter2 = 2;
+                neededBadCharacter3 = 2;
+                neededBadCharacter4 = 2;
+                levelButtonLight_X = 813;
+                levelButtonLight_Y = 273;
+            }
+        }
+
+        // Fifth lvl button and it's moves:
+        batch.draw(level5Button1, 960, 280, 90, 97);
+        if (Gdx.input.getX() < 960 + 90 && Gdx.input.getX() > 960 && 673 < Gdx.input.getY() && Gdx.input.getY() < 770) {
+            batch.draw(level5Button2, 960, 280, 90, 97);
+            if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                neededBadCharacter1 = 0;
+                neededBadCharacter2 = 0;
+                neededBadCharacter3 = 0;
+                neededBadCharacter4 = 0;
+                levelButtonLight_X = 953;
                 levelButtonLight_Y = 273;
             }
         }
