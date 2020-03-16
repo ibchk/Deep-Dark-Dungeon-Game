@@ -180,11 +180,11 @@ public class SingleGameChooseScreen implements Screen {
         rightBadCharacters.add(badCharacter2);
         rightBadCharacters.add(badCharacter3);
         rightBadCharacters.add(badCharacter4);
-        prefs.putBoolean("level1", true);
-        prefs.putBoolean("level2", true);
-        prefs.putBoolean("level3", false);
-        prefs.putBoolean("level4", false);
-        prefs.putBoolean("level5", false);
+        prefs.putBoolean("level1", true); //lvl 1 is passed
+        prefs.putBoolean("level2", true); //lvl 2 is passed
+        prefs.putBoolean("level3", false); //lvl 3 is not passed
+        prefs.putBoolean("level4", false); //lvl 4 is not passed
+        prefs.putBoolean("level5", false); //lvl 5 is not passed
     }
 
     @Override
