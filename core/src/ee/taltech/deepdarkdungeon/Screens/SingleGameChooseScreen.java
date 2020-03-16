@@ -2,6 +2,7 @@ package ee.taltech.deepdarkdungeon.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -126,12 +127,28 @@ public class SingleGameChooseScreen implements Screen {
     GameObject badCharacter3;
     GameObject badCharacter4;
     List<GameObject> characters = new ArrayList<>();
+    List<GameObject> rightBadCharacters = new ArrayList<>();
     int neededCharacter1 = 0;
     int neededCharacter2 = 0;
     int neededCharacter3 = 0;
     int neededCharacter4 = 0;
+    int neededBadCharacter1 = -101;
+    int neededBadCharacter2;
+    int neededBadCharacter3;
+    int neededBadCharacter4;
     BitmapFont font = new BitmapFont();
     PutMusic music;
+    Preferences prefs = Gdx.app.getPreferences("my-preferences");
+    List<GameObject> badCharacters;
+
+
+    private Texture levelButtonLight;
+    int levelButtonLight_X = 0;
+    int levelButtonLight_Y = 0;
+    private Texture level1Button1;
+    private Texture level1Button2;
+    private Texture level2Button1;
+    private Texture level2Button2;
 
     public SingleGameChooseScreen(DeepDarkDungeonGame game, PutMusic music) {
         this.music = music;
@@ -148,6 +165,11 @@ public class SingleGameChooseScreen implements Screen {
         characters.add(goodCharacter2);
         characters.add(goodCharacter3);
         characters.add(goodCharacter4);
+        rightBadCharacters.add(badCharacter1);
+        rightBadCharacters.add(badCharacter2);
+        rightBadCharacters.add(badCharacter3);
+        rightBadCharacters.add(badCharacter4);
+        prefs.putBoolean("level1", true);
     }
 
     @Override
@@ -163,19 +185,40 @@ public class SingleGameChooseScreen implements Screen {
         previousCharacterButton2 = new Texture(Gdx.files.internal("previousCharacterButton2.png"));
         nextCharacterButton = new Texture(Gdx.files.internal("nextCharacterButton.png"));
         nextCharacterButton2 = new Texture(Gdx.files.internal("nextCharacterButton2.png"));
-
+        levelButtonLight = new Texture(Gdx.files.internal("levelButtonLight.png"));
+        level1Button1 = new Texture(Gdx.files.internal("level1Button.png"));
+        level1Button2 = new Texture(Gdx.files.internal("level1Button2.png"));
+        level2Button1 = new Texture(Gdx.files.internal("level2Button.png"));
+        level2Button2 = new Texture(Gdx.files.internal("level2Button2.png"));
     }
 
     //Далее я создаю персонажей чтобы закинуть их в игру, это нужно будет структурировать,
     // так как мы не знаем какие персонажи будут выбраны и сколько их будет и в какой последовательности.
     @Override
     public void render(float delta) {
-        TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle();
-
         Gdx.gl.glClearColor(135 / 255f, 206 / 255f, 235 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         batch.draw(background, 0, 0);
+
+        // Make backlight to the selected level:
+        if (levelButtonLight_X != 0) {
+            batch.draw(levelButtonLight, levelButtonLight_X, levelButtonLight_Y, 103, 111);
+        }
+
+        // First lvl button and it's moves:
+        batch.draw(level1Button1, 400, 280, 90, 97);
+        if (Gdx.input.getX() < 400 + 90 && Gdx.input.getX() > 400 && 673 < Gdx.input.getY() && Gdx.input.getY() < 770) {
+            batch.draw(level1Button2, 400, 280, 90, 97);
+            if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                neededBadCharacter1 = 3;
+                neededBadCharacter2 = 3;
+                neededBadCharacter3 = 3;
+                neededBadCharacter4 = 3;
+                levelButtonLight_X = 394;
+                levelButtonLight_Y = 273;
+            }
+        }
 
         // First char choose start:
         batch.draw(characters.get(neededCharacter1).getTexture(), FIRSTCHAR_X, FIRSTCHAR_Y, FIRSTCHAR_WIDTH, FIRSTCHAR_HEIGHT);
@@ -281,18 +324,10 @@ public class SingleGameChooseScreen implements Screen {
         batch.draw(startButton, PLAY_BUTTON_X_START, PLAYBUTTON_Y_FORBUTTONCHANGE, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
         if (Gdx.input.getX() > PLAY_BUTTON_X_START && Gdx.input.getX() < PLAY_BUTTON_X_END && Gdx.input.getY() > PLAY_BUTTON_Y_START && Gdx.input.getY() < PLAY_BUTTON_Y_END) {
             batch.draw(startButton2, PLAY_BUTTON_X_START, PLAYBUTTON_Y_FORBUTTONCHANGE, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
-            if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                List<GameObject> rightCharactersList = new ArrayList<>();
-                GameObject rightCharater1 = new CharacterCreating().createCharacter(characters, neededCharacter1, goodCharacter1);
-                GameObject rightCharater2 = new CharacterCreating().createCharacter(characters, neededCharacter2, goodCharacter2);
-                GameObject rightCharater3 = new CharacterCreating().createCharacter(characters, neededCharacter3, goodCharacter3);
-                GameObject rightCharater4 = new CharacterCreating().createCharacter(characters, neededCharacter4, goodCharacter4);
-                rightCharactersList.add(rightCharater1);
-                rightCharactersList.add(rightCharater2);
-                rightCharactersList.add(rightCharater3);
-                rightCharactersList.add(rightCharater4);
-                game.setScreen(new GameScreen(rightCharactersList, Arrays.asList(badCharacter1, badCharacter2, badCharacter3, badCharacter4), game, music));
-                // Тут я закидываю два листа и персонажами которые будут в игре. первый лист
+            if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && neededBadCharacter1 != -101) {
+                badCharacters = Arrays.asList(new BadCharacterCreating().createCharacter(rightBadCharacters, neededBadCharacter1, badCharacter1), new BadCharacterCreating().createCharacter(rightBadCharacters, neededBadCharacter2, badCharacter2), new BadCharacterCreating().createCharacter(rightBadCharacters, neededBadCharacter3, badCharacter3), new BadCharacterCreating().createCharacter(rightBadCharacters, neededBadCharacter4, badCharacter4));
+                List<GameObject> rightCharactersList = new ArrayList<>(Arrays.asList(new CharacterCreating().createCharacter(characters, neededCharacter1, goodCharacter1), new CharacterCreating().createCharacter(characters, neededCharacter2, goodCharacter2), new CharacterCreating().createCharacter(characters, neededCharacter3, goodCharacter3), new CharacterCreating().createCharacter(characters, neededCharacter4, goodCharacter4)));
+                game.setScreen(new GameScreen(rightCharactersList, badCharacters, game, music));
             }
         }
 
