@@ -3,17 +3,12 @@ package ee.taltech.deepdarkdungeon.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import ee.taltech.deepdarkdungeon.DeepDarkDungeonGame;
 import ee.taltech.deepdarkdungeon.Models.*;
 import ee.taltech.deepdarkdungeon.Models.BadCgaracterClasses.Necromancer;
@@ -44,6 +39,70 @@ public class SingleGameChooseScreen implements Screen {
     private static final int BACK_BUTTON_Y_END = BACK_BUTTON_Y_START + BACK_BUTTON_HEIGHT;
     private static final int BACK_BUTTON_X_END = BACK_BUTTON_X_START + BACK_BUTTON_WIDTH;
     private static final int BACKBUTTON_Y_FORBUTTONCHANGE = 100;
+
+    private static final int FIRSTCHAR_X = 284;
+    private static final int FIRSTCHAR_Y = 600;
+    private static final int FIRSTCHAR_WIDTH = 200;
+    private static final int FIRSTCHAR_HEIGHT = 222;
+    private static final int FIRSTCHAR_NEXTBUTTON_X = 500;
+    private static final int FIRSTCHAR_BACKBUTTON_X = 215;
+    private static final int FIRSTCHAR_BUTTON_Y = 670;
+    private static final int FIRSTCHAR_BUTTON_WIDTH = 45;
+    private static final int FIRSTCHAR_BUTTON_HEIGHT = 63;
+    private static final int FIRSTCHAR_GETXSTART = 500;
+    private static final int FIRSTCHAR_GETXEND = 545;
+    private static final int FIRSTCHAR_GETYSTART = 700;
+    private static final int FIRSTCHAR_GETYEND = 767;
+    private static final int FIRSTCHAR_GETXSTART2 = 215;
+    private static final int FIRSTCHAR_GETXEND2 = 260;
+
+    private static final int SECONDCHAR_X = 668;
+    private static final int SECONDCHAR_Y = 600;
+    private static final int SECONDCHAR_WIDTH = 200;
+    private static final int SECONDCHAR_HEIGHT = 222;
+    private static final int SECONDCHAR_NEXTBUTTON_X = 884;
+    private static final int SECONDCHAR_BACKBUTTON_X = 599;
+    private static final int SECONDCHAR_BUTTON_Y = 670;
+    private static final int SECONDCHAR_BUTTON_WIDTH = 45;
+    private static final int SECONDCHAR_BUTTON_HEIGHT = 63;
+    private static final int SECONDCHAR_GETXSTART = 884;
+    private static final int SECONDCHAR_GETXEND = 929;
+    private static final int SECONDCHAR_GETYSTART = 700;
+    private static final int SECONDCHAR_GETYEND = 767;
+    private static final int SECONDCHAR_GETXSTART2 = 599;
+    private static final int SECONDCHAR_GETXEND2 = 644;
+
+    private static final int THIRDCHAR_X = 1052;
+    private static final int THIRDCHAR_Y = 600;
+    private static final int THIRDCHAR_WIDTH = 200;
+    private static final int THIRDCHAR_HEIGHT = 222;
+    private static final int THIRDCHAR_NEXTBUTTON_X = 1268;
+    private static final int THIRDCHAR_BACKBUTTON_X = 983;
+    private static final int THIRDCHAR_BUTTON_Y = 670;
+    private static final int THIRDCHAR_BUTTON_WIDTH = 45;
+    private static final int THIRDCHAR_BUTTON_HEIGHT = 63;
+    private static final int THIRDCHAR_GETXSTART = 1268;
+    private static final int THIRDCHAR_GETXEND = 1313;
+    private static final int THIRDCHAR_GETYSTART = 700;
+    private static final int THIRDCHAR_GETYEND = 767;
+    private static final int THIRDCHAR_GETXSTART2 = 983;
+    private static final int THIRDCHAR_GETXEND2 = 1028;
+
+    private static final int FORTHCHAR_X = 1436;
+    private static final int FORTHCHAR_Y = 600;
+    private static final int FORTHCHAR_WIDTH = 200;
+    private static final int FORTHCHAR_HEIGHT = 222;
+    private static final int FORTHCHAR_NEXTBUTTON_X = 1652;
+    private static final int FORTHCHAR_BACKBUTTON_X = 1367;
+    private static final int FORTHCHAR_BUTTON_Y = 670;
+    private static final int FORTHCHAR_BUTTON_WIDTH = 45;
+    private static final int FORTHCHAR_BUTTON_HEIGHT = 63;
+    private static final int FORTHCHAR_GETXSTART = 1652;
+    private static final int FORTHCHAR_GETXEND = 1697;
+    private static final int FORTHCHAR_GETYSTART = 700;
+    private static final int FORTHCHAR_GETYEND = 767;
+    private static final int FORTHCHAR_GETXSTART2 = 1367;
+    private static final int FORTHCHAR_GETXEND2 = 1412;
 
     DeepDarkDungeonGame game;
     Stage stage;
@@ -119,102 +178,102 @@ public class SingleGameChooseScreen implements Screen {
         batch.draw(background, 0, 0);
 
         // First char choose start:
-        batch.draw(characters.get(neededCharacter1).getTexture(), 284, 600, 200, 222);
-        batch.draw(nextCharacterButton, 500, 670, 45, 63);
-        batch.draw(previousCharacterButton, 215, 670, 45, 63);
-        if (Gdx.input.getX() < 545 && Gdx.input.getX() > 500 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < 767 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > 700) {
-            batch.draw(nextCharacterButton2, 500, 670, 45, 63);
+        batch.draw(characters.get(neededCharacter1).getTexture(), FIRSTCHAR_X, FIRSTCHAR_Y, FIRSTCHAR_WIDTH, FIRSTCHAR_HEIGHT);
+        batch.draw(nextCharacterButton, FIRSTCHAR_NEXTBUTTON_X, FIRSTCHAR_BUTTON_Y, FIRSTCHAR_BUTTON_WIDTH, FIRSTCHAR_BUTTON_HEIGHT);
+        batch.draw(previousCharacterButton, FIRSTCHAR_BACKBUTTON_X, FIRSTCHAR_BUTTON_Y, FIRSTCHAR_BUTTON_WIDTH, FIRSTCHAR_BUTTON_HEIGHT);
+        if (Gdx.input.getX() < FIRSTCHAR_GETXEND && Gdx.input.getX() > FIRSTCHAR_GETXSTART && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < FIRSTCHAR_GETYEND && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > FIRSTCHAR_GETYSTART) {
+            batch.draw(nextCharacterButton2, FIRSTCHAR_NEXTBUTTON_X, FIRSTCHAR_BUTTON_Y, FIRSTCHAR_BUTTON_WIDTH, FIRSTCHAR_BUTTON_HEIGHT);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 neededCharacter1++;
                 if (neededCharacter1 == 4) {
                     neededCharacter1 = 0;
                 }
-                batch.draw(characters.get(neededCharacter1).getTexture(), 284, 600, 200, 222);
+                batch.draw(characters.get(neededCharacter1).getTexture(), FIRSTCHAR_X, FIRSTCHAR_Y, FIRSTCHAR_WIDTH, FIRSTCHAR_HEIGHT);
             }
         }
-        if (Gdx.input.getX() < 260 && Gdx.input.getX() > 215 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < 767 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > 700) {
-            batch.draw(previousCharacterButton2, 215, 670, 45, 63);
+        if (Gdx.input.getX() < FIRSTCHAR_GETXEND2 && Gdx.input.getX() > FIRSTCHAR_GETXSTART2 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < FIRSTCHAR_GETYEND && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > FIRSTCHAR_GETYSTART) {
+            batch.draw(previousCharacterButton2, FIRSTCHAR_BACKBUTTON_X, FIRSTCHAR_BUTTON_Y, FIRSTCHAR_BUTTON_WIDTH, FIRSTCHAR_BUTTON_HEIGHT);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 if (neededCharacter1 == 0) {
                     neededCharacter1 = 4;
                 }
                 neededCharacter1--;
-                batch.draw(characters.get(neededCharacter1).getTexture(), 284, 600, 200, 222);
+                batch.draw(characters.get(neededCharacter1).getTexture(), FIRSTCHAR_X, FIRSTCHAR_Y, FIRSTCHAR_WIDTH, FIRSTCHAR_HEIGHT);
             }
         } // First character choose ended.
 
         // Second char choose start:
-        batch.draw(characters.get(neededCharacter2).getTexture(), 668, 600, 200, 222);
-        batch.draw(nextCharacterButton, 884, 670, 45, 63);
-        batch.draw(previousCharacterButton, 599, 670, 45, 63);
-        if (Gdx.input.getX() < 884 + 45 && Gdx.input.getX() > 884 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < 767 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > 700) {
-            batch.draw(nextCharacterButton2, 884, 670, 45, 63);
+        batch.draw(characters.get(neededCharacter2).getTexture(), SECONDCHAR_X, SECONDCHAR_Y, SECONDCHAR_WIDTH, SECONDCHAR_HEIGHT);
+        batch.draw(nextCharacterButton, SECONDCHAR_NEXTBUTTON_X, SECONDCHAR_BUTTON_Y, SECONDCHAR_BUTTON_WIDTH, SECONDCHAR_BUTTON_HEIGHT);
+        batch.draw(previousCharacterButton, SECONDCHAR_BACKBUTTON_X, SECONDCHAR_BUTTON_Y, SECONDCHAR_BUTTON_WIDTH, SECONDCHAR_BUTTON_HEIGHT);
+        if (Gdx.input.getX() < SECONDCHAR_GETXEND && Gdx.input.getX() > SECONDCHAR_GETXSTART && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < SECONDCHAR_GETYEND && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > SECONDCHAR_GETYSTART) {
+            batch.draw(nextCharacterButton2, SECONDCHAR_NEXTBUTTON_X, SECONDCHAR_BUTTON_Y, SECONDCHAR_BUTTON_WIDTH, SECONDCHAR_BUTTON_HEIGHT);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 neededCharacter2++;
                 if (neededCharacter2 == 4) {
                     neededCharacter2 = 0;
                 }
-                batch.draw(characters.get(neededCharacter2).getTexture(), 668, 600, 200, 222);
+                batch.draw(characters.get(neededCharacter2).getTexture(), SECONDCHAR_X, SECONDCHAR_Y, SECONDCHAR_WIDTH, SECONDCHAR_HEIGHT);
             }
         }
-        if (Gdx.input.getX() < 599 + 45 && Gdx.input.getX() > 599 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < 767 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > 700) {
-            batch.draw(previousCharacterButton2, 599, 670, 45, 63);
+        if (Gdx.input.getX() < SECONDCHAR_GETXEND2 && Gdx.input.getX() > SECONDCHAR_GETXSTART2 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < SECONDCHAR_GETYEND && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > SECONDCHAR_GETYSTART) {
+            batch.draw(previousCharacterButton2, SECONDCHAR_BACKBUTTON_X, SECONDCHAR_BUTTON_Y, SECONDCHAR_BUTTON_WIDTH, SECONDCHAR_BUTTON_HEIGHT);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 if (neededCharacter2 == 0) {
                     neededCharacter2 = 4;
                 }
                 neededCharacter2--;
-                batch.draw(characters.get(neededCharacter2).getTexture(), 668, 600, 200, 222);
+                batch.draw(characters.get(neededCharacter2).getTexture(), SECONDCHAR_X, SECONDCHAR_Y, SECONDCHAR_WIDTH, SECONDCHAR_HEIGHT);
             }
         } // Second character choose ended.
 
         // Third char choose start:
-        batch.draw(characters.get(neededCharacter3).getTexture(), 1052, 600, 200, 222);
-        batch.draw(nextCharacterButton, 1268, 670, 45, 63);
-        batch.draw(previousCharacterButton, 983, 670, 45, 63);
-        if (Gdx.input.getX() < 1268 + 45 && Gdx.input.getX() > 1268 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < 767 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > 700) {
-            batch.draw(nextCharacterButton2, 1268, 670, 45, 63);
+        batch.draw(characters.get(neededCharacter3).getTexture(), THIRDCHAR_X, THIRDCHAR_Y, THIRDCHAR_WIDTH, THIRDCHAR_HEIGHT);
+        batch.draw(nextCharacterButton, THIRDCHAR_NEXTBUTTON_X, THIRDCHAR_BUTTON_Y, THIRDCHAR_BUTTON_WIDTH, THIRDCHAR_BUTTON_HEIGHT);
+        batch.draw(previousCharacterButton, THIRDCHAR_BACKBUTTON_X, THIRDCHAR_BUTTON_Y, THIRDCHAR_BUTTON_WIDTH, THIRDCHAR_BUTTON_HEIGHT);
+        if (Gdx.input.getX() < THIRDCHAR_GETXEND && Gdx.input.getX() > THIRDCHAR_GETXSTART && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < THIRDCHAR_GETYEND && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > THIRDCHAR_GETYSTART) {
+            batch.draw(nextCharacterButton2, THIRDCHAR_NEXTBUTTON_X, THIRDCHAR_BUTTON_Y, THIRDCHAR_BUTTON_WIDTH, THIRDCHAR_BUTTON_HEIGHT);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 neededCharacter3++;
                 if (neededCharacter3 == 4) {
                     neededCharacter3 = 0;
                 }
-                batch.draw(characters.get(neededCharacter3).getTexture(), 1052, 600, 200, 222);
+                batch.draw(characters.get(neededCharacter3).getTexture(), THIRDCHAR_X, THIRDCHAR_Y, THIRDCHAR_WIDTH, THIRDCHAR_HEIGHT);
             }
         }
-        if (Gdx.input.getX() < 983 + 45 && Gdx.input.getX() > 983 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < 767 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > 700) {
-            batch.draw(previousCharacterButton2, 983, 670, 45, 63);
+        if (Gdx.input.getX() < THIRDCHAR_GETXEND2 && Gdx.input.getX() > THIRDCHAR_GETXSTART2 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < THIRDCHAR_GETYEND && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > THIRDCHAR_GETYSTART) {
+            batch.draw(previousCharacterButton2, THIRDCHAR_BACKBUTTON_X, THIRDCHAR_BUTTON_Y, THIRDCHAR_BUTTON_WIDTH, THIRDCHAR_BUTTON_HEIGHT);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 if (neededCharacter3 == 0) {
                     neededCharacter3 = 4;
                 }
                 neededCharacter3--;
-                batch.draw(characters.get(neededCharacter3).getTexture(), 1052, 600, 200, 222);
+                batch.draw(characters.get(neededCharacter3).getTexture(), THIRDCHAR_X, THIRDCHAR_Y, THIRDCHAR_WIDTH, THIRDCHAR_HEIGHT);
             }
         } // Third character choose ended.
 
         // Forth char choose start:
-        batch.draw(characters.get(neededCharacter4).getTexture(), 1436, 600, 200, 222);
-        batch.draw(nextCharacterButton, 1652, 670, 45, 63);
-        batch.draw(previousCharacterButton, 1367, 670, 45, 63);
-        if (Gdx.input.getX() < 1652 + 45 && Gdx.input.getX() > 1652 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < 767 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > 700) {
-            batch.draw(nextCharacterButton2, 1652, 670, 45, 63);
+        batch.draw(characters.get(neededCharacter4).getTexture(), FORTHCHAR_X, FORTHCHAR_Y, FORTHCHAR_WIDTH, FORTHCHAR_HEIGHT);
+        batch.draw(nextCharacterButton, FORTHCHAR_NEXTBUTTON_X, FORTHCHAR_BUTTON_Y, FORTHCHAR_BUTTON_WIDTH, FORTHCHAR_BUTTON_HEIGHT);
+        batch.draw(previousCharacterButton, FORTHCHAR_BACKBUTTON_X, FORTHCHAR_BUTTON_Y, FORTHCHAR_BUTTON_WIDTH, FORTHCHAR_BUTTON_HEIGHT);
+        if (Gdx.input.getX() < FORTHCHAR_GETXEND && Gdx.input.getX() > FORTHCHAR_GETXSTART && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < FORTHCHAR_GETYEND && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > FORTHCHAR_GETYSTART) {
+            batch.draw(nextCharacterButton2, FORTHCHAR_NEXTBUTTON_X, FORTHCHAR_BUTTON_Y, FORTHCHAR_BUTTON_WIDTH, FORTHCHAR_BUTTON_HEIGHT);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 neededCharacter4++;
                 if (neededCharacter4 == 4) {
                     neededCharacter4 = 0;
                 }
-                batch.draw(characters.get(neededCharacter4).getTexture(), 1436, 600, 200, 222);
+                batch.draw(characters.get(neededCharacter4).getTexture(), FORTHCHAR_X, FORTHCHAR_Y, FORTHCHAR_WIDTH, FORTHCHAR_HEIGHT);
             }
         }
-        if (Gdx.input.getX() < 1367 + 45 && Gdx.input.getX() > 1367 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < 767 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > 700) {
-            batch.draw(previousCharacterButton2, 1367, 670, 45, 63);
+        if (Gdx.input.getX() < FORTHCHAR_GETXEND2 && Gdx.input.getX() > FORTHCHAR_GETXSTART2 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < FORTHCHAR_GETYEND && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > FORTHCHAR_GETYSTART) {
+            batch.draw(previousCharacterButton2, FORTHCHAR_BACKBUTTON_X, FORTHCHAR_BUTTON_Y, FORTHCHAR_BUTTON_WIDTH, FORTHCHAR_BUTTON_HEIGHT);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 if (neededCharacter4 == 0) {
                     neededCharacter4 = 4;
                 }
                 neededCharacter4--;
-                batch.draw(characters.get(neededCharacter4).getTexture(), 1436, 600, 200, 222);
+                batch.draw(characters.get(neededCharacter4).getTexture(), FORTHCHAR_X, FORTHCHAR_Y, FORTHCHAR_WIDTH, FORTHCHAR_HEIGHT);
             }
         } // Forth character choose ended.
 
@@ -224,10 +283,10 @@ public class SingleGameChooseScreen implements Screen {
             batch.draw(startButton2, PLAY_BUTTON_X_START, PLAYBUTTON_Y_FORBUTTONCHANGE, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 List<GameObject> rightCharactersList = new ArrayList<>();
-                GameObject rightCharater1 = new CharacterCreating().createCharacter(characters, neededCharacter1,goodCharacter1);
-                GameObject rightCharater2 = new CharacterCreating().createCharacter(characters, neededCharacter2,goodCharacter2);
-                GameObject rightCharater3 = new CharacterCreating().createCharacter(characters, neededCharacter3,goodCharacter3);
-                GameObject rightCharater4 = new CharacterCreating().createCharacter(characters, neededCharacter4,goodCharacter4);
+                GameObject rightCharater1 = new CharacterCreating().createCharacter(characters, neededCharacter1, goodCharacter1);
+                GameObject rightCharater2 = new CharacterCreating().createCharacter(characters, neededCharacter2, goodCharacter2);
+                GameObject rightCharater3 = new CharacterCreating().createCharacter(characters, neededCharacter3, goodCharacter3);
+                GameObject rightCharater4 = new CharacterCreating().createCharacter(characters, neededCharacter4, goodCharacter4);
                 rightCharactersList.add(rightCharater1);
                 rightCharactersList.add(rightCharater2);
                 rightCharactersList.add(rightCharater3);
