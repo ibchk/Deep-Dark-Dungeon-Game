@@ -9,7 +9,7 @@ public class Paladin extends GameObject {
         this.name = "Paladin";
         this.texture = picture;
         this.health = 100;
-        this.power = 20;
+        this.power = 15;
         this.x = x;
         this.y = y;
         this.width = width;
