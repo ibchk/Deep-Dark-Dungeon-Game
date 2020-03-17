@@ -34,6 +34,14 @@ public class GameScreen implements Screen {
     private static final int NEXT_Y_START = 580;
     private static final int NEXT_X_END = 1185;
     private static final int NEXT_Y_END = 675;
+    private static final int LOST_SCREEN_X = 650;
+    private static final int LOST_SCREEN_Y = 350;
+    private static final int LOST_SCREEN_WIDTH = 592;
+    private static final int LOST_SCREEN_HEIGHT = 341;
+    private static final int MAIN_MENU2_X_START = 835;
+    private static final int MAIN_MENU2_Y_START = 580;
+    private static final int MAIN_MENU2_X_END = 1060;
+    private static final int MAIN_MENU2_Y_END = 675;
 
     List<GameObject> heroes;
     List<GameObject> monsters;
@@ -45,6 +53,8 @@ public class GameScreen implements Screen {
     String messageForMonsters;
     BitmapFont font = new BitmapFont();
     private long stepCount = 1;
+    private Texture monstersWinScreen;
+    private Texture mainMenuButton2;
     private Texture nextLevelButton;
     private Texture mainMenuButton;
     private Texture heroesWinScreen;
@@ -86,6 +96,8 @@ public class GameScreen implements Screen {
         heroesWinScreen = new Texture(Gdx.files.internal("You_Win_Screen.png"));
         mainMenuButton = new Texture(Gdx.files.internal("MainMenuSelected.png"));
         nextLevelButton = new Texture(Gdx.files.internal("NextLevelSelected.png"));
+        monstersWinScreen = new Texture(Gdx.files.internal("YouLostScreen.png"));
+        mainMenuButton2 = new Texture(Gdx.files.internal("MainMenuSelected2.png"));
     }
 
     @Override
@@ -125,6 +137,16 @@ public class GameScreen implements Screen {
                 batch.draw(nextLevelButton, 970, 380, 220, 95);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && gameOver) {
                     // Для перехода в след уровень вставь код для открытия окна с уровнем сюда!
+                }
+            }
+        }
+        if (goodCharacter1.getHealth() == 0 && goodCharacter2.getHealth() == 0 && goodCharacter3.getHealth() == 0 && goodCharacter4.getHealth() == 0) {
+            gameOver = true;
+            batch.draw(monstersWinScreen, LOST_SCREEN_X, LOST_SCREEN_Y, LOST_SCREEN_WIDTH, LOST_SCREEN_HEIGHT);
+            if (Gdx.input.getX() > MAIN_MENU2_X_START && Gdx.input.getX() < MAIN_MENU2_X_END && Gdx.input.getY() > MAIN_MENU2_Y_START && Gdx.input.getY() < MAIN_MENU2_Y_END) {
+                batch.draw(mainMenuButton2, 835, 385, 228, 95);
+                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && gameOver) {
+                    game.setScreen(new MainMenuScreen(game));
                 }
             }
         }
