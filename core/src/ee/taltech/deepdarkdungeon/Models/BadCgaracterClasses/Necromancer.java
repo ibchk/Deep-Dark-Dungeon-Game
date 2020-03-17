@@ -7,7 +7,7 @@ public class Necromancer extends GameObject {
 
     public Necromancer (Texture picture, String name, int health, int power, double x, double y, double width, double height, BadCharacterClass badCharacterClass, CharacterType badCharacterType) {
         this.name = "Necromancer";
-        this.health = 150;
+        this.health = 0;
         this.power = 40;
         this.x = x;
         this.y = y;
