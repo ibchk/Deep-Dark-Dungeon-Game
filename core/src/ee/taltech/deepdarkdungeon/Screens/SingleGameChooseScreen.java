@@ -28,7 +28,7 @@ public class SingleGameChooseScreen implements Screen {
     private static final int PLAY_BUTTON_WIDTH = 250;
     private static final int PLAY_BUTTON_HEIGHT = 78;
     private static final int PLAY_BUTTON_Y_START = 870;
-    private static final int PLAY_BUTTON_X_START = 1400;
+    private static final int PLAY_BUTTON_X_START = 1470;
     private static final int PLAY_BUTTON_Y_END = PLAY_BUTTON_Y_START + PLAY_BUTTON_HEIGHT;
     private static final int PLAY_BUTTON_X_END = PLAY_BUTTON_X_START + PLAY_BUTTON_WIDTH;
     private static final int PLAYBUTTON_Y_FORBUTTONCHANGE = 100;
@@ -42,66 +42,66 @@ public class SingleGameChooseScreen implements Screen {
     private static final int BACKBUTTON_Y_FORBUTTONCHANGE = 100;
 
     private static final int FIRSTCHAR_X = 284;
-    private static final int FIRSTCHAR_Y = 600;
+    private static final int FIRSTCHAR_Y = 700;
     private static final int FIRSTCHAR_WIDTH = 200;
     private static final int FIRSTCHAR_HEIGHT = 222;
     private static final int FIRSTCHAR_NEXTBUTTON_X = 500;
     private static final int FIRSTCHAR_BACKBUTTON_X = 215;
-    private static final int FIRSTCHAR_BUTTON_Y = 670;
+    private static final int FIRSTCHAR_BUTTON_Y = 770;
     private static final int FIRSTCHAR_BUTTON_WIDTH = 45;
     private static final int FIRSTCHAR_BUTTON_HEIGHT = 63;
     private static final int FIRSTCHAR_GETXSTART = 500;
     private static final int FIRSTCHAR_GETXEND = 545;
-    private static final int FIRSTCHAR_GETYSTART = 700;
-    private static final int FIRSTCHAR_GETYEND = 767;
+    private static final int FIRSTCHAR_GETYSTART = 800;
+    private static final int FIRSTCHAR_GETYEND = 867;
     private static final int FIRSTCHAR_GETXSTART2 = 215;
     private static final int FIRSTCHAR_GETXEND2 = 260;
 
     private static final int SECONDCHAR_X = 668;
-    private static final int SECONDCHAR_Y = 600;
+    private static final int SECONDCHAR_Y = 700;
     private static final int SECONDCHAR_WIDTH = 200;
     private static final int SECONDCHAR_HEIGHT = 222;
     private static final int SECONDCHAR_NEXTBUTTON_X = 884;
     private static final int SECONDCHAR_BACKBUTTON_X = 599;
-    private static final int SECONDCHAR_BUTTON_Y = 670;
+    private static final int SECONDCHAR_BUTTON_Y = 770;
     private static final int SECONDCHAR_BUTTON_WIDTH = 45;
     private static final int SECONDCHAR_BUTTON_HEIGHT = 63;
     private static final int SECONDCHAR_GETXSTART = 884;
     private static final int SECONDCHAR_GETXEND = 929;
-    private static final int SECONDCHAR_GETYSTART = 700;
-    private static final int SECONDCHAR_GETYEND = 767;
+    private static final int SECONDCHAR_GETYSTART = 800;
+    private static final int SECONDCHAR_GETYEND = 867;
     private static final int SECONDCHAR_GETXSTART2 = 599;
     private static final int SECONDCHAR_GETXEND2 = 644;
 
     private static final int THIRDCHAR_X = 1052;
-    private static final int THIRDCHAR_Y = 600;
+    private static final int THIRDCHAR_Y = 700;
     private static final int THIRDCHAR_WIDTH = 200;
     private static final int THIRDCHAR_HEIGHT = 222;
     private static final int THIRDCHAR_NEXTBUTTON_X = 1268;
     private static final int THIRDCHAR_BACKBUTTON_X = 983;
-    private static final int THIRDCHAR_BUTTON_Y = 670;
+    private static final int THIRDCHAR_BUTTON_Y = 770;
     private static final int THIRDCHAR_BUTTON_WIDTH = 45;
     private static final int THIRDCHAR_BUTTON_HEIGHT = 63;
     private static final int THIRDCHAR_GETXSTART = 1268;
     private static final int THIRDCHAR_GETXEND = 1313;
-    private static final int THIRDCHAR_GETYSTART = 700;
-    private static final int THIRDCHAR_GETYEND = 767;
+    private static final int THIRDCHAR_GETYSTART = 800;
+    private static final int THIRDCHAR_GETYEND = 867;
     private static final int THIRDCHAR_GETXSTART2 = 983;
     private static final int THIRDCHAR_GETXEND2 = 1028;
 
     private static final int FORTHCHAR_X = 1436;
-    private static final int FORTHCHAR_Y = 600;
+    private static final int FORTHCHAR_Y = 700;
     private static final int FORTHCHAR_WIDTH = 200;
     private static final int FORTHCHAR_HEIGHT = 222;
     private static final int FORTHCHAR_NEXTBUTTON_X = 1652;
     private static final int FORTHCHAR_BACKBUTTON_X = 1367;
-    private static final int FORTHCHAR_BUTTON_Y = 670;
+    private static final int FORTHCHAR_BUTTON_Y = 770;
     private static final int FORTHCHAR_BUTTON_WIDTH = 45;
     private static final int FORTHCHAR_BUTTON_HEIGHT = 63;
     private static final int FORTHCHAR_GETXSTART = 1652;
     private static final int FORTHCHAR_GETXEND = 1697;
-    private static final int FORTHCHAR_GETYSTART = 700;
-    private static final int FORTHCHAR_GETYEND = 767;
+    private static final int FORTHCHAR_GETYSTART = 800;
+    private static final int FORTHCHAR_GETYEND = 867;
     private static final int FORTHCHAR_GETXSTART2 = 1367;
     private static final int FORTHCHAR_GETXEND2 = 1412;
 
@@ -189,7 +189,7 @@ public class SingleGameChooseScreen implements Screen {
 
     @Override
     public void show() {
-        background = new Texture(Gdx.files.internal("playerchoosebackgroung.jpg"));
+        background = new Texture(Gdx.files.internal("backScreenChooseScreen.png"));
         batch = new SpriteBatch();
         backButton = new Texture(Gdx.files.internal("backbutton.png"));
         backButton2 = new Texture(Gdx.files.internal("backbutton2.png"));
@@ -232,87 +232,87 @@ public class SingleGameChooseScreen implements Screen {
         }
 
         // First lvl button and it's moves:
-        batch.draw(level1Button1, 400, 280, 90, 97);
-        if (Gdx.input.getX() < 400 + 90 && Gdx.input.getX() > 400 && 673 < Gdx.input.getY() && Gdx.input.getY() < 770) {
-            batch.draw(level1Button2, 400, 280, 90, 97);
+        batch.draw(level1Button1, 635, 290, 90, 97);
+        if (Gdx.input.getX() < 635 + 90 && Gdx.input.getX() > 635 && 663 < Gdx.input.getY() && Gdx.input.getY() < 760) {
+            batch.draw(level1Button2, 635, 290, 90, 97);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 neededBadCharacter1 = 3;
                 neededBadCharacter2 = 3;
                 neededBadCharacter3 = 3;
                 neededBadCharacter4 = 3;
-                levelButtonLight_X = 393;
-                levelButtonLight_Y = 273;
+                levelButtonLight_X = 628;
+                levelButtonLight_Y = 283;
                 lvlPlaying = "level1";
             }
         }
 
         // Second lvl button and it's moves:
-        batch.draw(level2ButtonLocked, 540, 280, 90, 97);
+        batch.draw(level2ButtonLocked, 775, 290, 90, 97);
         if (prefs.getBoolean("level1")){
-            batch.draw(level2Button1, 540, 280, 90, 97);
-            if (Gdx.input.getX() < 540 + 90 && Gdx.input.getX() > 540 && 673 < Gdx.input.getY() && Gdx.input.getY() < 770) {
-                batch.draw(level2Button2, 540, 280, 90, 97);
+            batch.draw(level2Button1, 775, 290, 90, 97);
+            if (Gdx.input.getX() < 775 + 90 && Gdx.input.getX() > 775 && 663 < Gdx.input.getY() && Gdx.input.getY() < 760) {
+                batch.draw(level2Button2, 775, 290, 90, 97);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                     neededBadCharacter1 = 1;
                     neededBadCharacter2 = 1;
                     neededBadCharacter3 = 1;
                     neededBadCharacter4 = 1;
-                    levelButtonLight_X = 533;
-                    levelButtonLight_Y = 273;
+                    levelButtonLight_X = 768;
+                    levelButtonLight_Y = 283;
                     lvlPlaying = "level2";
                 }
             }
         }
 
         // Third lvl button and it's moves:
-        batch.draw(level3ButtonLocked, 680, 280, 90, 97);
+        batch.draw(level3ButtonLocked, 915, 290, 90, 97);
         if (prefs.getBoolean("level2")) {
-            batch.draw(level3Button1, 680, 280, 90, 97);
-            if (Gdx.input.getX() < 680 + 90 && Gdx.input.getX() > 680 && 673 < Gdx.input.getY() && Gdx.input.getY() < 770) {
-                batch.draw(level3Button2, 680, 280, 90, 97);
+            batch.draw(level3Button1, 915, 290, 90, 97);
+            if (Gdx.input.getX() < 915 + 90 && Gdx.input.getX() > 915 && 663 < Gdx.input.getY() && Gdx.input.getY() < 760) {
+                batch.draw(level3Button2, 915, 290, 90, 97);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                     neededBadCharacter1 = 0;
                     neededBadCharacter2 = 1;
                     neededBadCharacter3 = 2;
                     neededBadCharacter4 = 3;
-                    levelButtonLight_X = 673;
-                    levelButtonLight_Y = 273;
+                    levelButtonLight_X = 908;
+                    levelButtonLight_Y = 283;
                     lvlPlaying = "level3";
                 }
             }
         }
 
         // Forth lvl button and it's moves:
-        batch.draw(level4ButtonLocked, 820, 280, 90, 97);
+        batch.draw(level4ButtonLocked, 1055, 290, 90, 97);
         if (prefs.getBoolean("level3")) {
-            batch.draw(level4Button1, 820, 280, 90, 97);
-            if (Gdx.input.getX() < 820 + 90 && Gdx.input.getX() > 820 && 673 < Gdx.input.getY() && Gdx.input.getY() < 770) {
-                batch.draw(level4Button2, 820, 280, 90, 97);
+            batch.draw(level4Button1, 1055, 290, 90, 97);
+            if (Gdx.input.getX() < 1055 + 90 && Gdx.input.getX() > 1055 && 663 < Gdx.input.getY() && Gdx.input.getY() < 760) {
+                batch.draw(level4Button2, 1055, 290, 90, 97);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                     neededBadCharacter1 = 2;
                     neededBadCharacter2 = 2;
                     neededBadCharacter3 = 2;
                     neededBadCharacter4 = 2;
-                    levelButtonLight_X = 813;
-                    levelButtonLight_Y = 273;
+                    levelButtonLight_X = 1048;
+                    levelButtonLight_Y = 283;
                     lvlPlaying = "level4";
                 }
             }
         }
 
         // Fifth lvl button and it's moves:
-        batch.draw(level5ButtonLocked, 960, 280, 90, 97);
+        batch.draw(level5ButtonLocked, 1195, 290, 90, 97);
         if (prefs.getBoolean("level4")) {
-            batch.draw(level5Button1, 960, 280, 90, 97);
-            if (Gdx.input.getX() < 960 + 90 && Gdx.input.getX() > 960 && 673 < Gdx.input.getY() && Gdx.input.getY() < 770) {
-                batch.draw(level5Button2, 960, 280, 90, 97);
+            batch.draw(level5Button1, 1195, 290, 90, 97);
+            if (Gdx.input.getX() < 1195 + 90 && Gdx.input.getX() > 1195 && 663 < Gdx.input.getY() && Gdx.input.getY() < 760) {
+                batch.draw(level5Button2, 1195, 290, 90, 97);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                     neededBadCharacter1 = 0;
                     neededBadCharacter2 = 0;
                     neededBadCharacter3 = 0;
                     neededBadCharacter4 = 0;
-                    levelButtonLight_X = 953;
-                    levelButtonLight_Y = 273;
+                    levelButtonLight_X = 1188;
+                    levelButtonLight_Y = 283;
                     lvlPlaying = "level5";
                 }
             }
@@ -435,7 +435,6 @@ public class SingleGameChooseScreen implements Screen {
             batch.draw(backButton2, BACK_BUTTON_X_START, BACKBUTTON_Y_FORBUTTONCHANGE, BACK_BUTTON_WIDTH, BACK_BUTTON_HEIGHT);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 game.setScreen(new MainMenuScreen(game));
-                prefs.putBoolean(lvlPlaying, true);
             }
         }
         batch.end();
