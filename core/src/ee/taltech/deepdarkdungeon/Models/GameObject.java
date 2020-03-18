@@ -15,6 +15,7 @@ import ee.taltech.deepdarkdungeon.Models.characterClasses.Warrior;
 import java.awt.*;
 
 public abstract class GameObject {
+    public int mana;
     public String skills;
     public BadCharacterClass badCharacterClass;
     public Rectangle bounds;
@@ -76,6 +77,14 @@ public abstract class GameObject {
 
     public int getHealth() {
         return health;
+    }
+
+    public int getMana() {
+        return mana;
+    }
+
+    public void setMana(int needed) {
+        this.mana = needed;
     }
 
     public void setHealth(int health) {

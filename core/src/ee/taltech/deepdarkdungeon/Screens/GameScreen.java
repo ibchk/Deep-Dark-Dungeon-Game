@@ -92,6 +92,18 @@ public class GameScreen implements Screen {
         batch.draw(badCharacter2.getTexture(), 1300, (int) badCharacter2.getY(), 200, 220);
         batch.draw(badCharacter3.getTexture(), 1500, (int) badCharacter3.getY(), 200, 220);
         batch.draw(badCharacter4.getTexture(), 1700, (int) badCharacter4.getY(), 200, 220);
+        font.draw(batch, badCharacter1.getHealth() + "", 1200, 400);
+        font.draw(batch, badCharacter2.getHealth() + "", 1400, 400);
+        font.draw(batch, badCharacter3.getHealth() + "", 1600, 400);
+        font.draw(batch, badCharacter4.getHealth() + "", 1800, 400);
+        font.draw(batch, goodCharacter1.getHealth() + "", 80, 400);
+        font.draw(batch, goodCharacter2.getHealth() + "", 280, 400);
+        font.draw(batch, goodCharacter3.getHealth() + "", 480, 400);
+        font.draw(batch, goodCharacter4.getHealth() + "", 680, 400);
+        font.draw(batch, goodCharacter1.getMana() + "", 95, 400);
+        font.draw(batch, goodCharacter2.getMana() + "", 295, 400);
+        font.draw(batch, goodCharacter3.getMana() + "", 495, 400);
+        font.draw(batch, goodCharacter4.getMana() + "", 695, 400);
         if (wait) {
             try {
                 TimeUnit.SECONDS.sleep(5);
@@ -113,15 +125,10 @@ public class GameScreen implements Screen {
             } else {
                 attacker = goodCharacter4;
             }
-            font.draw(batch, badCharacter1.getHealth() + "", 1200, 400);
-            font.draw(batch, badCharacter2.getHealth() + "", 1400, 400);
-            font.draw(batch, badCharacter3.getHealth() + "", 1600, 400);
-            font.draw(batch, badCharacter4.getHealth() + "", 1800, 400);
-            font.draw(batch, goodCharacter1.getHealth() + "", 80, 400);
-            font.draw(batch, goodCharacter2.getHealth() + "", 280, 400);
-            font.draw(batch, goodCharacter3.getHealth() + "", 480, 400);
-            font.draw(batch, goodCharacter4.getHealth() + "", 680, 400);
-            font.draw(batch, attacker.getHealth() + "", 300, 200);
+            font.draw(batch, "Health: ", 300, 200);
+            font.draw(batch, attacker.getHealth() + "", 360, 200);
+            font.draw(batch, "Mana: ", 300, 150);
+            font.draw(batch, attacker.getMana() + "", 360, 150);
             font.draw(batch, "Your turn! " + stepCount, 100, 1000); // Вызывает текст, тут например power персанажа
             batch.draw(attacker.getTexture(), 40, 130, 200, 220);
             if (stepCount > 1) {
@@ -138,13 +145,15 @@ public class GameScreen implements Screen {
                 }
             }
             if (Gdx.input.getX() < VBOI_X + VBOI_WIDTH && Gdx.input.getX() > VBOI_X && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() <= VBOI_Y - 70 + VBOI_HEIGTH + 30  && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() >= VBOI_Y - 70 + 25) {
-                batch.draw(aciveDefenceButton, VBOI_X, VBOI_Y -70, VBOI_WIDTH, VBOI_HEIGTH);
-                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                    skillIsPressed = true;
-                    if(canbeattacked) {
-                        canbeattacked = false;
+                if (attacker.getSkill().equals("powershot") && attacker.getMana() >= 100 || attacker.getSkill().equals("sunstrike") && attacker.getMana() >= 50) {
+                    batch.draw(aciveDefenceButton, VBOI_X, VBOI_Y -70, VBOI_WIDTH, VBOI_HEIGTH);
+                    if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                        skillIsPressed = true;
+                        if(canbeattacked) {
+                            canbeattacked = false;
+                        }
+                        batch.draw(goodCharacter2.getTexture(), 200, 800);
                     }
-                    batch.draw(goodCharacter2.getTexture(), 200, 800);
                 }
             }
             if (Gdx.input.getX() > badCharacter1.getX() && Gdx.input.getX() < badCharacter1.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > badCharacter1.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < badCharacter1.getY() + 300) {
@@ -163,18 +172,22 @@ public class GameScreen implements Screen {
                             //start++;
                             //batch.draw(powerShot, start += 0.000000000000000001, (int) attacker.getY() + 100, 150, 150);
                         //}
+                        messageForMonsters = "You powershoted " + badCharacter1.getName() + " with damage 100";
                         batch.draw(powerShot, (int) attacker.getX() + 185, (int) attacker.getY() - 25, 150, 150);
                         wait = true;
                         badCharacter1.setHealth(Math.max(badCharacter1.getHealth() - 100, 0));
                         batch.draw(powerShot, (int) badCharacter1.getX(), (int) badCharacter1.getY(), 150, 150);
+                        attacker.setMana(attacker.getMana() - 100);
                         wait = true;
                         WHOWILLATTACK++;
                         stepCount += 1;
                         skillIsPressed = false;
                         // x 0 y 400
                     } else if (attacker.getSkill().equals("sunstrike")) {
+                        messageForMonsters = "You used sunstrike on " + badCharacter1.getName() + " and nearby enemyes with damage 30";
                         badCharacter1.setHealth(Math.max(badCharacter1.getHealth() - 30, 0));
                         badCharacter2.setHealth(Math.max(badCharacter1.getHealth() - 30, 0));
+                        attacker.setMana(attacker.getMana() - 50);
                         WHOWILLATTACK++;
                         stepCount += 1;
                         skillIsPressed = false;
@@ -190,18 +203,22 @@ public class GameScreen implements Screen {
                     WHOWILLATTACK++;
                 } else if (skillIsPressed && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && badCharacter2.getHealth() > 0) {
                     if (attacker.getSkill().equals("powershot")) {
+                        messageForMonsters = "You powershoted " + badCharacter2.getName() + " with damage 100";
                         batch.draw(powerShot, (int) attacker.getX() + 185, (int) attacker.getY() - 25, 150, 150);
                         wait = true;
                         badCharacter2.setHealth(Math.max(badCharacter2.getHealth() - 100, 0));
                         batch.draw(powerShot, (int) badCharacter2.getX(), (int) badCharacter2.getY(), 150, 150);
+                        attacker.setMana(attacker.getMana() - 100);
                         wait = true;
                         WHOWILLATTACK++;
                         stepCount += 1;
                         skillIsPressed = false;
                     } else if (attacker.getSkill().equals("sunstrike")) {
+                        messageForMonsters = "You used sunstrike on " + badCharacter2.getName() + " and nearby enemyes with damage 30";
                         badCharacter1.setHealth(Math.max(badCharacter1.getHealth() - 30, 0));
                         badCharacter2.setHealth(Math.max(badCharacter2.getHealth() - 30, 0));
                         badCharacter3.setHealth(Math.max(badCharacter3.getHealth() - 30, 0));
+                        attacker.setMana(attacker.getMana() - 50);
                         WHOWILLATTACK++;
                         stepCount += 1;
                         skillIsPressed = false;
@@ -217,18 +234,22 @@ public class GameScreen implements Screen {
                     WHOWILLATTACK++;
                 } else if (skillIsPressed && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && badCharacter3.getHealth() > 0) {
                     if (attacker.getSkill().equals("powershot")) {
+                        messageForMonsters = "You powershoted " + badCharacter3.getName() + " with damage 100";
                         batch.draw(powerShot, (int) attacker.getX() + 185, (int) attacker.getY() - 25, 150, 150);
                         wait = true;
                         badCharacter3.setHealth(Math.max(badCharacter3.getHealth() - 100, 0));
                         batch.draw(powerShot, (int) badCharacter3.getX(), (int) badCharacter3.getY(), 150, 150);
+                        attacker.setMana(attacker.getMana() - 100);
                         wait = true;
                         WHOWILLATTACK++;
                         stepCount += 1;
                         skillIsPressed = false;
                     } else if (attacker.getSkill().equals("sunstrike")) {
+                        messageForMonsters = "You used sunstrike on " + badCharacter3.getName() + " and nearby enemyes with damage 30";
                         badCharacter2.setHealth(Math.max(badCharacter2.getHealth() - 30, 0));
                         badCharacter3.setHealth(Math.max(badCharacter3.getHealth() - 30, 0));
                         badCharacter4.setHealth(Math.max(badCharacter4.getHealth() - 30, 0));
+                        attacker.setMana(attacker.getMana() - 50);
                         WHOWILLATTACK++;
                         stepCount += 1;
                         skillIsPressed = false;
@@ -244,17 +265,21 @@ public class GameScreen implements Screen {
                     WHOWILLATTACK++;
                 } else if (skillIsPressed && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && badCharacter4.getHealth() > 0) {
                     if (attacker.getSkill().equals("powershot")) {
+                        messageForMonsters = "You powershoted " + badCharacter4.getName() + " with damage 100";
                         batch.draw(powerShot, (int) attacker.getX() + 185, (int) attacker.getY() - 25, 150, 150);
                         wait = true;
                         badCharacter4.setHealth(Math.max(badCharacter4.getHealth() - 100, 0));
                         batch.draw(powerShot, (int) badCharacter4.getX(), (int) badCharacter4.getY(), 150, 150);
+                        attacker.setMana(attacker.getMana() - 100);
                         wait = true;
                         WHOWILLATTACK++;
                         stepCount += 1;
                         skillIsPressed = false;
                     } else if (attacker.getSkill().equals("sunstrike")) {
+                        messageForMonsters = "You used sunstrike on " + badCharacter4.getName() + " and nearby enemyes with damage 30";
                         badCharacter3.setHealth(Math.max(badCharacter3.getHealth() - 30, 0));
                         badCharacter4.setHealth(Math.max(badCharacter4.getHealth() - 30, 0));
+                        attacker.setMana(attacker.getMana() - 50);
                         WHOWILLATTACK++;
                         stepCount += 1;
                         skillIsPressed = false;
@@ -262,8 +287,32 @@ public class GameScreen implements Screen {
                 }
             }
         } else if (stepCount % 2 == 0) {
+            if (goodCharacter1.getMana() < 100 && goodCharacter1.getHealth() > 0) {
+                goodCharacter1.setMana(goodCharacter1.getMana() + 10);
+                if (goodCharacter1.getMana() > 100) {
+                    goodCharacter1.setMana(100);
+                }
+            }
+            if (goodCharacter2.getMana() < 100 && goodCharacter2.getHealth() > 0) {
+                goodCharacter2.setMana(goodCharacter2.getMana() + 10);
+                if (goodCharacter2.getMana() > 100) {
+                    goodCharacter2.setMana(100);
+                }
+            }
+            if (goodCharacter3.getMana() < 100 && goodCharacter3.getHealth() > 0) {
+                goodCharacter3.setMana(goodCharacter3.getMana() + 10);
+                if (goodCharacter3.getMana() > 100) {
+                    goodCharacter3.setMana(100);
+                }
+            }
+            if (goodCharacter4.getMana() < 100 && goodCharacter4.getHealth() > 0) {
+                goodCharacter4.setMana(goodCharacter4.getMana() + 10);
+                if (goodCharacter4.getMana() > 100) {
+                    goodCharacter4.setMana(100);
+                }
+            }
             font.draw(batch, "Monsters turn! " + stepCount, 100, 1000);// Вызывает текст, тут например power персанажа
-            //font.draw(batch, messageForMonsters, 100, 950);
+            font.draw(batch, messageForMonsters, 100, 950);
             batch.draw(attacker.getTexture(), 40, 130, 200, 220);
             if (badCharacter1.getHealth() > 0) {
                 for (GameObject hero : heroes) {

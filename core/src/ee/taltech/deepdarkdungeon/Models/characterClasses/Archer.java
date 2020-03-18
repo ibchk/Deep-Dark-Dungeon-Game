@@ -8,6 +8,7 @@ public class Archer extends GameObject {
     public Archer(Texture picture, String name, int health, int power, double x, double y, double width, double height, CharacterClass characterClass, CharacterType characterType) {
         this.name = "Archer";
         this.health = 100;
+        this.mana = 100;
         this.power = 5;
         this.x = x;
         this.y = y;
