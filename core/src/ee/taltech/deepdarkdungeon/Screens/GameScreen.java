@@ -129,7 +129,7 @@ public class GameScreen implements Screen {
             if (Gdx.input.getX() > MAIN_MENU_X_START && Gdx.input.getX() < MAIN_MENU_X_END && Gdx.input.getY() > MAIN_MENU_Y_START && Gdx.input.getY() < MAIN_MENU_Y_END) {
                 batch.draw(mainMenuButton, 685, 380, 220, 95);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && gameOver) {
-                    game.setScreen(new MainMenuScreen(game));
+                    game.setScreen(new MainMenuScreen(game, music));
                 }
             }
             // Ильюша, сладкий, этот код для тебя ;*
@@ -146,7 +146,7 @@ public class GameScreen implements Screen {
             if (Gdx.input.getX() > MAIN_MENU2_X_START && Gdx.input.getX() < MAIN_MENU2_X_END && Gdx.input.getY() > MAIN_MENU2_Y_START && Gdx.input.getY() < MAIN_MENU2_Y_END) {
                 batch.draw(mainMenuButton2, 835, 385, 228, 95);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && gameOver) {
-                    game.setScreen(new MainMenuScreen(game));
+                    game.setScreen(new MainMenuScreen(game, music));
                 }
             }
         }
