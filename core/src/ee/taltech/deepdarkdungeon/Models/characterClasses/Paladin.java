@@ -16,5 +16,7 @@ public class Paladin extends GameObject {
         this.height = height;
         this.characterClass = characterClass;
         this.characterType = characterType;
+        this.skills = "purification";
+        this.mana = 100;
     }
 }
