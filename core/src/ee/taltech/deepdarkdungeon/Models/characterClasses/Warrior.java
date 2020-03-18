@@ -16,5 +16,6 @@ public class Warrior extends GameObject {
         this.height = height;
         this.characterClass = characterClass;
         this.characterType = characterType;
+        this.skills = "berserk call";
     }
 }

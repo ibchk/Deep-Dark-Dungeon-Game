@@ -15,7 +15,7 @@ import ee.taltech.deepdarkdungeon.Models.characterClasses.Warrior;
 import java.awt.*;
 
 public abstract class GameObject {
-
+    public String skills;
     public BadCharacterClass badCharacterClass;
     public Rectangle bounds;
     public Sprite object;
@@ -60,6 +60,10 @@ public abstract class GameObject {
 
     public void setCharacterClass(CharacterClass characterClass) {
         this.characterClass = characterClass;
+    }
+
+    public String getSkill() {
+        return skills;
     }
 
     public int getPower() {

@@ -16,5 +16,6 @@ public class Archer extends GameObject {
         this.characterClass = characterClass;
         this.characterType = characterType;
         this.texture = picture;
+        this.skills = "powershot";
     }
 }

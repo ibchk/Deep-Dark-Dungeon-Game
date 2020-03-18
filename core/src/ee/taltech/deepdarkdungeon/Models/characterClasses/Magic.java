@@ -16,5 +16,6 @@ public class Magic extends GameObject {
         this.characterClass = characterClass;
         this.characterType = characterType;
         this.texture = picture;
+        this.skills = "sunstrike";
     }
 }
