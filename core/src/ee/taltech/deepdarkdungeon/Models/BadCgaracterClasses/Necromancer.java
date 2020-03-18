@@ -6,9 +6,9 @@ import ee.taltech.deepdarkdungeon.Models.GameObject;
 public class Necromancer extends GameObject {
 
     public Necromancer (Texture picture, String name, int health, int power, double x, double y, double width, double height, BadCharacterClass badCharacterClass, CharacterType badCharacterType) {
-        this.name = "Necromancer";
-        this.health = 0;
-        this.power = 40;
+        this.name = name;
+        this.health = health;
+        this.power = power;
         this.x = x;
         this.y = y;
         this.width = width;

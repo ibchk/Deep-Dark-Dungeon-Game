@@ -7,9 +7,9 @@ public class Warrior extends GameObject {
 
     public Warrior(Texture picture, String name, int health, int power, double x, double y, double width, double height, CharacterClass characterClass, CharacterType characterType) {
         this.texture = picture;
-        this.name = "Warrior";
-        this.health = 100;
-        this.power = 20;
+        this.name = name;
+        this.health = health;
+        this.power = power;
         this.x = x;
         this.y = y;
         this.width = width;

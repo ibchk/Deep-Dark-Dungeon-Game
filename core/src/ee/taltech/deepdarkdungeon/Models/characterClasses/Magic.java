@@ -6,9 +6,9 @@ import ee.taltech.deepdarkdungeon.Models.GameObject;
 public class Magic extends GameObject {
 
     public Magic(Texture picture, String name, int health, int power, double x, double y, double width, double height, CharacterClass characterClass, CharacterType characterType) {
-        this.name = "Magic";
-        this.health = 100;
-        this.power = 10;
+        this.name = name;
+        this.health = health;
+        this.power = power;
         this.x = x;
         this.y = y;
         this.width = width;
