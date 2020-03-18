@@ -74,8 +74,12 @@ public class GameScreen implements Screen {
     private GameObject badCharacter4;
     private GameObject attacker;
     PutMusic music;
+    int openLevelNumber;
+    int lvlPlaying;
 
-    public GameScreen(List<GameObject> goodCharacters, List<GameObject> badCharacters, DeepDarkDungeonGame game, PutMusic music) {
+    public GameScreen(List<GameObject> goodCharacters, List<GameObject> badCharacters, DeepDarkDungeonGame game, PutMusic music, int openLevelNumber, int lvlPlaying) {
+        this.lvlPlaying = lvlPlaying;
+        this.openLevelNumber = openLevelNumber;
         this.music = music;
         this.game = game;
         heroes = goodCharacters;
@@ -123,7 +127,7 @@ public class GameScreen implements Screen {
         batch.draw(badCharacter2.getTexture(), 1300, (int) badCharacter2.getY(), 200, 220);
         batch.draw(badCharacter3.getTexture(), 1500, (int) badCharacter3.getY(), 200, 220);
         batch.draw(badCharacter4.getTexture(), 1700, (int) badCharacter4.getY(), 200, 220);
-        font.draw(batch,  "Hp: " + badCharacter1.getHealth(), 1200, 400);
+        font.draw(batch, "Hp: " + badCharacter1.getHealth(), 1200, 400);
         font.draw(batch, "Hp: " + badCharacter2.getHealth(), 1400, 400);
         font.draw(batch, "Hp: " + badCharacter3.getHealth(), 1600, 400);
         font.draw(batch, "Hp: " + badCharacter4.getHealth(), 1800, 400);
@@ -141,7 +145,10 @@ public class GameScreen implements Screen {
             if (Gdx.input.getX() > MAIN_MENU_X_START && Gdx.input.getX() < MAIN_MENU_X_END && Gdx.input.getY() > MAIN_MENU_Y_START && Gdx.input.getY() < MAIN_MENU_Y_END) {
                 batch.draw(mainMenuButton, 685, 380, 220, 95);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && gameOver) {
-                    game.setScreen(new MainMenuScreen(game));
+                    if (lvlPlaying == openLevelNumber) {
+                        openLevelNumber++;
+                    }
+                    game.setScreen(new MainMenuScreen(game, openLevelNumber, music));
                 }
             }
             // Ильюша, сладкий, этот код для тебя ;*
@@ -158,7 +165,7 @@ public class GameScreen implements Screen {
             if (Gdx.input.getX() > MAIN_MENU2_X_START && Gdx.input.getX() < MAIN_MENU2_X_END && Gdx.input.getY() > MAIN_MENU2_Y_START && Gdx.input.getY() < MAIN_MENU2_Y_END) {
                 batch.draw(mainMenuButton2, 835, 385, 228, 95);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && gameOver) {
-                    game.setScreen(new MainMenuScreen(game));
+                    game.setScreen(new MainMenuScreen(game, openLevelNumber, music));
                 }
             }
         }
@@ -192,7 +199,7 @@ public class GameScreen implements Screen {
             if (stepCount > 1) {
                 font.draw(batch, "In last step " + message, 100, 900);
             }
-            if (Gdx.input.getX() < VBOI_X + VBOI_WIDTH && Gdx.input.getX() > VBOI_X && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() <= VBOI_Y + VBOI_HEIGTH + 30  && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() >= VBOI_Y + 25) {
+            if (Gdx.input.getX() < VBOI_X + VBOI_WIDTH && Gdx.input.getX() > VBOI_X && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() <= VBOI_Y + VBOI_HEIGTH + 30 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() >= VBOI_Y + 25) {
                 batch.draw(attackbuttonacitve, VBOI_X, VBOI_Y, VBOI_WIDTH, VBOI_HEIGTH);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                     canbeattacked = true;
@@ -202,12 +209,12 @@ public class GameScreen implements Screen {
                     batch.draw(goodCharacter2.getTexture(), 200, 800);
                 }
             }
-            if (Gdx.input.getX() < VBOI_X + VBOI_WIDTH && Gdx.input.getX() > VBOI_X && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() <= VBOI_Y - 70 + VBOI_HEIGTH + 30  && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() >= VBOI_Y - 70 + 25) {
+            if (Gdx.input.getX() < VBOI_X + VBOI_WIDTH && Gdx.input.getX() > VBOI_X && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() <= VBOI_Y - 70 + VBOI_HEIGTH + 30 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() >= VBOI_Y - 70 + 25) {
                 if (attacker.getSkill().equals("powershot") && attacker.getMana() >= 100 || attacker.getSkill().equals("sunstrike") && attacker.getMana() >= 50) {
-                    batch.draw(aciveDefenceButton, VBOI_X, VBOI_Y -70, VBOI_WIDTH, VBOI_HEIGTH);
+                    batch.draw(aciveDefenceButton, VBOI_X, VBOI_Y - 70, VBOI_WIDTH, VBOI_HEIGTH);
                     if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                         skillIsPressed = true;
-                        if(canbeattacked) {
+                        if (canbeattacked) {
                             canbeattacked = false;
                         }
                         batch.draw(goodCharacter2.getTexture(), 200, 800);
@@ -221,14 +228,14 @@ public class GameScreen implements Screen {
                     stepCount += 1;
                     canbeattacked = false;
                     WHOWILLATTACK++;
-                } else if (skillIsPressed && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && badCharacter1.getHealth() > 0)  {
+                } else if (skillIsPressed && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && badCharacter1.getHealth() > 0) {
                     if (attacker.getSkill().equals("powershot")) {
                         //Double neededX = badCharacter1.getX();
                         //int start = (int) attacker.getX() + 200;
 
                         //while(start < neededX) {
-                            //start++;
-                            //batch.draw(powerShot, start += 0.000000000000000001, (int) attacker.getY() + 100, 150, 150);
+                        //start++;
+                        //batch.draw(powerShot, start += 0.000000000000000001, (int) attacker.getY() + 100, 150, 150);
                         //}
                         messageForMonsters = "You powershoted " + badCharacter1.getName() + " with damage 100";
                         batch.draw(powerShot, (int) attacker.getX() + 185, (int) attacker.getY() - 25, 150, 150);
@@ -381,7 +388,7 @@ public class GameScreen implements Screen {
                         if (hero.getHealth() == 0) {
                             message += "\n" + hero.getName() + " is dead!";
                         }
-                        stepCount ++;
+                        stepCount++;
                         wait = true;
                         break;
                     }
@@ -395,7 +402,7 @@ public class GameScreen implements Screen {
                         if (hero.getHealth() == 0) {
                             message += "\n" + hero.getName() + " is dead!";
                         }
-                        stepCount ++;
+                        stepCount++;
                         wait = true;
                         break;
                     }
@@ -409,7 +416,7 @@ public class GameScreen implements Screen {
                         if (hero.getHealth() == 0) {
                             message += "\n" + hero.getName() + " is dead!";
                         }
-                        stepCount ++;
+                        stepCount++;
                         wait = true;
                         break;
                     }
@@ -423,7 +430,7 @@ public class GameScreen implements Screen {
                         if (hero.getHealth() == 0) {
                             message += "\n" + hero.getName() + " is dead!";
                         }
-                        stepCount ++;
+                        stepCount++;
                         wait = true;
                         break;
                     }
@@ -431,9 +438,9 @@ public class GameScreen implements Screen {
             }
         }
         //try {
-            //Thread.sleep(3000);
+        //Thread.sleep(3000);
         //} catch (InterruptedException e) {
-            //e.printStackTrace();
+        //e.printStackTrace();
         //}
         batch.end();
     }
