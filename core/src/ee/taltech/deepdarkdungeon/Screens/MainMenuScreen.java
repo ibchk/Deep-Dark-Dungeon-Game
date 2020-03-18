@@ -71,6 +71,7 @@ public class MainMenuScreen implements Screen {
     private static final int MUSIC_BUTTON_HEIGHT = 100;
 
     DeepDarkDungeonGame game;
+    int openLevelNumber;
     Texture BACKGROUND;
     Texture PLAYBUTTONACTIVE;
     Texture PLAYBUTTONINACTIVE;
@@ -88,7 +89,8 @@ public class MainMenuScreen implements Screen {
     boolean wantingToPlay = false;
     PutMusic music;
 
-    public MainMenuScreen(DeepDarkDungeonGame game) {
+    public MainMenuScreen(DeepDarkDungeonGame game, int openLevelNumber) {
+        this.openLevelNumber = openLevelNumber;
         this.game = game;
         // Fixing all textures:
         QUITGAMEWINDOW = new Texture("quitgamewindow.png");
@@ -107,7 +109,8 @@ public class MainMenuScreen implements Screen {
         music = new PutMusic("startMelody.mp3");
     }
 
-    public MainMenuScreen(DeepDarkDungeonGame game, PutMusic musicToStop) {
+    public MainMenuScreen(DeepDarkDungeonGame game, int openLevelNumber, PutMusic musicToStop) {
+        this.openLevelNumber = openLevelNumber;
         musicToStop.stopMusic();
         this.game = game;
         // Fixing all textures:
@@ -144,7 +147,7 @@ public class MainMenuScreen implements Screen {
             if (Gdx.input.getX() > YES2BUTTON_X_START && Gdx.input.getX() < YES2BUTTON_X_END && Gdx.input.getY() > YES2BUTTON_Y_START && Gdx.input.getY() < YES2BUTTON_Y_END) {
                 game.batch.draw(PLAYBUTTONACTIVE, YES2BUTTON_X_START, YES2BUTTON_Y_FORBUTTONCHANGE);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                    game.setScreen(new SingleGameChooseScreen(game, music));
+                    game.setScreen(new SingleGameChooseScreen(game, openLevelNumber, music));
                 }
             }
             if (Gdx.input.getX() > BACKBUTTON_X_START && Gdx.input.getX() < BACKBUTTON_X_END && Gdx.input.getY() > BACKBUTTON_Y_START && Gdx.input.getY() < BACKBUTTON_Y_END) {

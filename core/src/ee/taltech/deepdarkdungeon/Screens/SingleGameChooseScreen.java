@@ -106,7 +106,7 @@ public class SingleGameChooseScreen implements Screen {
     private static final int FORTHCHAR_GETXEND2 = 1412;
 
     DeepDarkDungeonGame game;
-    Stage stage;
+    int openLevelNumber;
     private Texture startButton;
     private Texture startButton2;
     private Texture background;
@@ -145,7 +145,7 @@ public class SingleGameChooseScreen implements Screen {
     private Texture levelButtonLight;
     int levelButtonLight_X = 0;
     int levelButtonLight_Y = 0;
-    private String lvlPlaying;
+    private int lvlPlaying;
     private Texture level1Button1;
     private Texture level1Button2;
     private Texture level2Button1;
@@ -161,17 +161,18 @@ public class SingleGameChooseScreen implements Screen {
     private Texture level5Button2;
     private Texture level5ButtonLocked;
 
-    public SingleGameChooseScreen(DeepDarkDungeonGame game, PutMusic music) {
+    public SingleGameChooseScreen(DeepDarkDungeonGame game, int openLevelNumber, PutMusic music) {
+        this.openLevelNumber = openLevelNumber;
         this.music = music;
         this.game = game;
         goodCharacter1 = new Warrior(new Texture(Gdx.files.internal("GoodCharacter1.png")), "Char1", 100, 1000, 0, 450, 200, 277, GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD1);
         goodCharacter2 = new Archer(new Texture(Gdx.files.internal("GoodCharacter2.png")), "Char2", 100, 1000, 200, 400, 200, 277, GameObject.CharacterClass.ARCHER, GameObject.CharacterType.GOOD2);
         goodCharacter3 = new Magic(new Texture(Gdx.files.internal("GoodCharacter3.png")), "Char3", 100, 1000, 400, 450, 200, 277, GameObject.CharacterClass.MAGIC, GameObject.CharacterType.GOOD3);
         goodCharacter4 = new Paladin(new Texture(Gdx.files.internal("GoodCharacter4.png")), "Char4", 100, 1000, 600, 400, 200, 277, GameObject.CharacterClass.PALADIN, GameObject.CharacterType.GOOD4);
-        badCharacter1 = new Necromancer(new Texture(Gdx.files.internal("BadCharacter1.png")), "Necromancer", 100, 1000, 1100, 450, 200, 277, GameObject.BadCharacterClass.NECROMANCER, GameObject.CharacterType.BAD1);
-        badCharacter2 = new Zombie(new Texture(Gdx.files.internal("BadCharacter2.png")), "Zombie", 100, 1000, 1300, 400, 200, 277, GameObject.BadCharacterClass.ZOMBIE, GameObject.CharacterType.BAD2);
-        badCharacter3 = new SkeletonWarrior(new Texture(Gdx.files.internal("BadCharacter3.png")), "Skeleton Warrior", 100, 1000, 1500, 450, 200, 277, GameObject.BadCharacterClass.SKELETON_WARRIOR, GameObject.CharacterType.BAD3);
-        badCharacter4 = new SkeletonArcher(new Texture(Gdx.files.internal("BadCharacter4.png")), "Skeleton Archer", 100, 1000, 1700, 400, 200, 277, GameObject.BadCharacterClass.SKELETON_ARCHER, GameObject.CharacterType.BAD4);
+        badCharacter1 = new Necromancer(new Texture(Gdx.files.internal("BadCharacter1.png")), "Necromancer", 0, 1000, 1100, 450, 200, 277, GameObject.BadCharacterClass.NECROMANCER, GameObject.CharacterType.BAD1);
+        badCharacter2 = new Zombie(new Texture(Gdx.files.internal("BadCharacter2.png")), "Zombie", 0, 1000, 1300, 400, 200, 277, GameObject.BadCharacterClass.ZOMBIE, GameObject.CharacterType.BAD2);
+        badCharacter3 = new SkeletonWarrior(new Texture(Gdx.files.internal("BadCharacter3.png")), "Skeleton Warrior", 0, 1000, 1500, 450, 200, 277, GameObject.BadCharacterClass.SKELETON_WARRIOR, GameObject.CharacterType.BAD3);
+        badCharacter4 = new SkeletonArcher(new Texture(Gdx.files.internal("BadCharacter4.png")), "Skeleton Archer", 0, 1000, 1700, 400, 200, 277, GameObject.BadCharacterClass.SKELETON_ARCHER, GameObject.CharacterType.BAD4);
         characters.add(goodCharacter1);
         characters.add(goodCharacter2);
         characters.add(goodCharacter3);
@@ -180,11 +181,10 @@ public class SingleGameChooseScreen implements Screen {
         rightBadCharacters.add(badCharacter2);
         rightBadCharacters.add(badCharacter3);
         rightBadCharacters.add(badCharacter4);
-        prefs.putBoolean("level1", true); //lvl 1 is passed
-        prefs.putBoolean("level2", true); //lvl 2 is passed
-        prefs.putBoolean("level3", false); //lvl 3 is not passed
-        prefs.putBoolean("level4", false); //lvl 4 is not passed
-        prefs.putBoolean("level5", false); //lvl 5 is not passed
+        for (int i = 1; i <= openLevelNumber; i++){
+            prefs.putBoolean("level" + i, true); // counts open lvls.
+            System.out.println(i);
+        }
     }
 
     @Override
@@ -242,13 +242,13 @@ public class SingleGameChooseScreen implements Screen {
                 neededBadCharacter4 = 3;
                 levelButtonLight_X = 628;
                 levelButtonLight_Y = 283;
-                lvlPlaying = "level1";
+                lvlPlaying = 1;
             }
         }
 
         // Second lvl button and it's moves:
         batch.draw(level2ButtonLocked, 775, 290, 90, 97);
-        if (prefs.getBoolean("level1")){
+        if (prefs.getBoolean("level2")) {
             batch.draw(level2Button1, 775, 290, 90, 97);
             if (Gdx.input.getX() < 775 + 90 && Gdx.input.getX() > 775 && 663 < Gdx.input.getY() && Gdx.input.getY() < 760) {
                 batch.draw(level2Button2, 775, 290, 90, 97);
@@ -259,14 +259,14 @@ public class SingleGameChooseScreen implements Screen {
                     neededBadCharacter4 = 1;
                     levelButtonLight_X = 768;
                     levelButtonLight_Y = 283;
-                    lvlPlaying = "level2";
+                    lvlPlaying = 2;
                 }
             }
         }
 
         // Third lvl button and it's moves:
         batch.draw(level3ButtonLocked, 915, 290, 90, 97);
-        if (prefs.getBoolean("level2")) {
+        if (prefs.getBoolean("level3")) {
             batch.draw(level3Button1, 915, 290, 90, 97);
             if (Gdx.input.getX() < 915 + 90 && Gdx.input.getX() > 915 && 663 < Gdx.input.getY() && Gdx.input.getY() < 760) {
                 batch.draw(level3Button2, 915, 290, 90, 97);
@@ -277,14 +277,14 @@ public class SingleGameChooseScreen implements Screen {
                     neededBadCharacter4 = 3;
                     levelButtonLight_X = 908;
                     levelButtonLight_Y = 283;
-                    lvlPlaying = "level3";
+                    lvlPlaying = 3;
                 }
             }
         }
 
         // Forth lvl button and it's moves:
         batch.draw(level4ButtonLocked, 1055, 290, 90, 97);
-        if (prefs.getBoolean("level3")) {
+        if (prefs.getBoolean("level4")) {
             batch.draw(level4Button1, 1055, 290, 90, 97);
             if (Gdx.input.getX() < 1055 + 90 && Gdx.input.getX() > 1055 && 663 < Gdx.input.getY() && Gdx.input.getY() < 760) {
                 batch.draw(level4Button2, 1055, 290, 90, 97);
@@ -295,14 +295,14 @@ public class SingleGameChooseScreen implements Screen {
                     neededBadCharacter4 = 2;
                     levelButtonLight_X = 1048;
                     levelButtonLight_Y = 283;
-                    lvlPlaying = "level4";
+                    lvlPlaying = 4;
                 }
             }
         }
 
         // Fifth lvl button and it's moves:
         batch.draw(level5ButtonLocked, 1195, 290, 90, 97);
-        if (prefs.getBoolean("level4")) {
+        if (prefs.getBoolean("level5")) {
             batch.draw(level5Button1, 1195, 290, 90, 97);
             if (Gdx.input.getX() < 1195 + 90 && Gdx.input.getX() > 1195 && 663 < Gdx.input.getY() && Gdx.input.getY() < 760) {
                 batch.draw(level5Button2, 1195, 290, 90, 97);
@@ -313,7 +313,7 @@ public class SingleGameChooseScreen implements Screen {
                     neededBadCharacter4 = 0;
                     levelButtonLight_X = 1188;
                     levelButtonLight_Y = 283;
-                    lvlPlaying = "level5";
+                    lvlPlaying = 5;
                 }
             }
         }
@@ -425,7 +425,7 @@ public class SingleGameChooseScreen implements Screen {
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && neededBadCharacter1 != -101) {
                 badCharacters = Arrays.asList(new BadCharacterCreating().createCharacter(rightBadCharacters, neededBadCharacter1, badCharacter1), new BadCharacterCreating().createCharacter(rightBadCharacters, neededBadCharacter2, badCharacter2), new BadCharacterCreating().createCharacter(rightBadCharacters, neededBadCharacter3, badCharacter3), new BadCharacterCreating().createCharacter(rightBadCharacters, neededBadCharacter4, badCharacter4));
                 List<GameObject> rightCharactersList = new ArrayList<>(Arrays.asList(new CharacterCreating().createCharacter(characters, neededCharacter1, goodCharacter1), new CharacterCreating().createCharacter(characters, neededCharacter2, goodCharacter2), new CharacterCreating().createCharacter(characters, neededCharacter3, goodCharacter3), new CharacterCreating().createCharacter(characters, neededCharacter4, goodCharacter4)));
-                game.setScreen(new GameScreen(rightCharactersList, badCharacters, game, music));
+                game.setScreen(new GameScreen(rightCharactersList, badCharacters, game, music, openLevelNumber, lvlPlaying));
             }
         }
 
@@ -434,7 +434,7 @@ public class SingleGameChooseScreen implements Screen {
         if (Gdx.input.getX() > BACK_BUTTON_X_START && Gdx.input.getX() < BACK_BUTTON_X_END && Gdx.input.getY() > BACK_BUTTON_Y_START && Gdx.input.getY() < BACK_BUTTON_Y_END) {
             batch.draw(backButton2, BACK_BUTTON_X_START, BACKBUTTON_Y_FORBUTTONCHANGE, BACK_BUTTON_WIDTH, BACK_BUTTON_HEIGHT);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                game.setScreen(new MainMenuScreen(game));
+                game.setScreen(new MainMenuScreen(game, openLevelNumber, music));
             }
         }
         batch.end();
