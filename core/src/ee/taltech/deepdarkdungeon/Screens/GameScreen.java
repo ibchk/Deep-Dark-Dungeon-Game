@@ -140,14 +140,14 @@ public class GameScreen implements Screen {
         font.draw(batch, "Mn: " + goodCharacter3.getMana(), 515, 400);
         font.draw(batch, "Mn: " + goodCharacter4.getMana(), 715, 400);
         if (badCharacter1.getHealth() == 0 && badCharacter2.getHealth() == 0 && badCharacter3.getHealth() == 0 && badCharacter4.getHealth() == 0) {
+            if (lvlPlaying == openLevelNumber) {
+                openLevelNumber++;
+            }
             gameOver = true;
             batch.draw(heroesWinScreen, WIN_SCREEN_X, WIN_SCREEN_Y, WIN_SCREEN_WIDTH, WIN_SCREEN_HEIGHT);
             if (Gdx.input.getX() > MAIN_MENU_X_START && Gdx.input.getX() < MAIN_MENU_X_END && Gdx.input.getY() > MAIN_MENU_Y_START && Gdx.input.getY() < MAIN_MENU_Y_END) {
                 batch.draw(mainMenuButton, 685, 380, 220, 95);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && gameOver) {
-                    if (lvlPlaying == openLevelNumber) {
-                        openLevelNumber++;
-                    }
                     game.setScreen(new MainMenuScreen(game, openLevelNumber, music));
                 }
             }
@@ -155,6 +155,9 @@ public class GameScreen implements Screen {
             if (Gdx.input.getX() > NEXT_X_START && Gdx.input.getX() < NEXT_X_END && Gdx.input.getY() > NEXT_Y_START && Gdx.input.getY() < NEXT_Y_END) {
                 batch.draw(nextLevelButton, 970, 380, 220, 95);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && gameOver) {
+                    music.stopMusic();
+                    music = new PutMusic("startMelody.mp3");
+                    game.setScreen(new SingleGameChooseScreen(game, openLevelNumber, music));
                     // Для перехода в след уровень вставь код для открытия окна с уровнем сюда!
                 }
             }
