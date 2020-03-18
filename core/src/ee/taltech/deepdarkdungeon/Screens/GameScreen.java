@@ -24,6 +24,7 @@ public class GameScreen implements Screen {
     List<GameObject> heroes;
     List<GameObject> monsters;
     DeepDarkDungeonGame game;
+    boolean gameOver = false;
     boolean canbeattacked = false;
     boolean wait = false;
     boolean skillIsPressed = false;
@@ -112,7 +113,7 @@ public class GameScreen implements Screen {
                 e.printStackTrace();
             }
         }
-        if (stepCount % 2 != 0) {
+        if (stepCount % 2 != 0 && !gameOver) {
             if (WHOWILLATTACK == 4) {
                 WHOWILLATTACK = 0;
             }

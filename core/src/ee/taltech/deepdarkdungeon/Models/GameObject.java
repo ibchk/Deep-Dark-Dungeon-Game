@@ -31,6 +31,10 @@ public abstract class GameObject {
     public double width;
     public double height;
 
+    public BadCharacterClass getBadCharacterClass() {
+        return badCharacterClass;
+    }
+
     public Texture getTexture() {
         return texture;
     }

@@ -8,7 +8,7 @@ public class Zombie extends GameObject {
 
     public Zombie (Texture picture, String name, int health, int power, double x, double y, double width, double height, BadCharacterClass badCharacterClass, CharacterType badCharacterType) {
         this.name = "Zombie";
-        this.health = 100;
+        this.health = 0;
         this.power = 15;
         this.x = x;
         this.y = y;

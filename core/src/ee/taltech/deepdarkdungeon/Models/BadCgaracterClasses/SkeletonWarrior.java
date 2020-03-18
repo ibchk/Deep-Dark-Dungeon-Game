@@ -7,7 +7,7 @@ public class SkeletonWarrior extends GameObject {
 
     public SkeletonWarrior (Texture picture, String name, int health, int power, double x, double y, double width, double height, BadCharacterClass badCharacterClass, CharacterType badCharacterType) {
         this.name = "Skeleton Warrior";
-        this.health = 100;
+        this.health = 0;
         this.power = 10;
         this.x = x;
         this.y = y;

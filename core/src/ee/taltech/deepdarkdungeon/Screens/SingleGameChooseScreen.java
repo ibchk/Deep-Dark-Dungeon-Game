@@ -2,6 +2,7 @@ package ee.taltech.deepdarkdungeon.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -27,7 +28,7 @@ public class SingleGameChooseScreen implements Screen {
     private static final int PLAY_BUTTON_WIDTH = 250;
     private static final int PLAY_BUTTON_HEIGHT = 78;
     private static final int PLAY_BUTTON_Y_START = 870;
-    private static final int PLAY_BUTTON_X_START = 1400;
+    private static final int PLAY_BUTTON_X_START = 1470;
     private static final int PLAY_BUTTON_Y_END = PLAY_BUTTON_Y_START + PLAY_BUTTON_HEIGHT;
     private static final int PLAY_BUTTON_X_END = PLAY_BUTTON_X_START + PLAY_BUTTON_WIDTH;
     private static final int PLAYBUTTON_Y_FORBUTTONCHANGE = 100;
@@ -41,66 +42,66 @@ public class SingleGameChooseScreen implements Screen {
     private static final int BACKBUTTON_Y_FORBUTTONCHANGE = 100;
 
     private static final int FIRSTCHAR_X = 284;
-    private static final int FIRSTCHAR_Y = 600;
+    private static final int FIRSTCHAR_Y = 700;
     private static final int FIRSTCHAR_WIDTH = 200;
     private static final int FIRSTCHAR_HEIGHT = 222;
     private static final int FIRSTCHAR_NEXTBUTTON_X = 500;
     private static final int FIRSTCHAR_BACKBUTTON_X = 215;
-    private static final int FIRSTCHAR_BUTTON_Y = 670;
+    private static final int FIRSTCHAR_BUTTON_Y = 770;
     private static final int FIRSTCHAR_BUTTON_WIDTH = 45;
     private static final int FIRSTCHAR_BUTTON_HEIGHT = 63;
     private static final int FIRSTCHAR_GETXSTART = 500;
     private static final int FIRSTCHAR_GETXEND = 545;
-    private static final int FIRSTCHAR_GETYSTART = 700;
-    private static final int FIRSTCHAR_GETYEND = 767;
+    private static final int FIRSTCHAR_GETYSTART = 800;
+    private static final int FIRSTCHAR_GETYEND = 867;
     private static final int FIRSTCHAR_GETXSTART2 = 215;
     private static final int FIRSTCHAR_GETXEND2 = 260;
 
     private static final int SECONDCHAR_X = 668;
-    private static final int SECONDCHAR_Y = 600;
+    private static final int SECONDCHAR_Y = 700;
     private static final int SECONDCHAR_WIDTH = 200;
     private static final int SECONDCHAR_HEIGHT = 222;
     private static final int SECONDCHAR_NEXTBUTTON_X = 884;
     private static final int SECONDCHAR_BACKBUTTON_X = 599;
-    private static final int SECONDCHAR_BUTTON_Y = 670;
+    private static final int SECONDCHAR_BUTTON_Y = 770;
     private static final int SECONDCHAR_BUTTON_WIDTH = 45;
     private static final int SECONDCHAR_BUTTON_HEIGHT = 63;
     private static final int SECONDCHAR_GETXSTART = 884;
     private static final int SECONDCHAR_GETXEND = 929;
-    private static final int SECONDCHAR_GETYSTART = 700;
-    private static final int SECONDCHAR_GETYEND = 767;
+    private static final int SECONDCHAR_GETYSTART = 800;
+    private static final int SECONDCHAR_GETYEND = 867;
     private static final int SECONDCHAR_GETXSTART2 = 599;
     private static final int SECONDCHAR_GETXEND2 = 644;
 
     private static final int THIRDCHAR_X = 1052;
-    private static final int THIRDCHAR_Y = 600;
+    private static final int THIRDCHAR_Y = 700;
     private static final int THIRDCHAR_WIDTH = 200;
     private static final int THIRDCHAR_HEIGHT = 222;
     private static final int THIRDCHAR_NEXTBUTTON_X = 1268;
     private static final int THIRDCHAR_BACKBUTTON_X = 983;
-    private static final int THIRDCHAR_BUTTON_Y = 670;
+    private static final int THIRDCHAR_BUTTON_Y = 770;
     private static final int THIRDCHAR_BUTTON_WIDTH = 45;
     private static final int THIRDCHAR_BUTTON_HEIGHT = 63;
     private static final int THIRDCHAR_GETXSTART = 1268;
     private static final int THIRDCHAR_GETXEND = 1313;
-    private static final int THIRDCHAR_GETYSTART = 700;
-    private static final int THIRDCHAR_GETYEND = 767;
+    private static final int THIRDCHAR_GETYSTART = 800;
+    private static final int THIRDCHAR_GETYEND = 867;
     private static final int THIRDCHAR_GETXSTART2 = 983;
     private static final int THIRDCHAR_GETXEND2 = 1028;
 
     private static final int FORTHCHAR_X = 1436;
-    private static final int FORTHCHAR_Y = 600;
+    private static final int FORTHCHAR_Y = 700;
     private static final int FORTHCHAR_WIDTH = 200;
     private static final int FORTHCHAR_HEIGHT = 222;
     private static final int FORTHCHAR_NEXTBUTTON_X = 1652;
     private static final int FORTHCHAR_BACKBUTTON_X = 1367;
-    private static final int FORTHCHAR_BUTTON_Y = 670;
+    private static final int FORTHCHAR_BUTTON_Y = 770;
     private static final int FORTHCHAR_BUTTON_WIDTH = 45;
     private static final int FORTHCHAR_BUTTON_HEIGHT = 63;
     private static final int FORTHCHAR_GETXSTART = 1652;
     private static final int FORTHCHAR_GETXEND = 1697;
-    private static final int FORTHCHAR_GETYSTART = 700;
-    private static final int FORTHCHAR_GETYEND = 767;
+    private static final int FORTHCHAR_GETYSTART = 800;
+    private static final int FORTHCHAR_GETYEND = 867;
     private static final int FORTHCHAR_GETXSTART2 = 1367;
     private static final int FORTHCHAR_GETXEND2 = 1412;
 
@@ -126,12 +127,39 @@ public class SingleGameChooseScreen implements Screen {
     GameObject badCharacter3;
     GameObject badCharacter4;
     List<GameObject> characters = new ArrayList<>();
+    List<GameObject> rightBadCharacters = new ArrayList<>();
     int neededCharacter1 = 0;
     int neededCharacter2 = 0;
     int neededCharacter3 = 0;
     int neededCharacter4 = 0;
+    int neededBadCharacter1 = -101;
+    int neededBadCharacter2;
+    int neededBadCharacter3;
+    int neededBadCharacter4;
     BitmapFont font = new BitmapFont();
     PutMusic music;
+    Preferences prefs = Gdx.app.getPreferences("my-preferences");
+    List<GameObject> badCharacters;
+
+
+    private Texture levelButtonLight;
+    int levelButtonLight_X = 0;
+    int levelButtonLight_Y = 0;
+    private String lvlPlaying;
+    private Texture level1Button1;
+    private Texture level1Button2;
+    private Texture level2Button1;
+    private Texture level2Button2;
+    private Texture level2ButtonLocked;
+    private Texture level3Button1;
+    private Texture level3Button2;
+    private Texture level3ButtonLocked;
+    private Texture level4Button1;
+    private Texture level4Button2;
+    private Texture level4ButtonLocked;
+    private Texture level5Button1;
+    private Texture level5Button2;
+    private Texture level5ButtonLocked;
 
     public SingleGameChooseScreen(DeepDarkDungeonGame game, PutMusic music) {
         this.music = music;
@@ -148,11 +176,20 @@ public class SingleGameChooseScreen implements Screen {
         characters.add(goodCharacter2);
         characters.add(goodCharacter3);
         characters.add(goodCharacter4);
+        rightBadCharacters.add(badCharacter1);
+        rightBadCharacters.add(badCharacter2);
+        rightBadCharacters.add(badCharacter3);
+        rightBadCharacters.add(badCharacter4);
+        prefs.putBoolean("level1", true); //lvl 1 is passed
+        prefs.putBoolean("level2", true); //lvl 2 is passed
+        prefs.putBoolean("level3", false); //lvl 3 is not passed
+        prefs.putBoolean("level4", false); //lvl 4 is not passed
+        prefs.putBoolean("level5", false); //lvl 5 is not passed
     }
 
     @Override
     public void show() {
-        background = new Texture(Gdx.files.internal("playerchoosebackgroung.jpg"));
+        background = new Texture(Gdx.files.internal("backScreenChooseScreen.png"));
         batch = new SpriteBatch();
         backButton = new Texture(Gdx.files.internal("backbutton.png"));
         backButton2 = new Texture(Gdx.files.internal("backbutton2.png"));
@@ -163,19 +200,123 @@ public class SingleGameChooseScreen implements Screen {
         previousCharacterButton2 = new Texture(Gdx.files.internal("previousCharacterButton2.png"));
         nextCharacterButton = new Texture(Gdx.files.internal("nextCharacterButton.png"));
         nextCharacterButton2 = new Texture(Gdx.files.internal("nextCharacterButton2.png"));
-
+        levelButtonLight = new Texture(Gdx.files.internal("levelButtonLight.png"));
+        level1Button1 = new Texture(Gdx.files.internal("level1Button.png"));
+        level1Button2 = new Texture(Gdx.files.internal("level1Button2.png"));
+        level2Button1 = new Texture(Gdx.files.internal("level2Button.png"));
+        level2Button2 = new Texture(Gdx.files.internal("level2Button2.png"));
+        level2ButtonLocked = new Texture(Gdx.files.internal("level2ButtonLocked.png"));
+        level3Button1 = new Texture(Gdx.files.internal("level3Button1.png"));
+        level3Button2 = new Texture(Gdx.files.internal("level3Button2.png"));
+        level3ButtonLocked = new Texture(Gdx.files.internal("level3ButtonLocked.png"));
+        level4Button1 = new Texture(Gdx.files.internal("level4Button1.png"));
+        level4Button2 = new Texture(Gdx.files.internal("level4Button2.png"));
+        level4ButtonLocked = new Texture(Gdx.files.internal("level4ButtonLocked.png"));
+        level5Button1 = new Texture(Gdx.files.internal("level5Button1.png"));
+        level5Button2 = new Texture(Gdx.files.internal("level5Button2.png"));
+        level5ButtonLocked = new Texture(Gdx.files.internal("level5ButtonLocked.png"));
     }
 
     //Далее я создаю персонажей чтобы закинуть их в игру, это нужно будет структурировать,
     // так как мы не знаем какие персонажи будут выбраны и сколько их будет и в какой последовательности.
     @Override
     public void render(float delta) {
-        TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle();
-
         Gdx.gl.glClearColor(135 / 255f, 206 / 255f, 235 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         batch.draw(background, 0, 0);
+
+        // Make backlight to the selected level:
+        if (levelButtonLight_X != 0) {
+            batch.draw(levelButtonLight, levelButtonLight_X, levelButtonLight_Y, 103, 111);
+        }
+
+        // First lvl button and it's moves:
+        batch.draw(level1Button1, 635, 290, 90, 97);
+        if (Gdx.input.getX() < 635 + 90 && Gdx.input.getX() > 635 && 663 < Gdx.input.getY() && Gdx.input.getY() < 760) {
+            batch.draw(level1Button2, 635, 290, 90, 97);
+            if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                neededBadCharacter1 = 3;
+                neededBadCharacter2 = 3;
+                neededBadCharacter3 = 3;
+                neededBadCharacter4 = 3;
+                levelButtonLight_X = 628;
+                levelButtonLight_Y = 283;
+                lvlPlaying = "level1";
+            }
+        }
+
+        // Second lvl button and it's moves:
+        batch.draw(level2ButtonLocked, 775, 290, 90, 97);
+        if (prefs.getBoolean("level1")){
+            batch.draw(level2Button1, 775, 290, 90, 97);
+            if (Gdx.input.getX() < 775 + 90 && Gdx.input.getX() > 775 && 663 < Gdx.input.getY() && Gdx.input.getY() < 760) {
+                batch.draw(level2Button2, 775, 290, 90, 97);
+                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                    neededBadCharacter1 = 1;
+                    neededBadCharacter2 = 1;
+                    neededBadCharacter3 = 1;
+                    neededBadCharacter4 = 1;
+                    levelButtonLight_X = 768;
+                    levelButtonLight_Y = 283;
+                    lvlPlaying = "level2";
+                }
+            }
+        }
+
+        // Third lvl button and it's moves:
+        batch.draw(level3ButtonLocked, 915, 290, 90, 97);
+        if (prefs.getBoolean("level2")) {
+            batch.draw(level3Button1, 915, 290, 90, 97);
+            if (Gdx.input.getX() < 915 + 90 && Gdx.input.getX() > 915 && 663 < Gdx.input.getY() && Gdx.input.getY() < 760) {
+                batch.draw(level3Button2, 915, 290, 90, 97);
+                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                    neededBadCharacter1 = 0;
+                    neededBadCharacter2 = 1;
+                    neededBadCharacter3 = 2;
+                    neededBadCharacter4 = 3;
+                    levelButtonLight_X = 908;
+                    levelButtonLight_Y = 283;
+                    lvlPlaying = "level3";
+                }
+            }
+        }
+
+        // Forth lvl button and it's moves:
+        batch.draw(level4ButtonLocked, 1055, 290, 90, 97);
+        if (prefs.getBoolean("level3")) {
+            batch.draw(level4Button1, 1055, 290, 90, 97);
+            if (Gdx.input.getX() < 1055 + 90 && Gdx.input.getX() > 1055 && 663 < Gdx.input.getY() && Gdx.input.getY() < 760) {
+                batch.draw(level4Button2, 1055, 290, 90, 97);
+                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                    neededBadCharacter1 = 2;
+                    neededBadCharacter2 = 2;
+                    neededBadCharacter3 = 2;
+                    neededBadCharacter4 = 2;
+                    levelButtonLight_X = 1048;
+                    levelButtonLight_Y = 283;
+                    lvlPlaying = "level4";
+                }
+            }
+        }
+
+        // Fifth lvl button and it's moves:
+        batch.draw(level5ButtonLocked, 1195, 290, 90, 97);
+        if (prefs.getBoolean("level4")) {
+            batch.draw(level5Button1, 1195, 290, 90, 97);
+            if (Gdx.input.getX() < 1195 + 90 && Gdx.input.getX() > 1195 && 663 < Gdx.input.getY() && Gdx.input.getY() < 760) {
+                batch.draw(level5Button2, 1195, 290, 90, 97);
+                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                    neededBadCharacter1 = 0;
+                    neededBadCharacter2 = 0;
+                    neededBadCharacter3 = 0;
+                    neededBadCharacter4 = 0;
+                    levelButtonLight_X = 1188;
+                    levelButtonLight_Y = 283;
+                    lvlPlaying = "level5";
+                }
+            }
+        }
 
         // First char choose start:
         batch.draw(characters.get(neededCharacter1).getTexture(), FIRSTCHAR_X, FIRSTCHAR_Y, FIRSTCHAR_WIDTH, FIRSTCHAR_HEIGHT);
@@ -281,18 +422,10 @@ public class SingleGameChooseScreen implements Screen {
         batch.draw(startButton, PLAY_BUTTON_X_START, PLAYBUTTON_Y_FORBUTTONCHANGE, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
         if (Gdx.input.getX() > PLAY_BUTTON_X_START && Gdx.input.getX() < PLAY_BUTTON_X_END && Gdx.input.getY() > PLAY_BUTTON_Y_START && Gdx.input.getY() < PLAY_BUTTON_Y_END) {
             batch.draw(startButton2, PLAY_BUTTON_X_START, PLAYBUTTON_Y_FORBUTTONCHANGE, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
-            if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                List<GameObject> rightCharactersList = new ArrayList<>();
-                GameObject rightCharater1 = new CharacterCreating().createCharacter(characters, neededCharacter1, goodCharacter1);
-                GameObject rightCharater2 = new CharacterCreating().createCharacter(characters, neededCharacter2, goodCharacter2);
-                GameObject rightCharater3 = new CharacterCreating().createCharacter(characters, neededCharacter3, goodCharacter3);
-                GameObject rightCharater4 = new CharacterCreating().createCharacter(characters, neededCharacter4, goodCharacter4);
-                rightCharactersList.add(rightCharater1);
-                rightCharactersList.add(rightCharater2);
-                rightCharactersList.add(rightCharater3);
-                rightCharactersList.add(rightCharater4);
-                game.setScreen(new GameScreen(rightCharactersList, Arrays.asList(badCharacter1, badCharacter2, badCharacter3, badCharacter4), game, music));
-                // Тут я закидываю два листа и персонажами которые будут в игре. первый лист
+            if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && neededBadCharacter1 != -101) {
+                badCharacters = Arrays.asList(new BadCharacterCreating().createCharacter(rightBadCharacters, neededBadCharacter1, badCharacter1), new BadCharacterCreating().createCharacter(rightBadCharacters, neededBadCharacter2, badCharacter2), new BadCharacterCreating().createCharacter(rightBadCharacters, neededBadCharacter3, badCharacter3), new BadCharacterCreating().createCharacter(rightBadCharacters, neededBadCharacter4, badCharacter4));
+                List<GameObject> rightCharactersList = new ArrayList<>(Arrays.asList(new CharacterCreating().createCharacter(characters, neededCharacter1, goodCharacter1), new CharacterCreating().createCharacter(characters, neededCharacter2, goodCharacter2), new CharacterCreating().createCharacter(characters, neededCharacter3, goodCharacter3), new CharacterCreating().createCharacter(characters, neededCharacter4, goodCharacter4)));
+                game.setScreen(new GameScreen(rightCharactersList, badCharacters, game, music));
             }
         }
 

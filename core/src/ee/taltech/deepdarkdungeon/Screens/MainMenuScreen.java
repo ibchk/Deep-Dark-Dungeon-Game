@@ -107,6 +107,26 @@ public class MainMenuScreen implements Screen {
         music = new PutMusic("startMelody.mp3");
     }
 
+    public MainMenuScreen(DeepDarkDungeonGame game, PutMusic musicToStop) {
+        musicToStop.stopMusic();
+        this.game = game;
+        // Fixing all textures:
+        QUITGAMEWINDOW = new Texture("quitgamewindow.png");
+        BACKGROUND = new Texture("backgroungformainscreen.png");
+        EXITBUTTONINACTIVE = new Texture("quitbutton.png");
+        EXITBUTTONACTIVE = new Texture("quitbutton2.png");
+        PLAYBUTTONINACTIVE = new Texture("playbutton.png");
+        PLAYBUTTONACTIVE = new Texture("playbutton2.png");
+        YESBUTTON = new Texture("yes.png");
+        NOBUTTON = new Texture("no.png");
+        STARTGAMEWINDOW = new Texture("gameStartWindow.png");
+        BACKBUTTON = new Texture("backbutton2.png");
+        MULTIPLAYERBUTTON = new Texture("multiplayerButton.png");
+        MUSICBUTTON1 = new Texture("musicButton1.png");
+        MUSICBUTTON2 = new Texture("musicButton2.png");
+        music = new PutMusic("startMelody.mp3");
+    }
+
     @Override
     public void show() {
 
