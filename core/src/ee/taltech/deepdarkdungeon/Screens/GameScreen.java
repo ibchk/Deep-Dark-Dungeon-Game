@@ -138,8 +138,28 @@ public class GameScreen implements Screen {
         if (badCharacter1.getHealth() == 0 && badCharacter2.getHealth() == 0 && badCharacter3.getHealth() == 0 && badCharacter4.getHealth() == 0) {
             gameOver = true;
             batch.draw(heroesWinScreen, WIN_SCREEN_X, WIN_SCREEN_Y, WIN_SCREEN_WIDTH, WIN_SCREEN_HEIGHT);
-            if (Gdx.input.getX()  MAIN_MENU_X_START && Gdx.input.getX(),  MAIN_MENU_X_END && Gdx.input.getY(),  MAIN_MENU_Y_START && Gdx.input.getY(),  MAIN_MENU_Y_END) {
-
+            if (Gdx.input.getX() > MAIN_MENU_X_START && Gdx.input.getX() < MAIN_MENU_X_END && Gdx.input.getY() > MAIN_MENU_Y_START && Gdx.input.getY() < MAIN_MENU_Y_END) {
+                batch.draw(mainMenuButton, 685, 380, 220, 95);
+                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && gameOver) {
+                    game.setScreen(new MainMenuScreen(game));
+                }
+            }
+            // Ильюша, сладкий, этот код для тебя ;*
+            if (Gdx.input.getX() > NEXT_X_START && Gdx.input.getX() < NEXT_X_END && Gdx.input.getY() > NEXT_Y_START && Gdx.input.getY() < NEXT_Y_END) {
+                batch.draw(nextLevelButton, 970, 380, 220, 95);
+                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && gameOver) {
+                    // Для перехода в след уровень вставь код для открытия окна с уровнем сюда!
+                }
+            }
+        }
+        if (goodCharacter1.getHealth() == 0 && goodCharacter2.getHealth() == 0 && goodCharacter3.getHealth() == 0 && goodCharacter4.getHealth() == 0) {
+            gameOver = true;
+            batch.draw(monstersWinScreen, LOST_SCREEN_X, LOST_SCREEN_Y, LOST_SCREEN_WIDTH, LOST_SCREEN_HEIGHT);
+            if (Gdx.input.getX() > MAIN_MENU2_X_START && Gdx.input.getX() < MAIN_MENU2_X_END && Gdx.input.getY() > MAIN_MENU2_Y_START && Gdx.input.getY() < MAIN_MENU2_Y_END) {
+                batch.draw(mainMenuButton2, 835, 385, 228, 95);
+                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && gameOver) {
+                    game.setScreen(new MainMenuScreen(game));
+                }
             }
         }
         if (wait) {
@@ -324,7 +344,7 @@ public class GameScreen implements Screen {
                     }
                 }
             }
-        } else if (stepCount % 2 == 0) {
+        } else if (stepCount % 2 == 0 && !gameOver) {
             if (goodCharacter1.getMana() < 100 && goodCharacter1.getHealth() > 0) {
                 goodCharacter1.setMana(goodCharacter1.getMana() + 10);
                 if (goodCharacter1.getMana() > 100) {
