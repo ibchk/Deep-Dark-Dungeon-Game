@@ -20,6 +20,26 @@ public class GameScreen implements Screen {
     private static final int VBOI_Y = 300;
     private static final int VBOI_HEIGTH = 50;
     private static final int VBOI_WIDTH = 50;
+    private static final int WIN_SCREEN_X = 650;
+    private static final int WIN_SCREEN_Y = 350;
+    private static final int WIN_SCREEN_WIDTH = 592;
+    private static final int WIN_SCREEN_HEIGHT = 341;
+    private static final int MAIN_MENU_X_START = 690;
+    private static final int MAIN_MENU_Y_START = 580;
+    private static final int MAIN_MENU_X_END = 900;
+    private static final int MAIN_MENU_Y_END = 675;
+    private static final int NEXT_X_START = 970;
+    private static final int NEXT_Y_START = 580;
+    private static final int NEXT_X_END = 1185;
+    private static final int NEXT_Y_END = 675;
+    private static final int LOST_SCREEN_X = 650;
+    private static final int LOST_SCREEN_Y = 350;
+    private static final int LOST_SCREEN_WIDTH = 592;
+    private static final int LOST_SCREEN_HEIGHT = 341;
+    private static final int MAIN_MENU2_X_START = 835;
+    private static final int MAIN_MENU2_Y_START = 580;
+    private static final int MAIN_MENU2_X_END = 1060;
+    private static final int MAIN_MENU2_Y_END = 675;
 
     List<GameObject> heroes;
     List<GameObject> monsters;
@@ -32,6 +52,11 @@ public class GameScreen implements Screen {
     String messageForMonsters;
     BitmapFont font = new BitmapFont();
     private long stepCount = 1;
+    private Texture monstersWinScreen;
+    private Texture mainMenuButton2;
+    private Texture nextLevelButton;
+    private Texture mainMenuButton;
+    private Texture heroesWinScreen;
     private Texture powerShot;
     private Texture attackbutton;
     private Texture attackbuttonacitve;
@@ -75,6 +100,11 @@ public class GameScreen implements Screen {
         defenceButton = new Texture(Gdx.files.internal("defenceButton1.png"));
         aciveDefenceButton = new Texture(Gdx.files.internal("defenceButton2.png"));
         powerShot = new Texture(Gdx.files.internal("pixil-frame-0_1.png"));
+        heroesWinScreen = new Texture(Gdx.files.internal("You_Win_Screen.png"));
+        mainMenuButton = new Texture(Gdx.files.internal("MainMenuSelected.png"));
+        nextLevelButton = new Texture(Gdx.files.internal("NextLevelSelected.png"));
+        monstersWinScreen = new Texture(Gdx.files.internal("YouLostScreen.png"));
+        mainMenuButton2 = new Texture(Gdx.files.internal("MainMenuSelected2.png"));
     }
 
     @Override
@@ -105,6 +135,13 @@ public class GameScreen implements Screen {
         font.draw(batch, "Mn: " + goodCharacter2.getMana(), 315, 400);
         font.draw(batch, "Mn: " + goodCharacter3.getMana(), 515, 400);
         font.draw(batch, "Mn: " + goodCharacter4.getMana(), 715, 400);
+        if (badCharacter1.getHealth() == 0 && badCharacter2.getHealth() == 0 && badCharacter3.getHealth() == 0 && badCharacter4.getHealth() == 0) {
+            gameOver = true;
+            batch.draw(heroesWinScreen, WIN_SCREEN_X, WIN_SCREEN_Y, WIN_SCREEN_WIDTH, WIN_SCREEN_HEIGHT);
+            if (Gdx.input.getX()  MAIN_MENU_X_START && Gdx.input.getX(),  MAIN_MENU_X_END && Gdx.input.getY(),  MAIN_MENU_Y_START && Gdx.input.getY(),  MAIN_MENU_Y_END) {
+
+            }
+        }
         if (wait) {
             try {
                 TimeUnit.SECONDS.sleep(5);
