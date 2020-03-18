@@ -93,18 +93,18 @@ public class GameScreen implements Screen {
         batch.draw(badCharacter2.getTexture(), 1300, (int) badCharacter2.getY(), 200, 220);
         batch.draw(badCharacter3.getTexture(), 1500, (int) badCharacter3.getY(), 200, 220);
         batch.draw(badCharacter4.getTexture(), 1700, (int) badCharacter4.getY(), 200, 220);
-        font.draw(batch, badCharacter1.getHealth() + "", 1200, 400);
-        font.draw(batch, badCharacter2.getHealth() + "", 1400, 400);
-        font.draw(batch, badCharacter3.getHealth() + "", 1600, 400);
-        font.draw(batch, badCharacter4.getHealth() + "", 1800, 400);
-        font.draw(batch, goodCharacter1.getHealth() + "", 80, 400);
-        font.draw(batch, goodCharacter2.getHealth() + "", 280, 400);
-        font.draw(batch, goodCharacter3.getHealth() + "", 480, 400);
-        font.draw(batch, goodCharacter4.getHealth() + "", 680, 400);
-        font.draw(batch, goodCharacter1.getMana() + "", 95, 400);
-        font.draw(batch, goodCharacter2.getMana() + "", 295, 400);
-        font.draw(batch, goodCharacter3.getMana() + "", 495, 400);
-        font.draw(batch, goodCharacter4.getMana() + "", 695, 400);
+        font.draw(batch,  "Hp: " + badCharacter1.getHealth(), 1200, 400);
+        font.draw(batch, "Hp: " + badCharacter2.getHealth(), 1400, 400);
+        font.draw(batch, "Hp: " + badCharacter3.getHealth(), 1600, 400);
+        font.draw(batch, "Hp: " + badCharacter4.getHealth(), 1800, 400);
+        font.draw(batch, "Hp: " + goodCharacter1.getHealth(), 40, 400);
+        font.draw(batch, "Hp: " + goodCharacter2.getHealth(), 240, 400);
+        font.draw(batch, "Hp: " + goodCharacter3.getHealth(), 440, 400);
+        font.draw(batch, "Hp: " + goodCharacter4.getHealth(), 640, 400);
+        font.draw(batch, "Mn: " + goodCharacter1.getMana(), 115, 400);
+        font.draw(batch, "Mn: " + goodCharacter2.getMana(), 315, 400);
+        font.draw(batch, "Mn: " + goodCharacter3.getMana(), 515, 400);
+        font.draw(batch, "Mn: " + goodCharacter4.getMana(), 715, 400);
         if (wait) {
             try {
                 TimeUnit.SECONDS.sleep(5);
