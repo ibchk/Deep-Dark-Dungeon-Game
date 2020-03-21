@@ -5,8 +5,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import ee.taltech.deepdarkdungeon.DeepDarkDungeonGame;
 import ee.taltech.deepdarkdungeon.Models.GameObject;
 import ee.taltech.deepdarkdungeon.Models.PutMusic;
@@ -40,6 +42,9 @@ public class GameScreen implements Screen {
     private static final int MAIN_MENU2_Y_START = 580;
     private static final int MAIN_MENU2_X_END = 1060;
     private static final int MAIN_MENU2_Y_END = 675;
+    private static final int FRAME_COLS = 10;
+    private static final int FRAME_ROWS = 5;
+
 
     List<GameObject> heroes;
     List<GameObject> monsters;
@@ -77,6 +82,13 @@ public class GameScreen implements Screen {
     int openLevelNumber;
     int lvlPlaying;
 
+    Animation monsterAttackAnimation;
+    Texture monsterAttackSheet;
+    TextureRegion[] monsterAttackFrames;
+    TextureRegion currentFrame;
+
+    float stateTime;
+
     public GameScreen(List<GameObject> goodCharacters, List<GameObject> badCharacters, DeepDarkDungeonGame game, PutMusic music, int openLevelNumber, int lvlPlaying) {
         this.lvlPlaying = lvlPlaying;
         this.openLevelNumber = openLevelNumber;
@@ -109,12 +121,25 @@ public class GameScreen implements Screen {
         nextLevelButton = new Texture(Gdx.files.internal("NextLevelSelected.png"));
         monstersWinScreen = new Texture(Gdx.files.internal("YouLostScreen.png"));
         mainMenuButton2 = new Texture(Gdx.files.internal("MainMenuSelected2.png"));
+        monsterAttackSheet = new Texture(Gdx.files.internal("explosionAttack.png"));
+        TextureRegion[][] tmp = TextureRegion.split(monsterAttackSheet, monsterAttackSheet.getWidth()/FRAME_COLS, monsterAttackSheet.getHeight()/FRAME_ROWS);
+        monsterAttackFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+        int index = 0;
+        for (int i = 0; i < FRAME_ROWS; i++) {
+            for (int j = 0; j < FRAME_COLS; j++) {
+                monsterAttackFrames[index++] = tmp[i][j];
+            }
+        }
+        monsterAttackAnimation = new Animation(0.02f, monsterAttackFrames);
+        stateTime = 0f;
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(135 / 255f, 206 / 255f, 235 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        stateTime += Gdx.graphics.getDeltaTime();
+        currentFrame = (TextureRegion) monsterAttackAnimation.getKeyFrame(stateTime, true);
         batch.begin();
         batch.draw(background, 0, 0);
         batch.draw(attackbutton, VBOI_X, VBOI_Y, VBOI_WIDTH, VBOI_HEIGTH);
@@ -143,6 +168,7 @@ public class GameScreen implements Screen {
             if (lvlPlaying == openLevelNumber) {
                 openLevelNumber++;
             }
+            batch.draw(currentFrame, 50, 50, 300, 320);
             gameOver = true;
             batch.draw(heroesWinScreen, WIN_SCREEN_X, WIN_SCREEN_Y, WIN_SCREEN_WIDTH, WIN_SCREEN_HEIGHT);
             if (Gdx.input.getX() > MAIN_MENU_X_START && Gdx.input.getX() < MAIN_MENU_X_END && Gdx.input.getY() > MAIN_MENU_Y_START && Gdx.input.getY() < MAIN_MENU_Y_END) {
