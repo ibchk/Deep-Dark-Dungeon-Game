@@ -5,7 +5,7 @@ import ee.taltech.deepdarkdungeon.Models.GameObject;
 
 public class Paladin extends GameObject {
 
-    public Paladin(Texture picture, String name, int health, int power, double x, double y, double width, double height, CharacterClass characterClass, CharacterType characterType) {
+    public Paladin(Texture picture, String name, int health, int power, int x, int y, double width, double height, CharacterClass characterClass, CharacterType characterType) {
         this.name = name;
         this.texture = picture;
         this.health = health;

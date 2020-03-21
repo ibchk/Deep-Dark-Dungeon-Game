@@ -5,8 +5,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.TimeUtils;
 import ee.taltech.deepdarkdungeon.DeepDarkDungeonGame;
 import ee.taltech.deepdarkdungeon.Models.GameObject;
 import ee.taltech.deepdarkdungeon.Models.PutMusic;
@@ -40,6 +43,9 @@ public class GameScreen implements Screen {
     private static final int MAIN_MENU2_Y_START = 580;
     private static final int MAIN_MENU2_X_END = 1060;
     private static final int MAIN_MENU2_Y_END = 675;
+    private static final int FRAME_COLS = 10;
+    private static final int FRAME_ROWS = 5;
+
 
     List<GameObject> heroes;
     List<GameObject> monsters;
@@ -76,6 +82,17 @@ public class GameScreen implements Screen {
     PutMusic music;
     int openLevelNumber;
     int lvlPlaying;
+    boolean attackAnimationStarted = false;
+    private int attackedHeroX;
+    private int attackedHeroY;
+    int flag = 0;
+
+    Animation monsterAttackAnimation; // анимация
+    Texture monsterAttackSheet; // текстура анимации
+    TextureRegion[] monsterAttackFrames;  // в этом массиве мы храним все кадры конкретной анимации
+    TextureRegion currentFrame; // текуший кадр анимации
+
+    float stateTime; // количество секунд прошедших с начала анимации
 
     public GameScreen(List<GameObject> goodCharacters, List<GameObject> badCharacters, DeepDarkDungeonGame game, PutMusic music, int openLevelNumber, int lvlPlaying) {
         this.lvlPlaying = lvlPlaying;
@@ -109,24 +126,41 @@ public class GameScreen implements Screen {
         nextLevelButton = new Texture(Gdx.files.internal("NextLevelSelected.png"));
         monstersWinScreen = new Texture(Gdx.files.internal("YouLostScreen.png"));
         mainMenuButton2 = new Texture(Gdx.files.internal("MainMenuSelected2.png"));
+        monsterAttackSheet = new Texture(Gdx.files.internal("explosionAttack.png"));
+        // Дальше идет конструктор анимации атаки:
+        TextureRegion[][] tmp = TextureRegion.split(monsterAttackSheet, monsterAttackSheet.getWidth()/FRAME_COLS, monsterAttackSheet.getHeight()/FRAME_ROWS);
+        monsterAttackFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+        int index = 0;
+        for (int i = 0; i < FRAME_ROWS; i++) {
+            for (int j = 0; j < FRAME_COLS; j++) {
+                monsterAttackFrames[index++] = tmp[i][j];
+            }
+        }
+        monsterAttackAnimation = new Animation(0.02f, monsterAttackFrames);
+        monsterAttackAnimation.setPlayMode(Animation.PlayMode.NORMAL);
+        stateTime = 0f;
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(135 / 255f, 206 / 255f, 235 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        // Следующие 2 строчки запускают отсчет времени для анимации и берут необходимый кадр для данного промежутка времени:
+        //stateTime += Gdx.graphics.getDeltaTime();
+        //currentFrame = (TextureRegion) monsterAttackAnimation.getKeyFrame(stateTime, true); //второй параметр нужен для зацикленности анимации
+        //
         batch.begin();
         batch.draw(background, 0, 0);
         batch.draw(attackbutton, VBOI_X, VBOI_Y, VBOI_WIDTH, VBOI_HEIGTH);
         batch.draw(defenceButton, VBOI_X, VBOI_Y - 70, VBOI_WIDTH, VBOI_HEIGTH);
-        batch.draw(goodCharacter1.getTexture(), 0, 400, 200, 220); // рисует персанажа (картинка)
-        batch.draw(goodCharacter2.getTexture(), 200, 450, 200, 220);
-        batch.draw(goodCharacter3.getTexture(), 400, 400, 200, 220);
-        batch.draw(goodCharacter4.getTexture(), 600, 450, 200, 220);
-        batch.draw(badCharacter1.getTexture(), 1100, (int) badCharacter1.getY(), 200, 220);
-        batch.draw(badCharacter2.getTexture(), 1300, (int) badCharacter2.getY(), 200, 220);
-        batch.draw(badCharacter3.getTexture(), 1500, (int) badCharacter3.getY(), 200, 220);
-        batch.draw(badCharacter4.getTexture(), 1700, (int) badCharacter4.getY(), 200, 220);
+        batch.draw(goodCharacter1.getTexture(), goodCharacter1.getX(), goodCharacter1.getY(), 200, 220); // рисует персанажа (картинка)
+        batch.draw(goodCharacter2.getTexture(), goodCharacter2.getX(), goodCharacter2.getY(), 200, 220);
+        batch.draw(goodCharacter3.getTexture(), goodCharacter3.getX(), goodCharacter3.getY(), 200, 220);
+        batch.draw(goodCharacter4.getTexture(), goodCharacter4.getX(), goodCharacter4.getY(), 200, 220);
+        batch.draw(badCharacter1.getTexture(), badCharacter1.getX(), badCharacter1.getY(), 200, 220);
+        batch.draw(badCharacter2.getTexture(), badCharacter2.getX(), badCharacter2.getY(), 200, 220);
+        batch.draw(badCharacter3.getTexture(), badCharacter3.getX(), badCharacter3.getY(), 200, 220);
+        batch.draw(badCharacter4.getTexture(), badCharacter4.getX(), badCharacter4.getY(), 200, 220);
         font.draw(batch, "Hp: " + badCharacter1.getHealth(), 1200, 400);
         font.draw(batch, "Hp: " + badCharacter2.getHealth(), 1400, 400);
         font.draw(batch, "Hp: " + badCharacter3.getHealth(), 1600, 400);
@@ -139,7 +173,26 @@ public class GameScreen implements Screen {
         font.draw(batch, "Mn: " + goodCharacter2.getMana(), 315, 400);
         font.draw(batch, "Mn: " + goodCharacter3.getMana(), 515, 400);
         font.draw(batch, "Mn: " + goodCharacter4.getMana(), 715, 400);
-        if (badCharacter1.getHealth() == 0 && badCharacter2.getHealth() == 0 && badCharacter3.getHealth() == 0 && badCharacter4.getHealth() == 0) {
+
+        if (attackAnimationStarted) {
+            font.draw(batch, "Monsters turn! " + stepCount, 100, 1000);// Вызывает текст, тут например power персанажа
+            font.draw(batch, messageForMonsters, 100, 950);
+            font.draw(batch, message, 100, 900 );
+            flag++;
+            if (flag > 100) {
+                stateTime += Gdx.graphics.getDeltaTime();
+                currentFrame = (TextureRegion) monsterAttackAnimation.getKeyFrame(stateTime);
+                batch.draw(currentFrame, attackedHeroX - 50, attackedHeroY, 300, 320);
+            }
+            if (monsterAttackAnimation.isAnimationFinished(stateTime) && flag > 200) {
+                flag = 0;
+                attackAnimationStarted = false;
+                stateTime = 0f;
+                stepCount++;
+            }
+        }
+
+        if (badCharacter1.getHealth() == 0 && badCharacter2.getHealth() == 0 && badCharacter3.getHealth() == 0 && badCharacter4.getHealth() == 0 && !attackAnimationStarted) {
             if (lvlPlaying == openLevelNumber) {
                 openLevelNumber++;
             }
@@ -158,11 +211,10 @@ public class GameScreen implements Screen {
                     music.stopMusic();
                     music = new PutMusic("startMelody.mp3");
                     game.setScreen(new SingleGameChooseScreen(game, openLevelNumber, music));
-                    // Для перехода в след уровень вставь код для открытия окна с уровнем сюда!
                 }
             }
         }
-        if (goodCharacter1.getHealth() == 0 && goodCharacter2.getHealth() == 0 && goodCharacter3.getHealth() == 0 && goodCharacter4.getHealth() == 0) {
+        if (goodCharacter1.getHealth() == 0 && goodCharacter2.getHealth() == 0 && goodCharacter3.getHealth() == 0 && goodCharacter4.getHealth() == 0 && !attackAnimationStarted) {
             gameOver = true;
             batch.draw(monstersWinScreen, LOST_SCREEN_X, LOST_SCREEN_Y, LOST_SCREEN_WIDTH, LOST_SCREEN_HEIGHT);
             if (Gdx.input.getX() > MAIN_MENU2_X_START && Gdx.input.getX() < MAIN_MENU2_X_END && Gdx.input.getY() > MAIN_MENU2_Y_START && Gdx.input.getY() < MAIN_MENU2_Y_END) {
@@ -172,15 +224,15 @@ public class GameScreen implements Screen {
                 }
             }
         }
-        if (wait) {
-            try {
-                TimeUnit.SECONDS.sleep(5);
-                wait = false;
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        if (stepCount % 2 != 0 && !gameOver) {
+        //if (wait) {
+            //try {
+                //TimeUnit.SECONDS.sleep(5);
+                //wait = false;
+            //} catch (InterruptedException e) {
+                //e.printStackTrace();
+            //}
+        //}
+        if (stepCount % 2 != 0 && !gameOver && !attackAnimationStarted) {
             if (WHOWILLATTACK == 4) {
                 WHOWILLATTACK = 0;
             }
@@ -354,7 +406,7 @@ public class GameScreen implements Screen {
                     }
                 }
             }
-        } else if (stepCount % 2 == 0 && !gameOver) {
+        } else if (stepCount % 2 == 0 && !gameOver && !attackAnimationStarted) {
             if (goodCharacter1.getMana() < 100 && goodCharacter1.getHealth() > 0) {
                 goodCharacter1.setMana(goodCharacter1.getMana() + 10);
                 if (goodCharacter1.getMana() > 100) {
@@ -379,62 +431,68 @@ public class GameScreen implements Screen {
                     goodCharacter4.setMana(100);
                 }
             }
-            font.draw(batch, "Monsters turn! " + stepCount, 100, 1000);// Вызывает текст, тут например power персанажа
-            font.draw(batch, messageForMonsters, 100, 950);
             batch.draw(attacker.getTexture(), 40, 130, 200, 220);
             if (badCharacter1.getHealth() > 0) {
                 for (GameObject hero : heroes) {
                     if (hero.getHealth() > 0) {
+                        attackAnimationStarted = true;
                         message = badCharacter1.getName() + " attached " + hero.getName() + "." + "\n" + hero.getName() + " got " + badCharacter1.getPower() + " damage!";
                         font.draw(batch, message, 100, 900);
                         hero.setHealth(Math.max(hero.getHealth() - badCharacter1.getPower(), 0));
                         if (hero.getHealth() == 0) {
                             message += "\n" + hero.getName() + " is dead!";
                         }
-                        stepCount++;
-                        wait = true;
+                        attackedHeroX = hero.getX();
+                        attackedHeroY = hero.getY();
+                        //wait = true;
                         break;
                     }
                 }
             } else if (badCharacter2.getHealth() > 0) {
                 for (GameObject hero : heroes) {
                     if (hero.getHealth() > 0) {
+                        attackAnimationStarted = true;
                         message = badCharacter2.getName() + " attached " + hero.getName() + "." + "\n" + hero.getName() + " got " + badCharacter2.getPower() + " damage!";
                         font.draw(batch, message, 100, 900);
                         hero.setHealth(Math.max(hero.getHealth() - badCharacter2.getPower(), 0));
                         if (hero.getHealth() == 0) {
                             message += "\n" + hero.getName() + " is dead!";
                         }
-                        stepCount++;
-                        wait = true;
+                        attackedHeroX = hero.getX();
+                        attackedHeroY = hero.getY();
+                        //wait = true;
                         break;
                     }
                 }
             } else if (badCharacter3.getHealth() > 0) {
                 for (GameObject hero : heroes) {
                     if (hero.getHealth() > 0) {
+                        attackAnimationStarted = true;
                         message = badCharacter3.getName() + " attached " + hero.getName() + "." + "\n" + hero.getName() + " got " + badCharacter3.getPower() + " damage!";
                         font.draw(batch, message, 100, 900);
                         hero.setHealth(Math.max(hero.getHealth() - badCharacter3.getPower(), 0));
                         if (hero.getHealth() == 0) {
                             message += "\n" + hero.getName() + " is dead!";
                         }
-                        stepCount++;
-                        wait = true;
+                        attackedHeroX = hero.getX();
+                        attackedHeroY = hero.getY();
+                        //wait = true;
                         break;
                     }
                 }
             } else if (badCharacter4.getHealth() > 0) {
                 for (GameObject hero : heroes) {
                     if (hero.getHealth() > 0) {
+                        attackAnimationStarted = true;
                         message = badCharacter4.getName() + " attached " + hero.getName() + "." + "\n" + hero.getName() + " got " + badCharacter4.getPower() + " damage!";
                         font.draw(batch, message, 100, 900);
                         hero.setHealth(Math.max(hero.getHealth() - badCharacter4.getPower(), 0));
                         if (hero.getHealth() == 0) {
                             message += "\n" + hero.getName() + " is dead!";
                         }
-                        stepCount++;
-                        wait = true;
+                        attackedHeroX = hero.getX();
+                        attackedHeroY = hero.getY();
+                        //wait = true;
                         break;
                     }
                 }
