@@ -8,15 +8,15 @@ public class GoodCharacter extends GameObject {
     String name;
     int health;
     int power;
-    double x;
-    double y;
+    int x;
+    int y;
     double width;
     double height;
     CharacterType characterType;
     Texture picture;
 
 
-    public GoodCharacter(Texture texture, String name, CharacterType characterType, int power, int health, double x, double y, double width, double height) {
+    public GoodCharacter(Texture texture, String name, CharacterType characterType, int power, int health, int x, int y, double width, double height) {
         this.x = x;
         this.y = y;
         this.width = width;

@@ -26,8 +26,8 @@ public abstract class GameObject {
     public CharacterClass characterClass;
     public int power;
     public int health;
-    public double x;
-    public double y;
+    public int x;
+    public int y;
     public double width;
     public double height;
 
@@ -95,19 +95,19 @@ public abstract class GameObject {
         this.health = health;
     }
 
-    public double getX() {
+    public int getX() {
         return x;
     }
 
-    public void setX(double x) {
+    public void setX(int x) {
         this.x = x;
     }
 
-    public double getY() {
+    public int getY() {
         return y;
     }
 
-    public void setY(double y) {
+    public void setY(int y) {
         this.y = y;
     }
 
@@ -132,7 +132,7 @@ public abstract class GameObject {
     public enum BadCharacterClass {ZOMBIE, SKELETON_WARRIOR, SKELETON_ARCHER, NECROMANCER}
     public enum CharacterType {GOOD1, GOOD2, GOOD3, GOOD4, BAD1, BAD2, BAD3, BAD4}
 
-    public GameObject createCharacter(Texture texture, String name, CharacterType characterType, CharacterClass characterClass, int power, int health, double x, double y, double width, double height) {
+    public GameObject createCharacter(Texture texture, String name, CharacterType characterType, CharacterClass characterClass, int power, int health, int x, int y, double width, double height) {
         GameObject object = null;
         switch (characterType) {
             case GOOD1:
@@ -155,12 +155,12 @@ public abstract class GameObject {
             default:
                 throw new IllegalStateException("Unexpected value: " + characterType);
         }
-        this.bounds = new Rectangle((int) x, (int) y, (int) width, (int) height);
+        this.bounds = new Rectangle(x, y, (int) width, (int) height);
         this.object = new Sprite(getTexture());
         return object;
     }
 
-    public GameObject createBadCharacter(Texture texture, String name, CharacterType badCharacterType, BadCharacterClass badCharacterClass, int power, int health, double x, double y, double width, double height) {
+    public GameObject createBadCharacter(Texture texture, String name, CharacterType badCharacterType, BadCharacterClass badCharacterClass, int power, int health, int x, int y, double width, double height) {
         GameObject object = null;
         switch (badCharacterType) {
             case BAD1:
@@ -183,7 +183,7 @@ public abstract class GameObject {
             default:
                 throw new IllegalStateException("Unexpected value: " + badCharacterType);
         }
-        this.bounds = new Rectangle((int) x, (int) y, (int) width, (int) height);
+        this.bounds = new Rectangle(x, y, (int) width, (int) height);
         this.object = new Sprite(getTexture());
         return object;
     }
