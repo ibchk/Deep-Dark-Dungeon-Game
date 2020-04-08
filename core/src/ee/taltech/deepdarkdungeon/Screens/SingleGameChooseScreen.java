@@ -183,7 +183,6 @@ public class SingleGameChooseScreen implements Screen {
         rightBadCharacters.add(badCharacter4);
         for (int i = 1; i <= openLevelNumber; i++){
             prefs.putBoolean("level" + i, true); // counts open lvls.
-            System.out.println(i);
         }
     }
 
