@@ -165,9 +165,9 @@ public class SingleGameChooseScreen implements Screen {
         this.openLevelNumber = openLevelNumber;
         this.music = music;
         this.game = game;
-        goodCharacter1 = new Warrior(new Texture(Gdx.files.internal("GoodCharacter1.png")), "Char1", 10, 10, 0, 400, 200, 277, GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD1);
+        goodCharacter1 = new Warrior(new Texture(Gdx.files.internal("GoodCharacter1.png")), "Char1", 100, 10, 0, 400, 200, 277, GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD1);
         goodCharacter2 = new Archer(new Texture(Gdx.files.internal("GoodCharacter2.png")), "Char2", 10, 10, 200, 450, 200, 277, GameObject.CharacterClass.ARCHER, GameObject.CharacterType.GOOD2);
-        goodCharacter3 = new Magic(new Texture(Gdx.files.internal("GoodCharacter3.png")), "Char3", 10, 10, 400, 400, 200, 277, GameObject.CharacterClass.MAGIC, GameObject.CharacterType.GOOD3);
+        goodCharacter3 = new Magic(new Texture(Gdx.files.internal("GoodCharacter3.png")), "Char3", 20, 10, 400, 400, 200, 277, GameObject.CharacterClass.MAGIC, GameObject.CharacterType.GOOD3);
         goodCharacter4 = new Paladin(new Texture(Gdx.files.internal("GoodCharacter4.png")), "Char4", 10, 10, 600, 450, 200, 277, GameObject.CharacterClass.PALADIN, GameObject.CharacterType.GOOD4);
         badCharacter1 = new Necromancer(new Texture(Gdx.files.internal("BadCharacter1.png")), "Necromancer", 100, 10, 1100, 450, 200, 277, GameObject.BadCharacterClass.NECROMANCER, GameObject.CharacterType.BAD1);
         badCharacter2 = new Zombie(new Texture(Gdx.files.internal("BadCharacter2.png")), "Zombie", 100, 10, 1300, 400, 200, 277, GameObject.BadCharacterClass.ZOMBIE, GameObject.CharacterType.BAD2);

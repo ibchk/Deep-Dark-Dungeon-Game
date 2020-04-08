@@ -44,6 +44,8 @@ public class GameScreen implements Screen {
     private static final int MAIN_MENU2_Y_END = 675;
     private static final int FRAME_COLS = 10;
     private static final int FRAME_ROWS = 5;
+    private static final int FRAME_COLS_MONSTERS_ATTACK = 5;
+    private static final int FRAME_ROWS_MONSTERS_ATTACK = 3;
 
 
     List<GameObject> heroes;
@@ -92,12 +94,18 @@ public class GameScreen implements Screen {
     private GameObject attackedMonster;
     Random random = new Random();
 
+    Animation sunstrikeAnimation; // анимация
+    Texture sunstrikeSheet; // текстура анимации
+    TextureRegion[] sunstrikeFrames;  // в этом массиве мы храним все кадры конкретной анимации
+    TextureRegion currentSunstrikeFrame; // текуший кадр анимации
+
+    float stateTime; // количество секунд прошедших с начала анимации
+
     Animation monsterAttackAnimation; // анимация
     Texture monsterAttackSheet; // текстура анимации
     TextureRegion[] monsterAttackFrames;  // в этом массиве мы храним все кадры конкретной анимации
-    TextureRegion currentFrame; // текуший кадр анимации
-
-    float stateTime; // количество секунд прошедших с начала анимации
+    TextureRegion currentMonsterAttackFrame; // текуший кадр анимации
+    float stateTimeMonsterAttack;
 
     public GameScreen(List<GameObject> goodCharacters, List<GameObject> badCharacters, DeepDarkDungeonGame game, PutMusic music, int openLevelNumber, int lvlPlaying) {
         this.lvlPlaying = lvlPlaying;
@@ -131,29 +139,43 @@ public class GameScreen implements Screen {
         nextLevelButton = new Texture(Gdx.files.internal("NextLevelSelected.png"));
         monstersWinScreen = new Texture(Gdx.files.internal("YouLostScreen.png"));
         mainMenuButton2 = new Texture(Gdx.files.internal("MainMenuSelected2.png"));
-        monsterAttackSheet = new Texture(Gdx.files.internal("explosionAttack.png"));
-        // Дальше идет конструктор анимации атаки:
-        TextureRegion[][] tmp = TextureRegion.split(monsterAttackSheet, monsterAttackSheet.getWidth()/FRAME_COLS, monsterAttackSheet.getHeight()/FRAME_ROWS);
-        monsterAttackFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+        sunstrikeSheet = new Texture(Gdx.files.internal("explosionAttack.png"));
+        monsterAttackSheet = new Texture(Gdx.files.internal("newMonsterAttackAnimation.png"));
+        // Дальше идет конструктор анимации: (это анимация санстрайка здесь менять ничего не нужно)
+        TextureRegion[][] tmp = TextureRegion.split(sunstrikeSheet, sunstrikeSheet.getWidth()/FRAME_COLS, sunstrikeSheet.getHeight()/FRAME_ROWS);
+        sunstrikeFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
         int index = 0;
         for (int i = 0; i < FRAME_ROWS; i++) {
             for (int j = 0; j < FRAME_COLS; j++) {
-                monsterAttackFrames[index++] = tmp[i][j];
+                sunstrikeFrames[index++] = tmp[i][j];
+            }
+        }
+        sunstrikeAnimation = new Animation(0.02f, sunstrikeFrames);
+        sunstrikeAnimation.setPlayMode(Animation.PlayMode.NORMAL);
+        stateTime = 0f;
+
+        // Monster Attack Animation:
+
+        TextureRegion[][] tmp2 = TextureRegion.split(monsterAttackSheet, monsterAttackSheet.getWidth()/FRAME_COLS_MONSTERS_ATTACK, monsterAttackSheet.getHeight()/FRAME_ROWS_MONSTERS_ATTACK);
+        monsterAttackFrames = new TextureRegion[FRAME_COLS_MONSTERS_ATTACK * FRAME_ROWS_MONSTERS_ATTACK];
+        int index2 = 0;
+        for (int i = 0; i < FRAME_ROWS_MONSTERS_ATTACK; i++) {
+            for (int j = 0; j < FRAME_COLS_MONSTERS_ATTACK; j++) {
+                monsterAttackFrames[index2++] = tmp2[i][j];
             }
         }
         monsterAttackAnimation = new Animation(0.02f, monsterAttackFrames);
         monsterAttackAnimation.setPlayMode(Animation.PlayMode.NORMAL);
-        stateTime = 0f;
+        stateTimeMonsterAttack = 0f;
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(135 / 255f, 206 / 255f, 235 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        // Следующие 2 строчки запускают отсчет времени для анимации и берут необходимый кадр для данного промежутка времени:
+        // Следующие 2 строчки (для санстрайка!!!) запускают отсчет времени для анимации и берут необходимый кадр для данного промежутка времени:
         //stateTime += Gdx.graphics.getDeltaTime();
-        //currentFrame = (TextureRegion) monsterAttackAnimation.getKeyFrame(stateTime, true); //второй параметр нужен для зацикленности анимации
-        //
+        //currentFrame = (TextureRegion) monsterAttackAnimation.getKeyFrame(stateTime);
         batch.begin();
         batch.draw(background, 0, 0);
         batch.draw(attackbutton, VBOI_X, VBOI_Y, VBOI_WIDTH, VBOI_HEIGTH);
@@ -205,14 +227,14 @@ public class GameScreen implements Screen {
                 monsterDamage = "";
                 font.draw(batch, message, 100, 900 );
                 font.draw(batch, heroDamage, attackedHeroX + 90, attackedHeroY + 250);
-                stateTime += Gdx.graphics.getDeltaTime();
-                currentFrame = (TextureRegion) monsterAttackAnimation.getKeyFrame(stateTime);
-                batch.draw(currentFrame, attackedHeroX - 50, attackedHeroY, 300, 320);
+                stateTimeMonsterAttack += Gdx.graphics.getDeltaTime();
+                currentMonsterAttackFrame = (TextureRegion) monsterAttackAnimation.getKeyFrame(stateTimeMonsterAttack);
+                batch.draw(currentMonsterAttackFrame, attackedHeroX, attackedHeroY - 20, 300, 320);
             }
-            if (monsterAttackAnimation.isAnimationFinished(stateTime) && flag > 200) {
+            if (monsterAttackAnimation.isAnimationFinished(stateTimeMonsterAttack) && flag > 200) {
                 flag = 0;
                 attackAnimationStarted = false;
-                stateTime = 0f;
+                stateTimeMonsterAttack = 0f;
                 stepCount++;
             }
         }
