@@ -263,12 +263,60 @@ public class GameScreen implements Screen {
             }
             if (WHOWILLATTACK == 0) {
                 attacker = goodCharacter1;
+                if (attacker.getHealth() <= 0) {
+                    WHOWILLATTACK++;
+                    attacker = goodCharacter2;
+                    if (attacker.getHealth() <= 0) {
+                        WHOWILLATTACK++;
+                        attacker = goodCharacter3;
+                        if (attacker.getHealth() <= 0) {
+                            WHOWILLATTACK++;
+                            attacker = goodCharacter4;
+                        }
+                    }
+                }
             } else if (WHOWILLATTACK == 1) {
                 attacker = goodCharacter2;
+                if (attacker.getHealth() <= 0) {
+                    WHOWILLATTACK++;
+                    attacker = goodCharacter3;
+                    if (attacker.getHealth() <= 0) {
+                        WHOWILLATTACK++;
+                        attacker = goodCharacter4;
+                        if (attacker.getHealth() <= 0) {
+                            WHOWILLATTACK++;
+                            attacker = goodCharacter1;
+                        }
+                    }
+                }
             } else if (WHOWILLATTACK == 2) {
                 attacker = goodCharacter3;
+                if (attacker.getHealth() <= 0) {
+                    WHOWILLATTACK++;
+                    attacker = goodCharacter4;
+                    if (attacker.getHealth() <= 0) {
+                        WHOWILLATTACK++;
+                        attacker = goodCharacter1;
+                        if (attacker.getHealth() <= 0) {
+                            WHOWILLATTACK++;
+                            attacker = goodCharacter2;
+                        }
+                    }
+                }
             } else {
                 attacker = goodCharacter4;
+                if (attacker.getHealth() <= 0) {
+                    WHOWILLATTACK++;
+                    attacker = goodCharacter1;
+                    if (attacker.getHealth() <= 0) {
+                        WHOWILLATTACK++;
+                        attacker = goodCharacter2;
+                        if (attacker.getHealth() <= 0) {
+                            WHOWILLATTACK++;
+                            attacker = goodCharacter3;
+                        }
+                    }
+                }
             }
             font.draw(batch, "Health: ", 300, 200);
             font.draw(batch, attacker.getHealth() + "", 360, 200);
