@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -24,7 +25,7 @@ import ee.taltech.deepdarkdungeon.Models.CharacterCreating;
 
 import java.util.*;
 
-public class SingleGameChooseScreen implements Screen {
+public class SingleGameChooseScreen<FreeTypeFontParameter> implements Screen {
     private static final int PLAY_BUTTON_WIDTH = 250;
     private static final int PLAY_BUTTON_HEIGHT = 78;
     private static final int PLAY_BUTTON_Y_START = 870;
@@ -490,7 +491,17 @@ public class SingleGameChooseScreen implements Screen {
         if (infoWind) {
             batch.draw(infoWindow, INFOWINDOW_START_X, INFOWINDOW_START_Y, INFOWINDOW_WIDTH, INFOWINDOW_HEIGHT);
             batch.draw(closeButton1, INFOWINDOW_START_X + INFOWINDOW_WIDTH - 100, INFOWINDOW_START_Y + INFOWINDOW_HEIGHT - 100, 60, 60);
-            batch.draw(objectForInfo.getTexture(), INFOWINDOW_START_X + 100, INFOWINDOW_START_Y + INFOWINDOW_HEIGHT - FORTHCHAR_HEIGHT - 100, FORTHCHAR_WIDTH, FORTHCHAR_HEIGHT);
+            batch.draw(objectForInfo.getTexture(), INFOWINDOW_START_X + 60, INFOWINDOW_START_Y + INFOWINDOW_HEIGHT - FORTHCHAR_HEIGHT - 60, FORTHCHAR_WIDTH, FORTHCHAR_HEIGHT);
+            Color fontColor = new Color(Color.rgb888(0f, 0f, 85f));
+            font.setColor(new Color(fontColor));
+            font.getData().setScale(2);
+            font.draw(batch, objectForInfo.getName(), INFOWINDOW_START_X + 60, INFOWINDOW_START_Y + INFOWINDOW_HEIGHT - FORTHCHAR_HEIGHT - 100);
+            fontColor = new Color(Color.rgb888(0f, 0f, 102f));
+            font.setColor(new Color(fontColor));
+            font.getData().setScale(1.7f);
+            font.draw(batch, "Health: " + objectForInfo.getHealth(), INFOWINDOW_START_X + 60, INFOWINDOW_START_Y + INFOWINDOW_HEIGHT - FORTHCHAR_HEIGHT - 135);
+            font.draw(batch, "Power: " + objectForInfo.getPower(), INFOWINDOW_START_X + 60, INFOWINDOW_START_Y + INFOWINDOW_HEIGHT - FORTHCHAR_HEIGHT - 165);
+            font.draw(batch, "Mana: " + objectForInfo.getMana(), INFOWINDOW_START_X + 60, INFOWINDOW_START_Y + INFOWINDOW_HEIGHT - FORTHCHAR_HEIGHT - 195);
             if (Gdx.input.getX() > INFOWINDOW_START_X + INFOWINDOW_WIDTH - 100 && Gdx.input.getX() < INFOWINDOW_START_X + INFOWINDOW_WIDTH - 40 && Gdx.input.getY() > INFOWINDOW_START_Y && Gdx.input.getY() < INFOWINDOW_START_Y + 60) {
                 batch.draw(closeButton2, INFOWINDOW_START_X + INFOWINDOW_WIDTH - 100, INFOWINDOW_START_Y + INFOWINDOW_HEIGHT - 100, 60, 60);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
