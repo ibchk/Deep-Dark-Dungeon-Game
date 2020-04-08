@@ -9,13 +9,11 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.TimeUtils;
 import ee.taltech.deepdarkdungeon.DeepDarkDungeonGame;
 import ee.taltech.deepdarkdungeon.Models.GameObject;
 import ee.taltech.deepdarkdungeon.Models.PutMusic;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 public class GameScreen implements Screen {
     private static int WHOWILLATTACK = 0;
@@ -86,6 +84,11 @@ public class GameScreen implements Screen {
     private int attackedHeroX;
     private int attackedHeroY;
     int flag = 0;
+
+    private String monsterDamage;
+    private String heroDamage;
+
+    private GameObject attackedMonster;
 
     Animation monsterAttackAnimation; // анимация
     Texture monsterAttackSheet; // текстура анимации
@@ -175,11 +178,14 @@ public class GameScreen implements Screen {
         font.draw(batch, "Mn: " + goodCharacter4.getMana(), 715, 400);
 
         if (attackAnimationStarted) {
-            font.draw(batch, "Monsters turn! " + stepCount, 100, 1000);// Вызывает текст, тут например power персанажа
+            font.draw(batch, "Monsters turn! " + stepCount, 100, 1000);
             font.draw(batch, messageForMonsters, 100, 950);
-            font.draw(batch, message, 100, 900 );
+            font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 250);
             flag++;
             if (flag > 100) {
+                monsterDamage = "";
+                font.draw(batch, message, 100, 900 );
+                font.draw(batch, heroDamage, attackedHeroX + 90, attackedHeroY + 250);
                 stateTime += Gdx.graphics.getDeltaTime();
                 currentFrame = (TextureRegion) monsterAttackAnimation.getKeyFrame(stateTime);
                 batch.draw(currentFrame, attackedHeroX - 50, attackedHeroY, 300, 320);
@@ -251,6 +257,7 @@ public class GameScreen implements Screen {
             font.draw(batch, attacker.getMana() + "", 360, 150);
             font.draw(batch, "Your turn! " + stepCount, 100, 1000); // Вызывает текст, тут например power персанажа
             batch.draw(attacker.getTexture(), 40, 130, 200, 220);
+            monsterDamage = "-" + attacker.getPower() + "HP";
             if (stepCount > 1) {
                 font.draw(batch, "In last step " + message, 100, 900);
             }
@@ -278,7 +285,8 @@ public class GameScreen implements Screen {
             }
             if (Gdx.input.getX() > badCharacter1.getX() && Gdx.input.getX() < badCharacter1.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > badCharacter1.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < badCharacter1.getY() + 300) {
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked && badCharacter1.getHealth() > 0) {
-                    messageForMonsters = "You attacked " + badCharacter1.getName() + " with damage " + attacker.getPower();
+                    messageForMonsters = "You attacked " + badCharacter1.getName();
+                    attackedMonster = badCharacter1;
                     badCharacter1.setHealth(Math.max(badCharacter1.getHealth() - attacker.getPower(), 0));
                     stepCount += 1;
                     canbeattacked = false;
@@ -292,7 +300,8 @@ public class GameScreen implements Screen {
                         //start++;
                         //batch.draw(powerShot, start += 0.000000000000000001, (int) attacker.getY() + 100, 150, 150);
                         //}
-                        messageForMonsters = "You powershoted " + badCharacter1.getName() + " with damage 100";
+                        messageForMonsters = "You powershoted " + badCharacter1.getName();
+                        monsterDamage = "-100HP";
                         batch.draw(powerShot, (int) attacker.getX() + 185, (int) attacker.getY() - 25, 150, 150);
                         wait = true;
                         badCharacter1.setHealth(Math.max(badCharacter1.getHealth() - 100, 0));
@@ -316,14 +325,16 @@ public class GameScreen implements Screen {
             }
             if (Gdx.input.getX() > badCharacter2.getX() && Gdx.input.getX() < badCharacter2.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > badCharacter2.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < badCharacter2.getY() + 300) {
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked && badCharacter2.getHealth() > 0) {
-                    messageForMonsters = "You attacked " + badCharacter2.getName() + " with damage " + attacker.getPower();
+                    messageForMonsters = "You attacked " + badCharacter2.getName();
+                    attackedMonster = badCharacter2;
                     badCharacter2.setHealth(Math.max(badCharacter2.getHealth() - attacker.getPower(), 0));
                     stepCount += 1;
                     canbeattacked = false;
                     WHOWILLATTACK++;
                 } else if (skillIsPressed && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && badCharacter2.getHealth() > 0) {
                     if (attacker.getSkill().equals("powershot")) {
-                        messageForMonsters = "You powershoted " + badCharacter2.getName() + " with damage 100";
+                        messageForMonsters = "You powershoted " + badCharacter2.getName();
+                        monsterDamage = "-100HP";
                         batch.draw(powerShot, (int) attacker.getX() + 185, (int) attacker.getY() - 25, 150, 150);
                         wait = true;
                         badCharacter2.setHealth(Math.max(badCharacter2.getHealth() - 100, 0));
@@ -347,14 +358,16 @@ public class GameScreen implements Screen {
             }
             if (Gdx.input.getX() > badCharacter3.getX() && Gdx.input.getX() < badCharacter3.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > badCharacter3.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < badCharacter3.getY() + 300) {
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked && badCharacter3.getHealth() > 0) {
-                    messageForMonsters = "You attacked " + badCharacter3.getName() + " with damage " + attacker.getPower(); //замени goodCharacter1 на персанажа который атакует в данный момент
+                    messageForMonsters = "You attacked " + badCharacter3.getName();
+                    attackedMonster = badCharacter3;
                     badCharacter3.setHealth(Math.max(badCharacter3.getHealth() - attacker.getPower(), 0)); //замени goodCharacter1 на персанажа который атакует в данный момент, эта строчка отвечает за нанесение урона монстру.
                     stepCount += 1;
                     canbeattacked = false;
                     WHOWILLATTACK++;
                 } else if (skillIsPressed && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && badCharacter3.getHealth() > 0) {
                     if (attacker.getSkill().equals("powershot")) {
-                        messageForMonsters = "You powershoted " + badCharacter3.getName() + " with damage 100";
+                        messageForMonsters = "You powershoted " + badCharacter3.getName();
+                        monsterDamage = "-100HP";
                         batch.draw(powerShot, (int) attacker.getX() + 185, (int) attacker.getY() - 25, 150, 150);
                         wait = true;
                         badCharacter3.setHealth(Math.max(badCharacter3.getHealth() - 100, 0));
@@ -378,14 +391,16 @@ public class GameScreen implements Screen {
             }
             if (Gdx.input.getX() > badCharacter4.getX() && Gdx.input.getX() < badCharacter4.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > badCharacter4.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < badCharacter4.getY() + 300) {
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked && badCharacter4.getHealth() > 0) {
-                    messageForMonsters = "You attacked " + badCharacter4.getName() + " with damage " + attacker.getPower(); //замени goodCharacter1 на персанажа который атакует в данный момент
+                    messageForMonsters = "You attacked " + badCharacter4.getName();
+                    attackedMonster = badCharacter4;
                     badCharacter4.setHealth(Math.max(badCharacter4.getHealth() - attacker.getPower(), 0)); //замени goodCharacter1 на персанажа который атакует в данный момент, эта строчка отвечает за нанесение урона монстру.
                     stepCount += 1;
                     canbeattacked = false;
                     WHOWILLATTACK++;
                 } else if (skillIsPressed && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && badCharacter4.getHealth() > 0) {
                     if (attacker.getSkill().equals("powershot")) {
-                        messageForMonsters = "You powershoted " + badCharacter4.getName() + " with damage 100";
+                        messageForMonsters = "You powershoted " + badCharacter4.getName();
+                        monsterDamage = "-100HP";
                         batch.draw(powerShot, (int) attacker.getX() + 185, (int) attacker.getY() - 25, 150, 150);
                         wait = true;
                         badCharacter4.setHealth(Math.max(badCharacter4.getHealth() - 100, 0));
@@ -406,6 +421,8 @@ public class GameScreen implements Screen {
                     }
                 }
             }
+
+
         } else if (stepCount % 2 == 0 && !gameOver && !attackAnimationStarted) {
             if (goodCharacter1.getMana() < 100 && goodCharacter1.getHealth() > 0) {
                 goodCharacter1.setMana(goodCharacter1.getMana() + 10);
@@ -436,8 +453,8 @@ public class GameScreen implements Screen {
                 for (GameObject hero : heroes) {
                     if (hero.getHealth() > 0) {
                         attackAnimationStarted = true;
-                        message = badCharacter1.getName() + " attached " + hero.getName() + "." + "\n" + hero.getName() + " got " + badCharacter1.getPower() + " damage!";
-                        font.draw(batch, message, 100, 900);
+                        message = badCharacter1.getName() + " attached " + hero.getName();
+                        heroDamage = "-" + badCharacter1.getPower() + "HP";
                         hero.setHealth(Math.max(hero.getHealth() - badCharacter1.getPower(), 0));
                         if (hero.getHealth() == 0) {
                             message += "\n" + hero.getName() + " is dead!";
@@ -452,8 +469,9 @@ public class GameScreen implements Screen {
                 for (GameObject hero : heroes) {
                     if (hero.getHealth() > 0) {
                         attackAnimationStarted = true;
-                        message = badCharacter2.getName() + " attached " + hero.getName() + "." + "\n" + hero.getName() + " got " + badCharacter2.getPower() + " damage!";
-                        font.draw(batch, message, 100, 900);
+                        message = badCharacter2.getName() + " attached " + hero.getName();
+                        heroDamage = "-" + badCharacter2.getPower() + "HP";
+                        font.draw(batch, heroDamage, hero.getX() + 50, hero.getY() + 150);
                         hero.setHealth(Math.max(hero.getHealth() - badCharacter2.getPower(), 0));
                         if (hero.getHealth() == 0) {
                             message += "\n" + hero.getName() + " is dead!";
@@ -468,8 +486,9 @@ public class GameScreen implements Screen {
                 for (GameObject hero : heroes) {
                     if (hero.getHealth() > 0) {
                         attackAnimationStarted = true;
-                        message = badCharacter3.getName() + " attached " + hero.getName() + "." + "\n" + hero.getName() + " got " + badCharacter3.getPower() + " damage!";
-                        font.draw(batch, message, 100, 900);
+                        message = badCharacter3.getName() + " attached " + hero.getName();
+                        heroDamage = "-" + badCharacter3.getPower() + "HP";
+                        font.draw(batch, heroDamage, hero.getX() + 50, hero.getY() + 150);
                         hero.setHealth(Math.max(hero.getHealth() - badCharacter3.getPower(), 0));
                         if (hero.getHealth() == 0) {
                             message += "\n" + hero.getName() + " is dead!";
@@ -484,8 +503,9 @@ public class GameScreen implements Screen {
                 for (GameObject hero : heroes) {
                     if (hero.getHealth() > 0) {
                         attackAnimationStarted = true;
-                        message = badCharacter4.getName() + " attached " + hero.getName() + "." + "\n" + hero.getName() + " got " + badCharacter4.getPower() + " damage!";
-                        font.draw(batch, message, 100, 900);
+                        message = badCharacter4.getName() + " attached " + hero.getName();
+                        heroDamage = "-" + badCharacter4.getPower() + "HP";
+                        font.draw(batch, heroDamage, hero.getX() + 50, hero.getY() + 150);
                         hero.setHealth(Math.max(hero.getHealth() - badCharacter4.getPower(), 0));
                         if (hero.getHealth() == 0) {
                             message += "\n" + hero.getName() + " is dead!";
