@@ -477,6 +477,16 @@ public class GameScreen implements Screen {
 
 
         } else if (stepCount % 2 == 0 && !gameOver && !attackAnimationStarted) {
+            GameObject hero;
+            do {
+                hero = heroes.get(random.nextInt(heroes.size()));
+            } while (hero.getHealth() <= 0);
+            for (GameObject weak : heroes) {
+                if (weak.getHealth() <= 20 && weak.getHealth() > 0) {
+                    hero = weak;
+                    break;
+                }
+            }
             if (goodCharacter1.getMana() < 100 && goodCharacter1.getHealth() > 0) {
                 goodCharacter1.setMana(goodCharacter1.getMana() + 10);
                 if (goodCharacter1.getMana() > 100) {
@@ -503,10 +513,6 @@ public class GameScreen implements Screen {
             }
             batch.draw(attacker.getTexture(), 40, 130, 200, 220);
             if (badCharacter1.getHealth() > 0) {
-                GameObject hero;
-                do {
-                    hero = heroes.get(random.nextInt(heroes.size()));
-                } while (hero.getHealth() <= 0);
                 attackAnimationStarted = true;
                 message = badCharacter1.getName() + " attached " + hero.getName();
                 heroDamage = "-" + badCharacter1.getPower() + "HP";
@@ -518,10 +524,6 @@ public class GameScreen implements Screen {
                 attackedHeroY = hero.getY();
                 //wait = true;
             } else if (badCharacter2.getHealth() > 0) {
-                GameObject hero;
-                do {
-                    hero = heroes.get(random.nextInt(heroes.size()));
-                } while (hero.getHealth() <= 0);
                 attackAnimationStarted = true;
                 message = badCharacter2.getName() + " attached " + hero.getName();
                 heroDamage = "-" + badCharacter2.getPower() + "HP";
@@ -534,10 +536,6 @@ public class GameScreen implements Screen {
                 attackedHeroY = hero.getY();
                 //wait = true;
             } else if (badCharacter3.getHealth() > 0) {
-                GameObject hero;
-                do {
-                    hero = heroes.get(random.nextInt(heroes.size()));
-                } while (hero.getHealth() <= 0);
                 attackAnimationStarted = true;
                 message = badCharacter3.getName() + " attached " + hero.getName();
                 heroDamage = "-" + badCharacter3.getPower() + "HP";
@@ -550,10 +548,6 @@ public class GameScreen implements Screen {
                 attackedHeroY = hero.getY();
                 //wait = true;
             } else if (badCharacter4.getHealth() > 0) {
-                GameObject hero;
-                do {
-                    hero = heroes.get(random.nextInt(heroes.size()));
-                } while (hero.getHealth() <= 0);
                 attackAnimationStarted = true;
                 message = badCharacter4.getName() + " attached " + hero.getName();
                 heroDamage = "-" + badCharacter4.getPower() + "HP";
