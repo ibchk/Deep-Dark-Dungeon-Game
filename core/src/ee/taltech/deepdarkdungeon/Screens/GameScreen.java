@@ -85,8 +85,8 @@ public class GameScreen implements Screen {
     private int attackedHeroY;
     int flag = 0;
 
-    private String monsterDamage;
-    private String heroDamage;
+    private String monsterDamage = "";
+    private String heroDamage = "";
 
     private GameObject attackedMonster;
 
@@ -180,7 +180,24 @@ public class GameScreen implements Screen {
         if (attackAnimationStarted) {
             font.draw(batch, "Monsters turn! " + stepCount, 100, 1000);
             font.draw(batch, messageForMonsters, 100, 950);
-            font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 250);
+            if (monsterDamage.contains("30") && attackedMonster.equals(monsters.get(0))) {
+                font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 250);
+                font.draw(batch, monsterDamage, attackedMonster.getX() + 290, attackedMonster.getY() + 200);
+            } else if (monsterDamage.contains("30") && attackedMonster.equals(monsters.get(1))) {
+                font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 250);
+                font.draw(batch, monsterDamage, attackedMonster.getX() + 290, attackedMonster.getY() + 300);
+                font.draw(batch, monsterDamage, attackedMonster.getX() - 100, attackedMonster.getY() + 300);
+            } else if (monsterDamage.contains("30") && attackedMonster.equals(monsters.get(2))) {
+                font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 250);
+                font.draw(batch, monsterDamage, attackedMonster.getX() + 290, attackedMonster.getY() + 200);
+                font.draw(batch, monsterDamage, attackedMonster.getX() - 100, attackedMonster.getY() + 200);
+            }
+            else if (monsterDamage.contains("30") && attackedMonster.equals(monsters.get(3))) {
+                font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 250);
+                font.draw(batch, monsterDamage, attackedMonster.getX() - 100, attackedMonster.getY() + 300);
+            } else {
+                font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 250);
+            }
             flag++;
             if (flag > 100) {
                 monsterDamage = "";
@@ -301,6 +318,7 @@ public class GameScreen implements Screen {
                         //batch.draw(powerShot, start += 0.000000000000000001, (int) attacker.getY() + 100, 150, 150);
                         //}
                         messageForMonsters = "You powershoted " + badCharacter1.getName();
+                        attackedMonster = badCharacter1;
                         monsterDamage = "-100HP";
                         batch.draw(powerShot, (int) attacker.getX() + 185, (int) attacker.getY() - 25, 150, 150);
                         wait = true;
@@ -315,7 +333,9 @@ public class GameScreen implements Screen {
                     } else if (attacker.getSkill().equals("sunstrike")) {
                         messageForMonsters = "You used sunstrike on " + badCharacter1.getName() + " and nearby enemyes with damage 30";
                         badCharacter1.setHealth(Math.max(badCharacter1.getHealth() - 30, 0));
-                        badCharacter2.setHealth(Math.max(badCharacter1.getHealth() - 30, 0));
+                        badCharacter2.setHealth(Math.max(badCharacter2.getHealth() - 30, 0));
+                        attackedMonster = badCharacter1;
+                        monsterDamage = "-30HP";
                         attacker.setMana(attacker.getMana() - 50);
                         WHOWILLATTACK++;
                         stepCount += 1;
@@ -335,10 +355,10 @@ public class GameScreen implements Screen {
                     if (attacker.getSkill().equals("powershot")) {
                         messageForMonsters = "You powershoted " + badCharacter2.getName();
                         monsterDamage = "-100HP";
-                        batch.draw(powerShot, (int) attacker.getX() + 185, (int) attacker.getY() - 25, 150, 150);
+                        batch.draw(powerShot, attacker.getX() + 185,  attacker.getY() - 25, 150, 150);
                         wait = true;
                         badCharacter2.setHealth(Math.max(badCharacter2.getHealth() - 100, 0));
-                        batch.draw(powerShot, (int) badCharacter2.getX(), (int) badCharacter2.getY(), 150, 150);
+                        batch.draw(powerShot, badCharacter2.getX(), badCharacter2.getY(), 150, 150);
                         attacker.setMana(attacker.getMana() - 100);
                         wait = true;
                         WHOWILLATTACK++;
@@ -349,6 +369,8 @@ public class GameScreen implements Screen {
                         badCharacter1.setHealth(Math.max(badCharacter1.getHealth() - 30, 0));
                         badCharacter2.setHealth(Math.max(badCharacter2.getHealth() - 30, 0));
                         badCharacter3.setHealth(Math.max(badCharacter3.getHealth() - 30, 0));
+                        attackedMonster = badCharacter2;
+                        monsterDamage = "-30HP";
                         attacker.setMana(attacker.getMana() - 50);
                         WHOWILLATTACK++;
                         stepCount += 1;
@@ -382,6 +404,8 @@ public class GameScreen implements Screen {
                         badCharacter2.setHealth(Math.max(badCharacter2.getHealth() - 30, 0));
                         badCharacter3.setHealth(Math.max(badCharacter3.getHealth() - 30, 0));
                         badCharacter4.setHealth(Math.max(badCharacter4.getHealth() - 30, 0));
+                        attackedMonster = badCharacter3;
+                        monsterDamage = "-30HP";
                         attacker.setMana(attacker.getMana() - 50);
                         WHOWILLATTACK++;
                         stepCount += 1;
@@ -414,6 +438,8 @@ public class GameScreen implements Screen {
                         messageForMonsters = "You used sunstrike on " + badCharacter4.getName() + " and nearby enemyes with damage 30";
                         badCharacter3.setHealth(Math.max(badCharacter3.getHealth() - 30, 0));
                         badCharacter4.setHealth(Math.max(badCharacter4.getHealth() - 30, 0));
+                        attackedMonster = badCharacter4;
+                        monsterDamage = "-30HP";
                         attacker.setMana(attacker.getMana() - 50);
                         WHOWILLATTACK++;
                         stepCount += 1;
