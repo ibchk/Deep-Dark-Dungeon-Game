@@ -158,7 +158,10 @@ public class MainMenuScreen implements Screen {
             }
             if (Gdx.input.getX() > MPBUTTON_X_START && Gdx.input.getX() < MPBUTTON_X_END && Gdx.input.getY() > MPBUTTON_Y_START && Gdx.input.getY() < MPBUTTON_Y_END) {
                 game.batch.draw(MULTIPLAYERBUTTON, MPBUTTON_X_START, MPBUTTON_Y_FORBUTTONCHANGE);
-            }
+                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                    game.setScreen(new MultiplayerChooseScreen(game, music));
+                }
+                }
         }
         if (wantingToExit) { // If to click on exit button...
             game.batch.draw(QUITGAMEWINDOW, 525, 270);
