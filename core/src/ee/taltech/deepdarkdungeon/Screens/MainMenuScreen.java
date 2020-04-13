@@ -7,10 +7,12 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.TimeUtils;
 import ee.taltech.deepdarkdungeon.DeepDarkDungeonGame;
 import ee.taltech.deepdarkdungeon.Models.PutMusic;
 import ee.taltech.deepdarkdungeon.Screens.GameScreen;
 import ee.taltech.deepdarkdungeon.Screens.SingleGameChooseScreen;
+import jdk.nashorn.internal.ir.IfNode;
 
 import java.lang.reflect.GenericArrayType;
 
@@ -20,16 +22,24 @@ public class MainMenuScreen implements Screen {
     private static final int EXIT_BUTTON_WIDTH = 396;
     private static final int EXIT_BUTTON_HEIGHT = 150;
 
-    private static final int PLAY_BUTTON_X_END = 1420;
+    private static final int ABOUT_BUTTON_WIDTH = 245;
+    private static final int ABOUT_BUTTON_HEIGHT = 80;
+
+    private static final int ABOUT_BUTTON_X_END = 1075;
+    private static final int ABOUT_BUTTON_Y_END = 915;
+    private static final int ABOUT_BUTTON_Y_START = 140;
+    private static final int ABOUT_BUTTON_X_START = 830;
+
+    private static final int PLAY_BUTTON_X_END = 1596;
     private static final int PLAY_BUTTON_Y_END = 950;
     private static final int PLAY_BUTTON_Y_START = 800;
-    private static final int PLAY_BUTTON_X_START = 1024;
+    private static final int PLAY_BUTTON_X_START = 1200;
     private static final int PLAYBUTTON_Y_FORBUTTONCHANGE = 100;
 
-    private static final int EXIT_BUTTON_X_END = 796;
+    private static final int EXIT_BUTTON_X_END = 696;
     private static final int EXIT_BUTTON_Y_END = 950;
     private static final int EXIT_BUTTON_Y_START = 800;
-    private static final int EXIT_BUTTON_X_START = 400;
+    private static final int EXIT_BUTTON_X_START = 300;
     private static final int EXITBUTTON_Y_FORBUTTONCHANGE = 100;
 
     private static final int YESBUTTON_Y_START = 590;
@@ -70,6 +80,10 @@ public class MainMenuScreen implements Screen {
     private static final int MUSIC_BUTTON_WIDTH = 112;
     private static final int MUSIC_BUTTON_HEIGHT = 100;
 
+    private static final int C_X = 0;
+    private static int C_Y = 500;
+    private static int C_Y2 = 500;
+
     DeepDarkDungeonGame game;
     int openLevelNumber;
     Texture BACKGROUND;
@@ -85,9 +99,13 @@ public class MainMenuScreen implements Screen {
     Texture MULTIPLAYERBUTTON;
     Texture MUSICBUTTON1;
     Texture MUSICBUTTON2;
+    Texture ABOUTBUTTON1;
+    Texture ABOUTBUTTON2;
     boolean wantingToExit = false;
     boolean wantingToPlay = false;
     PutMusic music;
+
+    long startTime = 0;
 
     public MainMenuScreen(DeepDarkDungeonGame game, int openLevelNumber) {
         this.openLevelNumber = openLevelNumber;
@@ -106,7 +124,10 @@ public class MainMenuScreen implements Screen {
         MULTIPLAYERBUTTON = new Texture("multiplayerButton.png");
         MUSICBUTTON1 = new Texture("musicButton1.png");
         MUSICBUTTON2 = new Texture("musicButton2.png");
+        ABOUTBUTTON1 = new Texture("aboutButton.png");
+        ABOUTBUTTON2 = new Texture("aboutButton2.png");
         music = new PutMusic("startMelody.mp3");
+        music.changePlayOrStop();
     }
 
     public MainMenuScreen(DeepDarkDungeonGame game, int openLevelNumber, PutMusic musicToStop) {
@@ -142,6 +163,37 @@ public class MainMenuScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.batch.begin();
         game.batch.draw(BACKGROUND, 0, 0);
+        game.batch.draw(MUSICBUTTON1, C_X, C_Y, MUSIC_BUTTON_WIDTH, MUSIC_BUTTON_HEIGHT);
+        if (Gdx.input.getX() < MUSIC_BUTTON_WIDTH && Gdx.input.getY() > C_Y2 - MUSIC_BUTTON_HEIGHT / 2 && Gdx.input.getY() < C_Y2 + MUSIC_BUTTON_HEIGHT / 2) {
+            game.batch.draw(MUSICBUTTON2, C_X, C_Y, MUSIC_BUTTON_WIDTH, MUSIC_BUTTON_HEIGHT);
+//            if (Gdx.input.isTouched()) {
+//                int xPlace = Gdx.input.getY();
+//                startTime = TimeUtils.nanoTime();
+//
+//                if (TimeUtils.timeSinceNanos(startTime) > 100000000) {
+//                    C_Y = C_Y + Gdx.input.getY() - xPlace;
+//                    C_Y2 = C_Y2 - Gdx.input.getY() + xPlace;
+//                    startTime = TimeUtils.nanoTime();
+//                    int now = Gdx.input.getY();
+//                    //System.out.println("Place: " + xPlace + " and now: " + now);
+//                }
+//                System.out.println(Gdx.input.isCursorCatched());
+//                int cy = C_Y;
+//                int cy2 = C_Y2;
+//            }
+        }
+
+
+        game.batch.draw(ABOUTBUTTON1, ABOUT_BUTTON_X_START, ABOUT_BUTTON_Y_START, ABOUT_BUTTON_WIDTH, ABOUT_BUTTON_HEIGHT);
+        if (!wantingToPlay && !wantingToExit) {
+            if (Gdx.input.getX() > ABOUT_BUTTON_X_START && Gdx.input.getX() < ABOUT_BUTTON_X_END && Gdx.input.getY() > ABOUT_BUTTON_Y_END - ABOUT_BUTTON_HEIGHT - 5 && Gdx.input.getY() < ABOUT_BUTTON_X_END - ABOUT_BUTTON_Y_START - 25) {
+                game.batch.draw(ABOUTBUTTON2, ABOUT_BUTTON_X_START, ABOUT_BUTTON_Y_START, ABOUT_BUTTON_WIDTH, ABOUT_BUTTON_HEIGHT);
+                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                    game.setScreen(new InfoAboutUsScreen(game));
+                }
+            }
+        }
+
         if (wantingToPlay) { // If to click on play button...
             game.batch.draw(STARTGAMEWINDOW, 445, 245);
             if (Gdx.input.getX() > YES2BUTTON_X_START && Gdx.input.getX() < YES2BUTTON_X_END && Gdx.input.getY() > YES2BUTTON_Y_START && Gdx.input.getY() < YES2BUTTON_Y_END) {
@@ -161,7 +213,7 @@ public class MainMenuScreen implements Screen {
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                     game.setScreen(new MultiplayerChooseScreen(game, music));
                 }
-                }
+            }
         }
         if (wantingToExit) { // If to click on exit button...
             game.batch.draw(QUITGAMEWINDOW, 525, 270);
