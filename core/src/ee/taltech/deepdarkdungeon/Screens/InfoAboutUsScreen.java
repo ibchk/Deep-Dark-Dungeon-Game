@@ -9,11 +9,15 @@ import ee.taltech.deepdarkdungeon.DeepDarkDungeonGame;
 
 public class InfoAboutUsScreen implements Screen {
 
-    Texture BACKGROUND;
     DeepDarkDungeonGame game;
     BitmapFont font = new BitmapFont();
     Texture MUSICBUTTON1;
     Texture MUSICBUTTON2;
+    Texture BACKGROUND;
+    Texture BACKGROUND2;
+    Texture UPBUTTON;
+    Texture DOWNBUTTON;
+
     private static final int MUSICBUTTON_Y_START = 10;
     private static final int MUSICBUTTON_Y_END = 110;
     private static final int MUSICBUTTON_X_START = 1788;
@@ -68,11 +72,15 @@ public class InfoAboutUsScreen implements Screen {
     }
     @Override
     public void show() {
-        BACKGROUND = new Texture("GameBackground.png");
+        BACKGROUND = new Texture("infoPageBackground.png");
         font.setColor(new Color(Color.rgb888(0f, 0f, 85f)));
         font.getData().setScale(2);
         MUSICBUTTON1 = new Texture("musicButton1.png");
         MUSICBUTTON2 = new Texture("musicButton2.png");
+        BACKGROUND = new Texture("infoPageBackground.png");
+        BACKGROUND2 = new Texture("infoPageBackground2.png");
+        UPBUTTON = new Texture("scrollUp.png");
+        UPBUTTON = new Texture("scrollDown.png");
     }
 
     @Override
@@ -87,6 +95,7 @@ public class InfoAboutUsScreen implements Screen {
                 TEXTY = TEXTY + 2.5;
             }
         }
+        game.batch.draw(BACKGROUND2, 0, 0, DeepDarkDungeonGame.WIDTH, DeepDarkDungeonGame.WIDTH);
         game.batch.end();
     }
 
