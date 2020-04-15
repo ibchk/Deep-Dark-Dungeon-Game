@@ -13,9 +13,7 @@ import ee.taltech.deepdarkdungeon.DeepDarkDungeonGame;
 import ee.taltech.deepdarkdungeon.Models.GameObject;
 import ee.taltech.deepdarkdungeon.Models.PutMusic;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 public class GameScreen implements Screen {
@@ -87,8 +85,7 @@ public class GameScreen implements Screen {
     int lvlPlaying;
     boolean attackAnimationStarted = false;
     boolean sunstrikeAnimationStarted = false;
-    private int attackedHeroX;
-    private int attackedHeroY;
+    private GameObject attackedHero;
     int flag = 0;
 
     private String monsterDamage = "";
@@ -234,10 +231,10 @@ public class GameScreen implements Screen {
             if (flag > 100 && attackAnimationStarted) {
                 monsterDamage = "";
                 font.draw(batch, message, 100, 900 );
-                font.draw(batch, heroDamage, attackedHeroX + 90, attackedHeroY + 250);
+                font.draw(batch, heroDamage, attackedHero.getX() + 90, attackedHero.getY() + 250);
                 stateTimeMonsterAttack += Gdx.graphics.getDeltaTime();
                 currentMonsterAttackFrame = (TextureRegion) monsterAttackAnimation.getKeyFrame(stateTimeMonsterAttack);
-                batch.draw(currentMonsterAttackFrame, attackedHeroX, attackedHeroY - 20, 300, 320);
+                batch.draw(currentMonsterAttackFrame, attackedHero.getX(), attackedHero.getY() - 20, 300, 320);
             } else if (flag > 100 && sunstrikeAnimationStarted) {
                 monsterDamage = "";
                 stateTime += Gdx.graphics.getDeltaTime();
@@ -600,8 +597,7 @@ public class GameScreen implements Screen {
                 if (hero.getHealth() == 0) {
                     message += "\n" + hero.getName() + " is dead!";
                 }
-                attackedHeroX = hero.getX();
-                attackedHeroY = hero.getY();
+                attackedHero = hero;
                 //wait = true;
             } else if (badCharacter2.getHealth() > 0) {
                 attackAnimationStarted = true;
@@ -612,8 +608,7 @@ public class GameScreen implements Screen {
                 if (hero.getHealth() == 0) {
                     message += "\n" + hero.getName() + " is dead!";
                 }
-                attackedHeroX = hero.getX();
-                attackedHeroY = hero.getY();
+                attackedHero = hero;
                 //wait = true;
             } else if (badCharacter3.getHealth() > 0) {
                 attackAnimationStarted = true;
@@ -624,8 +619,7 @@ public class GameScreen implements Screen {
                 if (hero.getHealth() == 0) {
                     message += "\n" + hero.getName() + " is dead!";
                 }
-                attackedHeroX = hero.getX();
-                attackedHeroY = hero.getY();
+                attackedHero = hero;
                 //wait = true;
             } else if (badCharacter4.getHealth() > 0) {
                 attackAnimationStarted = true;
@@ -636,8 +630,7 @@ public class GameScreen implements Screen {
                 if (hero.getHealth() == 0) {
                     message += "\n" + hero.getName() + " is dead!";
                 }
-                attackedHeroX = hero.getX();
-                attackedHeroY = hero.getY();
+                attackedHero = hero;
                 //wait = true;
             }
         }
