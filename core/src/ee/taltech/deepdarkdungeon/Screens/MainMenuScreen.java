@@ -163,25 +163,6 @@ public class MainMenuScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.batch.begin();
         game.batch.draw(BACKGROUND, 0, 0);
-        game.batch.draw(MUSICBUTTON1, C_X, C_Y, MUSIC_BUTTON_WIDTH, MUSIC_BUTTON_HEIGHT);
-        if (Gdx.input.getX() < MUSIC_BUTTON_WIDTH && Gdx.input.getY() > C_Y2 - MUSIC_BUTTON_HEIGHT / 2 && Gdx.input.getY() < C_Y2 + MUSIC_BUTTON_HEIGHT / 2) {
-            game.batch.draw(MUSICBUTTON2, C_X, C_Y, MUSIC_BUTTON_WIDTH, MUSIC_BUTTON_HEIGHT);
-//            if (Gdx.input.isTouched()) {
-//                int xPlace = Gdx.input.getY();
-//                startTime = TimeUtils.nanoTime();
-//
-//                if (TimeUtils.timeSinceNanos(startTime) > 100000000) {
-//                    C_Y = C_Y + Gdx.input.getY() - xPlace;
-//                    C_Y2 = C_Y2 - Gdx.input.getY() + xPlace;
-//                    startTime = TimeUtils.nanoTime();
-//                    int now = Gdx.input.getY();
-//                    //System.out.println("Place: " + xPlace + " and now: " + now);
-//                }
-//                System.out.println(Gdx.input.isCursorCatched());
-//                int cy = C_Y;
-//                int cy2 = C_Y2;
-//            }
-        }
 
 
         game.batch.draw(ABOUTBUTTON1, ABOUT_BUTTON_X_START, ABOUT_BUTTON_Y_START, ABOUT_BUTTON_WIDTH, ABOUT_BUTTON_HEIGHT);

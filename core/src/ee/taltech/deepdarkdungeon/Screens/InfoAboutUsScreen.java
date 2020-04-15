@@ -2,6 +2,7 @@ package ee.taltech.deepdarkdungeon.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -9,10 +10,18 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import ee.taltech.deepdarkdungeon.DeepDarkDungeonGame;
 import ee.taltech.deepdarkdungeon.Models.PutMusic;
 
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class InfoAboutUsScreen implements Screen {
+public class InfoAboutUsScreen implements Screen, InputProcessor {
 
     DeepDarkDungeonGame game;
     BitmapFont font = new BitmapFont();
@@ -26,6 +35,7 @@ public class InfoAboutUsScreen implements Screen {
     Texture BACKBUTTON2;
     int openLevelNumber;
     PutMusic music;
+    int wheelMoved = 0;
 
     String text = "Kommunistlik ühiskonnakorraldus\n" +
             "Teoorias\n" +
@@ -92,6 +102,7 @@ public class InfoAboutUsScreen implements Screen {
         Pattern pattern = Pattern.compile("\n");
         Matcher matcher = pattern.matcher(text);
         TEXTLOWESTPLACE = (int) (matcher.results().count() + 1) * 40;
+        Gdx.input.setInputProcessor(this);
     }
 
     @Override
@@ -162,5 +173,50 @@ public class InfoAboutUsScreen implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        if (amount == 1 && TEXTY < TEXTLOWESTPLACE) {
+            TEXTY = TEXTY + 30;
+        } else if (amount == -1 && TEXTY > TEXTHEIGHESTPLACE) {
+            TEXTY = TEXTY - 30;
+        }
+        return false;
     }
 }
