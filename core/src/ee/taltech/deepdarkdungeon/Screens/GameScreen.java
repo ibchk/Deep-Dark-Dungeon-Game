@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import ee.taltech.deepdarkdungeon.DeepDarkDungeonGame;
 import ee.taltech.deepdarkdungeon.Models.GameObject;
 import ee.taltech.deepdarkdungeon.Models.PutMusic;
+import ee.taltech.deepdarkdungeon.Models.characterClasses.Warrior;
 
 import java.util.List;
 import java.util.Random;
@@ -83,6 +84,7 @@ public class GameScreen implements Screen {
     PutMusic music;
     int openLevelNumber;
     int lvlPlaying;
+    boolean agr = false;
     boolean attackAnimationStarted = false;
     boolean sunstrikeAnimationStarted = false;
     private GameObject attackedHero;
@@ -390,7 +392,7 @@ public class GameScreen implements Screen {
                 }
             }
             if (Gdx.input.getX() < VBOI_X + VBOI_WIDTH && Gdx.input.getX() > VBOI_X && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() <= VBOI_Y - 70 + VBOI_HEIGTH + 30 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() >= VBOI_Y - 70 + 25) {
-                if (attacker.getSkill().equals("powershot") && attacker.getMana() >= 100 || attacker.getSkill().equals("sunstrike") && attacker.getMana() >= 50 || attacker.getSkill().equals("purification") && attacker.getMana() >= 40) {
+                if (attacker.getSkill().equals("powershot") && attacker.getMana() >= 100 || attacker.getSkill().equals("sunstrike") && attacker.getMana() >= 50 || attacker.getSkill().equals("purification") && attacker.getMana() >= 40 || attacker.getSkill().equals("berserk call") && attacker.getMana() >= 40) {
                     batch.draw(aciveDefenceButton, VBOI_X, VBOI_Y - 70, VBOI_WIDTH, VBOI_HEIGTH);
                     if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                         skillIsPressed = true;
@@ -401,8 +403,8 @@ public class GameScreen implements Screen {
                     }
                 }
             }
-            GameObject needed = heroes.get(0);
             if (skillIsPressed && attacker.getSkill().equals("purification")) {
+                GameObject needed = heroes.get(0);
                 for (GameObject hero:heroes) {
                     if (needed.getHealth() > hero.getHealth()) {
                         needed = hero;
@@ -413,6 +415,21 @@ public class GameScreen implements Screen {
                 skillIsPressed = false;
                 stepCount++;
                 WHOWILLATTACK++;
+                messageForMonsters = "";
+                monsterDamage = "";
+                attackedMonster = badCharacter1;
+
+            }
+            if (skillIsPressed && attacker.getSkill().equals("berserk call")) {
+                stepCount++;
+                WHOWILLATTACK++;
+                skillIsPressed = false;
+                attacker.setMana(attacker.getMana() - 40);
+                attackedHero = attacker;
+                messageForMonsters = "";
+                monsterDamage = "";
+                attackedMonster = badCharacter1;
+                agr = true;
             }
             if (Gdx.input.getX() > badCharacter1.getX() && Gdx.input.getX() < badCharacter1.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > badCharacter1.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < badCharacter1.getY() + 300) {
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked && badCharacter1.getHealth() > 0) {
@@ -563,6 +580,10 @@ public class GameScreen implements Screen {
                     hero = weak;
                     break;
                 }
+            }
+            if (agr) {
+                hero = attackedHero;
+                agr = false;
             }
             if (goodCharacter1.getMana() < 100 && goodCharacter1.getHealth() > 0) {
                 goodCharacter1.setMana(goodCharacter1.getMana() + 10);
