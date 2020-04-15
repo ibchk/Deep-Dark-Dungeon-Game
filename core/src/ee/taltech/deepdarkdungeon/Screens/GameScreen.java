@@ -14,6 +14,7 @@ import ee.taltech.deepdarkdungeon.Models.GameObject;
 import ee.taltech.deepdarkdungeon.Models.PutMusic;
 import ee.taltech.deepdarkdungeon.Models.characterClasses.Warrior;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -94,7 +95,7 @@ public class GameScreen implements Screen {
     private String heroDamage = "";
 
     private GameObject attackedMonster;
-    private GameObject monsterAttackedLast;
+    List<GameObject> monsterAttackedLast = new LinkedList<>();
     Random random = new Random();
 
     Animation sunstrikeAnimation; // анимация
@@ -579,6 +580,9 @@ public class GameScreen implements Screen {
 
 
         } else if (stepCount % 2 == 0 && !gameOver && !attackAnimationStarted) {
+            if (monsterAttackedLast.size() > 3) {
+                monsterAttackedLast.clear();
+            }
             GameObject hero;
             do {
                 hero = heroes.get(random.nextInt(heroes.size()));
@@ -619,16 +623,31 @@ public class GameScreen implements Screen {
             }
             batch.draw(attacker.getTexture(), 40, 130, 200, 220);
             for (GameObject monster : monsters) {
-                if (monster.getHealth() > 0 && !monster.equals(monsterAttackedLast)) {
-                    attackAnimationStarted = true;
-                    message = monster.getName() + " attached " + hero.getName();
-                    heroDamage = "-" + monster.getPower() + "HP";
-                    hero.setHealth(Math.max(hero.getHealth() - monster.getPower(), 0));
-                    if (hero.getHealth() == 0) {
-                        message += "\n" + hero.getName() + " is dead!";
+                boolean attackFlag = true;
+                if (monster.getHealth() > 0 && !monsterAttackedLast.contains(monster)) {
+                    if (monster.getBadCharacterClass().equals(GameObject.BadCharacterClass.NECROMANCER)) {
+                        for (GameObject monsterToHeal : monsters) {
+                            if (monsterToHeal.getHealth() <= 30) {
+                                monsterToHeal.setHealth(monsterToHeal.getHealth() + 50);
+                                message = monster.getName() + " cured " + monsterToHeal.getName();
+                                heroDamage = "";
+                                attackFlag = false;
+                                stepCount++;
+                                break;
+                            }
+                        }
+                    }
+                    if (attackFlag) {
+                        attackAnimationStarted = true;
+                        message = monster.getName() + " attached " + hero.getName();
+                        heroDamage = "-" + monster.getPower() + "HP";
+                        hero.setHealth(Math.max(hero.getHealth() - monster.getPower(), 0));
+                        if (hero.getHealth() == 0) {
+                            message += "\n" + hero.getName() + " is dead!";
+                        }
                     }
                     attackedHero = hero;
-                    monsterAttackedLast = monster;
+                    monsterAttackedLast.add(monster);
                     break;
                 }
             }
