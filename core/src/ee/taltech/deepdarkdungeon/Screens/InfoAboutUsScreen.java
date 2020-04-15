@@ -23,7 +23,9 @@ public class InfoAboutUsScreen implements Screen {
     Texture UPBUTTON;
     Texture DOWNBUTTON;
     Texture BACKBUTTON;
+    Texture BACKBUTTON2;
     int openLevelNumber;
+    PutMusic music;
 
     String text = "Kommunistlik ühiskonnakorraldus\n" +
             "Teoorias\n" +
@@ -76,15 +78,17 @@ public class InfoAboutUsScreen implements Screen {
     private static final int DOWN_X = 1765;
     private static final int DOWN_Y = 130;
 
-    private static final int BACKBUTTON_Y_START = 605;
-    private static final int BACKBUTTON_Y_END = 745;
-    private static final int BACKBUTTON_X_START = 775;
-    private static final int BACKBUTTON_X_END = 1145;
-    private static final int BACKBUTTON_Y_FORBUTTONCHANGE = 305;
+    private static final int BACK_BUTTON_WIDTH = 150;
+    private static final int BACK_BUTTON_HEIGHT = 58;
+    private static final int BACKBUTTON_Y_START = 50;
+    private static final int BACKBUTTON_Y_END = 108;
+    private static final int BACKBUTTON_X_START = 30;
+    private static final int BACKBUTTON_X_END = 180;
 
     public InfoAboutUsScreen(DeepDarkDungeonGame game, int openLevelNumber, PutMusic musicToStop) {
         this.openLevelNumber = openLevelNumber;
         this.game = game;
+        this.music = musicToStop;
         Pattern pattern = Pattern.compile("\n");
         Matcher matcher = pattern.matcher(text);
         TEXTLOWESTPLACE = (int) (matcher.results().count() + 1) * 40;
@@ -92,7 +96,6 @@ public class InfoAboutUsScreen implements Screen {
 
     @Override
     public void show() {
-        BACKGROUND = new Texture("infoPageBackground.png");
         font.setColor(new Color(Color.rgb888(0f, 0f, 85f)));
         font.getData().setScale(2);
         MUSICBUTTON1 = new Texture("musicButton1.png");
@@ -101,7 +104,8 @@ public class InfoAboutUsScreen implements Screen {
         BACKGROUND2 = new Texture("infoPageBackground2.png");
         UPBUTTON = new Texture("scrollUp.png");
         DOWNBUTTON = new Texture("scrollDown.png");
-        BACKBUTTON = new Texture("backbutton2.png");
+        BACKBUTTON = new Texture("backbutton.png");
+        BACKBUTTON2 = new Texture("backbutton2.png");
     }
 
     @Override
@@ -114,21 +118,22 @@ public class InfoAboutUsScreen implements Screen {
         game.batch.draw(UPBUTTON, UP_X, UP_Y, UP_BUTTON_WIDTH, UP_BUTTON_HEIGHT);
         if (Gdx.input.getX() < UP_X + UP_BUTTON_WIDTH && Gdx.input.getX() > UP_X && Gdx.input.getY() < DeepDarkDungeonGame.HEIGHT - UP_Y - 27 && Gdx.input.getY() > DeepDarkDungeonGame.HEIGHT - UP_Y - 27 - UP_BUTTON_HEIGHT) {
             game.batch.draw(MUSICBUTTON2, UP_X, UP_Y, UP_BUTTON_WIDTH, UP_BUTTON_HEIGHT);
-            if (Gdx.input.isTouched() && TEXTY < TEXTLOWESTPLACE) {
-                TEXTY = TEXTY + 2.5;
+            if (Gdx.input.isTouched() && TEXTY > TEXTHEIGHESTPLACE) {
+                TEXTY = TEXTY - 2.5;
             }
         }
         game.batch.draw(DOWNBUTTON, DOWN_X, DOWN_Y, DOWN_BUTTON_WIDTH, DOWN_BUTTON_HEIGHT);
         if (Gdx.input.getX() < DOWN_X + DOWN_BUTTON_WIDTH && Gdx.input.getX() > DOWN_X && Gdx.input.getY() < DeepDarkDungeonGame.HEIGHT - DOWN_Y - 27 && Gdx.input.getY() > DeepDarkDungeonGame.HEIGHT - DOWN_Y - 27 - DOWN_BUTTON_HEIGHT) {
             game.batch.draw(MUSICBUTTON2, DOWN_X, DOWN_Y, DOWN_BUTTON_WIDTH, DOWN_BUTTON_HEIGHT);
-            if (Gdx.input.isTouched() && TEXTY > TEXTHEIGHESTPLACE) {
-                TEXTY = TEXTY - 2.5;
+            if (Gdx.input.isTouched() && TEXTY < TEXTLOWESTPLACE) {
+                TEXTY = TEXTY + 2.5;
             }
         }
-        game.batch.draw(BACKBUTTON, BACKBUTTON_X_START, BACKBUTTON_Y_FORBUTTONCHANGE);
-        if (Gdx.input.getX() > BACKBUTTON_X_START && Gdx.input.getX() < BACKBUTTON_X_END && Gdx.input.getY() > BACKBUTTON_Y_START && Gdx.input.getY() < BACKBUTTON_Y_END) {
+        game.batch.draw(BACKBUTTON, BACKBUTTON_X_START, BACKBUTTON_Y_START, BACK_BUTTON_WIDTH, BACK_BUTTON_HEIGHT);
+        if (Gdx.input.getX() > BACKBUTTON_X_START && Gdx.input.getX() < BACKBUTTON_X_END && Gdx.input.getY() > DeepDarkDungeonGame.HEIGHT - BACKBUTTON_Y_END - 27 && Gdx.input.getY() < DeepDarkDungeonGame.HEIGHT - BACKBUTTON_Y_START - 27) {
+            game.batch.draw(BACKBUTTON2, BACKBUTTON_X_START, BACKBUTTON_Y_START, BACK_BUTTON_WIDTH, BACK_BUTTON_HEIGHT);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-
+                game.setScreen(new MainMenuScreen(game, openLevelNumber));
             }
         }
         game.batch.end();
