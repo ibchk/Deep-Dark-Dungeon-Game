@@ -94,6 +94,7 @@ public class GameScreen implements Screen {
     private String heroDamage = "";
 
     private GameObject attackedMonster;
+    private GameObject monsterAttackedLast;
     Random random = new Random();
 
     Animation sunstrikeAnimation; // анимация
@@ -202,6 +203,8 @@ public class GameScreen implements Screen {
         font.draw(batch, "Mn: " + goodCharacter2.getMana(), 315, 400);
         font.draw(batch, "Mn: " + goodCharacter3.getMana(), 515, 400);
         font.draw(batch, "Mn: " + goodCharacter4.getMana(), 715, 400);
+
+
         if (attackAnimationStarted || sunstrikeAnimationStarted) {
             //stateTime += Gdx.graphics.getDeltaTime();
             //                        currentSunstrikeFrame = (TextureRegion) sunstrikeAnimation.getKeyFrame(stateTime);//TODO
@@ -270,6 +273,7 @@ public class GameScreen implements Screen {
                 WHOWILLATTACK++;
             }
         }
+
         if (badCharacter1.getHealth() == 0 && badCharacter2.getHealth() == 0 && badCharacter3.getHealth() == 0 && badCharacter4.getHealth() == 0 && !attackAnimationStarted) {
             if (lvlPlaying == openLevelNumber) {
                 openLevelNumber++;
@@ -302,6 +306,7 @@ public class GameScreen implements Screen {
                 }
             }
         }
+
         //if (wait) {
             //try {
                 //TimeUnit.SECONDS.sleep(5);
@@ -310,6 +315,7 @@ public class GameScreen implements Screen {
                 //e.printStackTrace();
             //}
         //}
+
         if (stepCount % 2 != 0 && !gameOver && !attackAnimationStarted && !sunstrikeAnimationStarted) {
             if (WHOWILLATTACK == 4) {
                 WHOWILLATTACK = 0;
@@ -570,6 +576,8 @@ public class GameScreen implements Screen {
                     }
                 }
             }
+
+
         } else if (stepCount % 2 == 0 && !gameOver && !attackAnimationStarted) {
             GameObject hero;
             do {
@@ -610,56 +618,21 @@ public class GameScreen implements Screen {
                 }
             }
             batch.draw(attacker.getTexture(), 40, 130, 200, 220);
-            if (badCharacter1.getHealth() > 0) {
-                attackAnimationStarted = true;
-                message = badCharacter1.getName() + " attached " + hero.getName();
-                heroDamage = "-" + badCharacter1.getPower() + "HP";
-                hero.setHealth(Math.max(hero.getHealth() - badCharacter1.getPower(), 0));
-                if (hero.getHealth() == 0) {
-                    message += "\n" + hero.getName() + " is dead!";
+            for (GameObject monster : monsters) {
+                if (monster.getHealth() > 0 && !monster.equals(monsterAttackedLast)) {
+                    attackAnimationStarted = true;
+                    message = monster.getName() + " attached " + hero.getName();
+                    heroDamage = "-" + monster.getPower() + "HP";
+                    hero.setHealth(Math.max(hero.getHealth() - monster.getPower(), 0));
+                    if (hero.getHealth() == 0) {
+                        message += "\n" + hero.getName() + " is dead!";
+                    }
+                    attackedHero = hero;
+                    monsterAttackedLast = monster;
+                    break;
                 }
-                attackedHero = hero;
-                //wait = true;
-            } else if (badCharacter2.getHealth() > 0) {
-                attackAnimationStarted = true;
-                message = badCharacter2.getName() + " attached " + hero.getName();
-                heroDamage = "-" + badCharacter2.getPower() + "HP";
-                font.draw(batch, heroDamage, hero.getX() + 50, hero.getY() + 150);
-                hero.setHealth(Math.max(hero.getHealth() - badCharacter2.getPower(), 0));
-                if (hero.getHealth() == 0) {
-                    message += "\n" + hero.getName() + " is dead!";
-                }
-                attackedHero = hero;
-                //wait = true;
-            } else if (badCharacter3.getHealth() > 0) {
-                attackAnimationStarted = true;
-                message = badCharacter3.getName() + " attached " + hero.getName();
-                heroDamage = "-" + badCharacter3.getPower() + "HP";
-                font.draw(batch, heroDamage, hero.getX() + 50, hero.getY() + 150);
-                hero.setHealth(Math.max(hero.getHealth() - badCharacter3.getPower(), 0));
-                if (hero.getHealth() == 0) {
-                    message += "\n" + hero.getName() + " is dead!";
-                }
-                attackedHero = hero;
-                //wait = true;
-            } else if (badCharacter4.getHealth() > 0) {
-                attackAnimationStarted = true;
-                message = badCharacter4.getName() + " attached " + hero.getName();
-                heroDamage = "-" + badCharacter4.getPower() + "HP";
-                font.draw(batch, heroDamage, hero.getX() + 50, hero.getY() + 150);
-                hero.setHealth(Math.max(hero.getHealth() - badCharacter4.getPower(), 0));
-                if (hero.getHealth() == 0) {
-                    message += "\n" + hero.getName() + " is dead!";
-                }
-                attackedHero = hero;
-                //wait = true;
             }
         }
-        //try {
-        //Thread.sleep(3000);
-        //} catch (InterruptedException e) {
-        //e.printStackTrace();
-        //}
         batch.end();
     }
 
