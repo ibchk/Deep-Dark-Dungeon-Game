@@ -178,10 +178,10 @@ public class SingleGameChooseScreen<FreeTypeFontParameter> implements Screen {
         this.openLevelNumber = openLevelNumber;
         this.music = music;
         this.game = game;
-        goodCharacter1 = new Warrior(new Texture(Gdx.files.internal("GoodCharacter1.png")), "Char1", 100, 20, 0, 400, 200, 277, GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD1);
-        goodCharacter2 = new Archer(new Texture(Gdx.files.internal("GoodCharacter2.png")), "Char2", 10, 20, 200, 450, 200, 277, GameObject.CharacterClass.ARCHER, GameObject.CharacterType.GOOD2);
-        goodCharacter3 = new Magic(new Texture(Gdx.files.internal("GoodCharacter3.png")), "Char3", 20, 20, 400, 400, 200, 277, GameObject.CharacterClass.MAGIC, GameObject.CharacterType.GOOD3);
-        goodCharacter4 = new Paladin(new Texture(Gdx.files.internal("GoodCharacter4.png")), "Char4", 10, 20, 600, 450, 200, 277, GameObject.CharacterClass.PALADIN, GameObject.CharacterType.GOOD4);
+        goodCharacter1 = new Warrior(new Texture(Gdx.files.internal("GoodCharacter1.png")), "Char1", 100, 70, 0, 400, 200, 277, GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD1);
+        goodCharacter2 = new Archer(new Texture(Gdx.files.internal("GoodCharacter2.png")), "Char2", 100, 70, 200, 450, 200, 277, GameObject.CharacterClass.ARCHER, GameObject.CharacterType.GOOD2);
+        goodCharacter3 = new Magic(new Texture(Gdx.files.internal("GoodCharacter3.png")), "Char3", 200, 70, 400, 400, 200, 277, GameObject.CharacterClass.MAGIC, GameObject.CharacterType.GOOD3);
+        goodCharacter4 = new Paladin(new Texture(Gdx.files.internal("GoodCharacter4.png")), "Char4", 100, 70, 600, 450, 200, 277, GameObject.CharacterClass.PALADIN, GameObject.CharacterType.GOOD4);
         badCharacter1 = new Necromancer(new Texture(Gdx.files.internal("BadCharacter1.png")), "Necromancer", 100, 10, 1100, 450, 200, 277, GameObject.BadCharacterClass.NECROMANCER, GameObject.CharacterType.BAD1);
         badCharacter2 = new Zombie(new Texture(Gdx.files.internal("BadCharacter2.png")), "Zombie", 100, 10, 1300, 400, 200, 277, GameObject.BadCharacterClass.ZOMBIE, GameObject.CharacterType.BAD2);
         badCharacter3 = new SkeletonWarrior(new Texture(Gdx.files.internal("BadCharacter3.png")), "Skeleton Warrior", 100, 10, 1500, 450, 200, 277, GameObject.BadCharacterClass.SKELETON_WARRIOR, GameObject.CharacterType.BAD3);
@@ -254,8 +254,8 @@ public class SingleGameChooseScreen<FreeTypeFontParameter> implements Screen {
             batch.draw(level1Button2, 635, 290, 90, 97);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 neededBadCharacter1 = 1;
-                neededBadCharacter2 = 2;
-                neededBadCharacter3 = 3;
+                neededBadCharacter2 = 0;
+                neededBadCharacter3 = 0;
                 neededBadCharacter4 = 0;
                 levelButtonLight_X = 628;
                 levelButtonLight_Y = 283;
