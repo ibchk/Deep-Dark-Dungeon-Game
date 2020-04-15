@@ -189,7 +189,7 @@ public class MainMenuScreen implements Screen {
             if (Gdx.input.getX() > ABOUT_BUTTON_X_START && Gdx.input.getX() < ABOUT_BUTTON_X_END && Gdx.input.getY() > ABOUT_BUTTON_Y_END - ABOUT_BUTTON_HEIGHT - 5 && Gdx.input.getY() < ABOUT_BUTTON_X_END - ABOUT_BUTTON_Y_START - 25) {
                 game.batch.draw(ABOUTBUTTON2, ABOUT_BUTTON_X_START, ABOUT_BUTTON_Y_START, ABOUT_BUTTON_WIDTH, ABOUT_BUTTON_HEIGHT);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                    game.setScreen(new InfoAboutUsScreen(game));
+                    game.setScreen(new InfoAboutUsScreen(game, openLevelNumber, music));
                 }
             }
         }
