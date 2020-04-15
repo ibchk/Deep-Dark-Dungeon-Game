@@ -269,7 +269,7 @@ public class GameScreen implements Screen {
                 currentMonsterAttackFrame = (TextureRegion) monsterAttackAnimation.getKeyFrame(stateTimeMonsterAttack);
                 batch.draw(currentMonsterAttackFrame, attackedHero.getX(), attackedHero.getY() - 20, 300, 320);
             } else if (flag > 100 && monsterHealAnimationStarted) {
-                monsterDamage = "";
+                monsterDamage = "+50 HP";
                 font.draw(batch, message, 100, 900 );
                 stateTimeMonsterHeal += Gdx.graphics.getDeltaTime();
                 currentMonsterHealFrame = (TextureRegion) monsterHealAnimation.getKeyFrame(stateTimeMonsterHeal);
