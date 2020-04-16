@@ -1,4 +1,4 @@
-Deep Dark Dungeon
+<h1>Deep Dark Dungeon</h1>
 
 It's a simple game, inspired by the Darkest Dungeon game.
 
