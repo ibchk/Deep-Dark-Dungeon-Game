@@ -18,7 +18,7 @@
 </ul>
 
 <h3>Textures</h3>
-<h5>Most of textures were made in Pixel Art Maker, special thanks to <a href="https://www.gamasutra.com/blogs/author/DavidYork/1013700/">David York</a> for characters sprites.</h5>
+<h5>Most of textures were made in <a href="http://pixelartmaker.com">Pixel Art Maker</a>, special thanks to <a href="https://www.gamasutra.com/blogs/author/DavidYork/1013700/">David York</a> for characters sprites.</h5>
 
 <h3>Team</h3>
 
