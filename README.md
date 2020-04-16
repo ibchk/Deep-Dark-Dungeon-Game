@@ -10,10 +10,12 @@
 
 <h5>Used LibGdx framework</h5>
 <h5>Created on:</h4>
-<h5>Java</h5>
-<h5>HTML</h5>
-<h5>CSS</h5>
-<h5>Javascript</h5>
+<ul>
+<li><h5>Java</h5></li>
+<li><h5>HTML</h5></li>
+<li><h5>CSS</h5></li>
+<li><h5>Javascript</h5></li>
+</ul>
 
 <h3>Textures</h3>
 <h5>Most of textures were made in Pixel Art Maker, special thanks to David York for characters sprites.</h5>
