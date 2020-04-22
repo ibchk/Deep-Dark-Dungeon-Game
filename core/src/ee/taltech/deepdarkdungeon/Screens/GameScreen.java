@@ -127,7 +127,7 @@ public class GameScreen implements Screen {
     Animation monsterHealAnimation; // анимация
     Texture monsterHealSheet; // текстура анимации
     TextureRegion[] monsterHealFrames;  // в этом массиве мы храним все кадры конкретной анимации
-    TextureRegion currentMonsterHealFrame; // текуший кадр анимации
+    TextureRegion currentMonsterHealFrame;
     float stateTimeMonsterHeal;
 
     public GameScreen(List<GameObject> goodCharacters, List<GameObject> badCharacters, DeepDarkDungeonGame game, PutMusic music, int openLevelNumber, int lvlPlaying) {
