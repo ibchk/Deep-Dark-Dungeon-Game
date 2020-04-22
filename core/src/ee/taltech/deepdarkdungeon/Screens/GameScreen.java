@@ -650,7 +650,14 @@ public class GameScreen implements Screen {
 
 
         } else if (stepCount % 2 == 0 && !gameOver && !attackAnimationStarted && !sunstrikeAnimationStarted && !monsterHealAnimationStarted && !heroAttackAnimationStarted) {
-            if (monsterAttackedLast.size() > 3) {
+            boolean clear = true;
+            for (GameObject monster : monsters) {
+                if (monster.getHealth() > 0 && !monsterAttackedLast.contains(monster)) {
+                    clear = false;
+                    break;
+                }
+            }
+            if (clear) {
                 monsterAttackedLast.clear();
             }
             GameObject hero;
