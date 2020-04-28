@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import ee.taltech.deepdarkdungeon.DeepDarkDungeonGame;
 import ee.taltech.deepdarkdungeon.Models.GameObject;
 import ee.taltech.deepdarkdungeon.Models.PutMusic;
+import ee.taltech.deepdarkdungeon.Models.characterClasses.Paladin;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -660,10 +661,27 @@ public class GameScreen implements Screen {
             if (clear) {
                 monsterAttackedLast.clear();
             }
-            GameObject hero;
-            do {
-                hero = heroes.get(random.nextInt(heroes.size()));
-            } while (hero.getHealth() <= 0);
+            int count = 0;
+            GameObject hero = heroes.get(0);
+            for (GameObject heros: heroes) {
+                if (count >= 4) {
+                    break;
+                }
+                if (heros.getCharacterClass() == GameObject.CharacterClass.PALADIN && heros.getHealth() > 0) {
+                    hero = heros;
+                    break;
+                } else if (heros.getCharacterClass() == GameObject.CharacterClass.MAGIC && heros.getHealth() > 0) {
+                    hero = heros;
+                } else if (heros.getCharacterClass() == GameObject.CharacterClass.ARCHER && hero.getCharacterClass()
+                        != GameObject.CharacterClass.MAGIC && heros.getHealth() > 0) {
+                    hero = heros;
+                } else if (heros.getCharacterClass() == GameObject.CharacterClass.WARIOR && hero.getCharacterClass()
+                        != GameObject.CharacterClass.MAGIC && hero.getCharacterClass() != GameObject.CharacterClass.ARCHER
+                        && heros.getHealth() > 0) {
+                    hero = heros;
+                } // логика выбора кого атаковать, но может быть сломана, это ещё потестим.
+                count++;
+            }
             for (GameObject weak : heroes) {
                 if (weak.getHealth() <= 20 && weak.getHealth() > 0) {
                     hero = weak;
@@ -674,31 +692,14 @@ public class GameScreen implements Screen {
                 hero = attackedHero;
                 agr = false;
             }
-            if (goodCharacter1.getMana() < 100 && goodCharacter1.getHealth() > 0) {
-                goodCharacter1.setMana(goodCharacter1.getMana() + 10);
-                if (goodCharacter1.getMana() > 100) {
-                    goodCharacter1.setMana(100);
+            for (GameObject manaUpdate: heroes) { //добовляет ману
+                if (manaUpdate.getMana() < 100 && manaUpdate.getHealth() > 0) {
+                    manaUpdate.setMana(manaUpdate.getMana() + 10);
+                    if (manaUpdate.getMana() > 100) {
+                        manaUpdate.setMana(100);
+                    }
                 }
             }
-            if (goodCharacter2.getMana() < 100 && goodCharacter2.getHealth() > 0) {
-                goodCharacter2.setMana(goodCharacter2.getMana() + 10);
-                if (goodCharacter2.getMana() > 100) {
-                    goodCharacter2.setMana(100);
-                }
-            }
-            if (goodCharacter3.getMana() < 100 && goodCharacter3.getHealth() > 0) {
-                goodCharacter3.setMana(goodCharacter3.getMana() + 10);
-                if (goodCharacter3.getMana() > 100) {
-                    goodCharacter3.setMana(100);
-                }
-            }
-            if (goodCharacter4.getMana() < 100 && goodCharacter4.getHealth() > 0) {
-                goodCharacter4.setMana(goodCharacter4.getMana() + 10);
-                if (goodCharacter4.getMana() > 100) {
-                    goodCharacter4.setMana(100);
-                }
-            }
-            //TODO
             batch.draw(attacker.getTexture(), 40, 130, 200, 220);
             for (GameObject monster : monsters) {
                 boolean attackFlag = true;
