@@ -356,7 +356,7 @@ public class GameScreen implements Screen {
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && gameOver) {
                     music.stopMusic();
                     music = new PutMusic("startMelody.mp3");
-                    game.setScreen(new SingleGameChooseScreen(game, openLevelNumber, music));
+                    game.setScreen(new SingleGameChooseScreen(game, openLevelNumber, music, true));
                 }
             }
         }

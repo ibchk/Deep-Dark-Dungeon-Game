@@ -110,7 +110,19 @@ public class MainMenuScreen implements Screen {
     public MainMenuScreen(DeepDarkDungeonGame game, int openLevelNumber) {
         this.openLevelNumber = openLevelNumber;
         this.game = game;
-        // Fixing all textures:
+        music = new PutMusic("startMelody.mp3");
+        music.changePlayOrStop();
+    }
+
+    public MainMenuScreen(DeepDarkDungeonGame game, int openLevelNumber, PutMusic musicToStop) {
+        this.openLevelNumber = openLevelNumber;
+        musicToStop.stopMusic();
+        this.game = game;
+        music = new PutMusic("startMelody.mp3");
+    }
+
+    @Override
+    public void show() {
         QUITGAMEWINDOW = new Texture("quitgamewindow.png");
         BACKGROUND = new Texture("backgroungformainscreen.png");
         EXITBUTTONINACTIVE = new Texture("quitbutton.png");
@@ -126,34 +138,6 @@ public class MainMenuScreen implements Screen {
         MUSICBUTTON2 = new Texture("musicButton2.png");
         ABOUTBUTTON1 = new Texture("aboutButton.png");
         ABOUTBUTTON2 = new Texture("aboutButton2.png");
-        music = new PutMusic("startMelody.mp3");
-        music.changePlayOrStop();
-    }
-
-    public MainMenuScreen(DeepDarkDungeonGame game, int openLevelNumber, PutMusic musicToStop) {
-        this.openLevelNumber = openLevelNumber;
-        musicToStop.stopMusic();
-        this.game = game;
-        // Fixing all textures:
-        QUITGAMEWINDOW = new Texture("quitgamewindow.png");
-        BACKGROUND = new Texture("backgroungformainscreen.png");
-        EXITBUTTONINACTIVE = new Texture("quitbutton.png");
-        EXITBUTTONACTIVE = new Texture("quitbutton2.png");
-        PLAYBUTTONINACTIVE = new Texture("playbutton.png");
-        PLAYBUTTONACTIVE = new Texture("playbutton2.png");
-        YESBUTTON = new Texture("yes.png");
-        NOBUTTON = new Texture("no.png");
-        STARTGAMEWINDOW = new Texture("gameStartWindow.png");
-        BACKBUTTON = new Texture("backbutton2.png");
-        MULTIPLAYERBUTTON = new Texture("multiplayerButton.png");
-        MUSICBUTTON1 = new Texture("musicButton1.png");
-        MUSICBUTTON2 = new Texture("musicButton2.png");
-        music = new PutMusic("startMelody.mp3");
-    }
-
-    @Override
-    public void show() {
-
     }
 
 
@@ -180,7 +164,7 @@ public class MainMenuScreen implements Screen {
             if (Gdx.input.getX() > YES2BUTTON_X_START && Gdx.input.getX() < YES2BUTTON_X_END && Gdx.input.getY() > YES2BUTTON_Y_START && Gdx.input.getY() < YES2BUTTON_Y_END) {
                 game.batch.draw(PLAYBUTTONACTIVE, YES2BUTTON_X_START, YES2BUTTON_Y_FORBUTTONCHANGE);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                    game.setScreen(new SingleGameChooseScreen(game, openLevelNumber, music));
+                    game.setScreen(new SingleGameChooseScreen(game, openLevelNumber, music, true));
                 }
             }
             if (Gdx.input.getX() > BACKBUTTON_X_START && Gdx.input.getX() < BACKBUTTON_X_END && Gdx.input.getY() > BACKBUTTON_Y_START && Gdx.input.getY() < BACKBUTTON_Y_END) {
@@ -192,7 +176,7 @@ public class MainMenuScreen implements Screen {
             if (Gdx.input.getX() > MPBUTTON_X_START && Gdx.input.getX() < MPBUTTON_X_END && Gdx.input.getY() > MPBUTTON_Y_START && Gdx.input.getY() < MPBUTTON_Y_END) {
                 game.batch.draw(MULTIPLAYERBUTTON, MPBUTTON_X_START, MPBUTTON_Y_FORBUTTONCHANGE);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                    game.setScreen(new MultiplayerChooseScreen(game, music));
+                    game.setScreen(new SingleGameChooseScreen(game, openLevelNumber, music, false));
                 }
             }
         }
