@@ -111,14 +111,23 @@ public class MainMenuScreen implements Screen {
         this.openLevelNumber = openLevelNumber;
         this.game = game;
         music = new PutMusic("startMelody.mp3");
-        music.changePlayOrStop();
+        music.playMusic();
     }
 
-    public MainMenuScreen(DeepDarkDungeonGame game, int openLevelNumber, PutMusic musicToStop) {
+    public MainMenuScreen(DeepDarkDungeonGame game, int openLevelNumber, PutMusic music, boolean continueMusic) {
         this.openLevelNumber = openLevelNumber;
-        musicToStop.stopMusic();
         this.game = game;
-        music = new PutMusic("startMelody.mp3");
+        if (!continueMusic) {
+            this.music = new PutMusic("startMelody.mp3");
+            if (!music.isPlaying()) {
+                this.music.stopMusic();
+            } else {
+                this.music.playMusic();
+            }
+            music.stopMusic();
+        } else {
+            this.music = music;
+        }
     }
 
     @Override

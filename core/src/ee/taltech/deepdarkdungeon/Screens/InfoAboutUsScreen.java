@@ -144,7 +144,7 @@ public class InfoAboutUsScreen implements Screen, InputProcessor {
         if (Gdx.input.getX() > BACKBUTTON_X_START && Gdx.input.getX() < BACKBUTTON_X_END && Gdx.input.getY() > DeepDarkDungeonGame.HEIGHT - BACKBUTTON_Y_END - 27 && Gdx.input.getY() < DeepDarkDungeonGame.HEIGHT - BACKBUTTON_Y_START - 27) {
             game.batch.draw(BACKBUTTON2, BACKBUTTON_X_START, BACKBUTTON_Y_START, BACK_BUTTON_WIDTH, BACK_BUTTON_HEIGHT);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                game.setScreen(new MainMenuScreen(game, openLevelNumber));
+                game.setScreen(new MainMenuScreen(game, openLevelNumber, music, true));
             }
         }
         game.batch.end();

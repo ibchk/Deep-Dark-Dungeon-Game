@@ -203,7 +203,7 @@ public class SingleGameChooseScreen<FreeTypeFontParameter> implements Screen {
 
     @Override
     public void show() {
-        if (singleGame){
+        if (singleGame) {
             background = new Texture(Gdx.files.internal("backScreenChooseScreen.png"));
         } else {
             background = new Texture(Gdx.files.internal("backScreenChooseScreenMP.png"));
@@ -266,7 +266,7 @@ public class SingleGameChooseScreen<FreeTypeFontParameter> implements Screen {
                 levelButtonLight_Y = 283;
                 lvlPlaying = 1;
             }
-        } else if (singleGame){
+        } else if (singleGame) {
             batch.draw(level1Button1, 635, 290, 90, 97);
         }
 
@@ -285,7 +285,7 @@ public class SingleGameChooseScreen<FreeTypeFontParameter> implements Screen {
                     lvlPlaying = 2;
                 }
             }
-        } else if (singleGame){
+        } else if (singleGame) {
             batch.draw(level2ButtonLocked, 775, 290, 90, 97);
         }
 
@@ -304,7 +304,7 @@ public class SingleGameChooseScreen<FreeTypeFontParameter> implements Screen {
                     lvlPlaying = 3;
                 }
             }
-        } else if (singleGame){
+        } else if (singleGame) {
             batch.draw(level3ButtonLocked, 915, 290, 90, 97);
         }
 
@@ -323,7 +323,7 @@ public class SingleGameChooseScreen<FreeTypeFontParameter> implements Screen {
                     lvlPlaying = 4;
                 }
             }
-        } else if (singleGame){
+        } else if (singleGame) {
             batch.draw(level4ButtonLocked, 1055, 290, 90, 97);
         }
 
@@ -342,7 +342,7 @@ public class SingleGameChooseScreen<FreeTypeFontParameter> implements Screen {
                     lvlPlaying = 5;
                 }
             }
-        } else if (singleGame){
+        } else if (singleGame) {
             batch.draw(level5ButtonLocked, 1195, 290, 90, 97);
         }
 
@@ -494,7 +494,7 @@ public class SingleGameChooseScreen<FreeTypeFontParameter> implements Screen {
         if (!infoWind && Gdx.input.getX() > BACK_BUTTON_X_START && Gdx.input.getX() < BACK_BUTTON_X_END && Gdx.input.getY() > BACK_BUTTON_Y_START && Gdx.input.getY() < BACK_BUTTON_Y_END) {
             batch.draw(backButton2, BACK_BUTTON_X_START, BACKBUTTON_Y_FORBUTTONCHANGE, BACK_BUTTON_WIDTH, BACK_BUTTON_HEIGHT);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                game.setScreen(new MainMenuScreen(game, openLevelNumber, music));
+                game.setScreen(new MainMenuScreen(game, openLevelNumber, music, true));
             }
         }
 

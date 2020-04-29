@@ -53,7 +53,6 @@ public class GameScreen implements Screen {
     private static final int FRAME_ROWS_MONSTERS_HEAL = 4;
 
 
-
     List<GameObject> heroes;
     List<GameObject> monsters;
     DeepDarkDungeonGame game;
@@ -139,6 +138,7 @@ public class GameScreen implements Screen {
         this.game = game;
         heroes = goodCharacters;
         monsters = badCharacters;
+        boolean playing = music.isPlaying();
         goodCharacter1 = goodCharacters.get(0);
         goodCharacter2 = goodCharacters.get(1);
         goodCharacter3 = goodCharacters.get(2);
@@ -148,6 +148,11 @@ public class GameScreen implements Screen {
         badCharacter3 = badCharacters.get(2);
         badCharacter4 = badCharacters.get(3);
         this.music.setMusic("gameMelody.mp3");
+        if (playing) {
+            this.music.playMusic();
+        } else {
+            this.music.stopMusic();
+        }
     }
 
     @Override
@@ -169,7 +174,7 @@ public class GameScreen implements Screen {
         monsterHealSheet = new Texture(Gdx.files.internal("MonsterHealAnimation.png"));
         heroAttackSheet = new Texture(Gdx.files.internal("atacka.png"));
 
-        TextureRegion[][] tmp4 = TextureRegion.split(heroAttackSheet,  heroAttackSheet.getWidth()/HERO_FRAME_COLS, heroAttackSheet.getHeight()/HERO_FRAME_ROWS);
+        TextureRegion[][] tmp4 = TextureRegion.split(heroAttackSheet, heroAttackSheet.getWidth() / HERO_FRAME_COLS, heroAttackSheet.getHeight() / HERO_FRAME_ROWS);
         heroAttackFrames = new TextureRegion[HERO_FRAME_ROWS * HERO_FRAME_COLS];
         int index4 = 0;
         for (int i = 0; i < HERO_FRAME_ROWS; i++) {
@@ -181,7 +186,7 @@ public class GameScreen implements Screen {
         heroAttack.setPlayMode(Animation.PlayMode.NORMAL);
         heroAttackStateTime = 0f;
         // Дальше идет конструктор анимации: (это анимация санстрайка здесь менять ничего не нужно)
-        TextureRegion[][] tmp = TextureRegion.split(sunstrikeSheet, sunstrikeSheet.getWidth()/FRAME_COLS, sunstrikeSheet.getHeight()/FRAME_ROWS);
+        TextureRegion[][] tmp = TextureRegion.split(sunstrikeSheet, sunstrikeSheet.getWidth() / FRAME_COLS, sunstrikeSheet.getHeight() / FRAME_ROWS);
         sunstrikeFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
         int index = 0;
         for (int i = 0; i < FRAME_ROWS; i++) {
@@ -195,7 +200,7 @@ public class GameScreen implements Screen {
 
         // Monster Attack Animation:
 
-        TextureRegion[][] tmp2 = TextureRegion.split(monsterAttackSheet, monsterAttackSheet.getWidth()/FRAME_COLS_MONSTERS_ATTACK, monsterAttackSheet.getHeight()/FRAME_ROWS_MONSTERS_ATTACK);
+        TextureRegion[][] tmp2 = TextureRegion.split(monsterAttackSheet, monsterAttackSheet.getWidth() / FRAME_COLS_MONSTERS_ATTACK, monsterAttackSheet.getHeight() / FRAME_ROWS_MONSTERS_ATTACK);
         monsterAttackFrames = new TextureRegion[FRAME_COLS_MONSTERS_ATTACK * FRAME_ROWS_MONSTERS_ATTACK];
         int index2 = 0;
         for (int i = 0; i < FRAME_ROWS_MONSTERS_ATTACK; i++) {
@@ -209,7 +214,7 @@ public class GameScreen implements Screen {
 
         // Monster Heal Animation:
 
-        TextureRegion[][] tmp3 = TextureRegion.split(monsterHealSheet, monsterHealSheet.getWidth()/FRAME_COLS_MONSTERS_HEAL, monsterHealSheet.getHeight()/FRAME_ROWS_MONSTERS_HEAL);
+        TextureRegion[][] tmp3 = TextureRegion.split(monsterHealSheet, monsterHealSheet.getWidth() / FRAME_COLS_MONSTERS_HEAL, monsterHealSheet.getHeight() / FRAME_ROWS_MONSTERS_HEAL);
         monsterHealFrames = new TextureRegion[FRAME_COLS_MONSTERS_HEAL * FRAME_ROWS_MONSTERS_HEAL];
         int index3 = 0;
         for (int i = 0; i < FRAME_ROWS_MONSTERS_HEAL; i++) {
@@ -265,8 +270,7 @@ public class GameScreen implements Screen {
                 font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 250);
                 font.draw(batch, monsterDamage, attackedMonster.getX() + 290, attackedMonster.getY() + 200);
                 font.draw(batch, monsterDamage, attackedMonster.getX() - 100, attackedMonster.getY() + 200);
-            }
-            else if (monsterDamage.contains("30") && attackedMonster.equals(monsters.get(3))) {
+            } else if (monsterDamage.contains("30") && attackedMonster.equals(monsters.get(3))) {
                 font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 250);
                 font.draw(batch, monsterDamage, attackedMonster.getX() - 100, attackedMonster.getY() + 300);
             } else {
@@ -275,13 +279,13 @@ public class GameScreen implements Screen {
             flag++;
             if (flag > 100 && attackAnimationStarted) {
                 monsterDamage = "";
-                font.draw(batch, message, 100, 900 );
+                font.draw(batch, message, 100, 900);
                 font.draw(batch, heroDamage, attackedHero.getX() + 90, attackedHero.getY() + 250);
                 stateTimeMonsterAttack += Gdx.graphics.getDeltaTime();
                 currentMonsterAttackFrame = (TextureRegion) monsterAttackAnimation.getKeyFrame(stateTimeMonsterAttack);
                 batch.draw(currentMonsterAttackFrame, attackedHero.getX(), attackedHero.getY() - 20, 300, 320);
             } else if (flag > 100 && monsterHealAnimationStarted) {
-                font.draw(batch, message, 100, 900 );
+                font.draw(batch, message, 100, 900);
                 stateTimeMonsterHeal += Gdx.graphics.getDeltaTime();
                 currentMonsterHealFrame = (TextureRegion) monsterHealAnimation.getKeyFrame(stateTimeMonsterHeal);
                 batch.draw(currentMonsterHealFrame, attackedMonster.getX() - 50, attackedMonster.getY() - 40, 300, 320);
@@ -295,16 +299,16 @@ public class GameScreen implements Screen {
                 stateTime += Gdx.graphics.getDeltaTime();
                 currentSunstrikeFrame = (TextureRegion) sunstrikeAnimation.getKeyFrame(stateTime);
                 if (attackedMonster.equals(monsters.get(0))) {
-                    batch.draw(currentSunstrikeFrame, badCharacter1.getX(),  badCharacter1.getY(), 300, 320);
-                    batch.draw(currentSunstrikeFrame, badCharacter2.getX(),  badCharacter2.getY(), 300, 320);
+                    batch.draw(currentSunstrikeFrame, badCharacter1.getX(), badCharacter1.getY(), 300, 320);
+                    batch.draw(currentSunstrikeFrame, badCharacter2.getX(), badCharacter2.getY(), 300, 320);
                 } else if (attackedMonster.equals(monsters.get(1))) {
-                    batch.draw(currentSunstrikeFrame, badCharacter1.getX(),  badCharacter1.getY(), 300, 320);
-                    batch.draw(currentSunstrikeFrame, badCharacter2.getX(),  badCharacter2.getY(), 300, 320);
-                    batch.draw(currentSunstrikeFrame, badCharacter3.getX(),  badCharacter3.getY(), 300, 320);
+                    batch.draw(currentSunstrikeFrame, badCharacter1.getX(), badCharacter1.getY(), 300, 320);
+                    batch.draw(currentSunstrikeFrame, badCharacter2.getX(), badCharacter2.getY(), 300, 320);
+                    batch.draw(currentSunstrikeFrame, badCharacter3.getX(), badCharacter3.getY(), 300, 320);
                 } else if (attackedMonster.equals(monsters.get(2))) {
-                    batch.draw(currentSunstrikeFrame, badCharacter2.getX(),  badCharacter2.getY(), 300, 320);
-                    batch.draw(currentSunstrikeFrame, badCharacter3.getX(),  badCharacter3.getY(), 300, 320);
-                    batch.draw(currentSunstrikeFrame, badCharacter4.getX(),  badCharacter4.getY(), 300, 320);
+                    batch.draw(currentSunstrikeFrame, badCharacter2.getX(), badCharacter2.getY(), 300, 320);
+                    batch.draw(currentSunstrikeFrame, badCharacter3.getX(), badCharacter3.getY(), 300, 320);
+                    batch.draw(currentSunstrikeFrame, badCharacter4.getX(), badCharacter4.getY(), 300, 320);
                 } else if (attackedMonster.equals(monsters.get(3))) {
                     batch.draw(currentSunstrikeFrame, badCharacter3.getX(), badCharacter3.getY(), 300, 320);
                     batch.draw(currentSunstrikeFrame, badCharacter4.getX(), badCharacter4.getY(), 300, 320);
@@ -347,15 +351,21 @@ public class GameScreen implements Screen {
             if (Gdx.input.getX() > MAIN_MENU_X_START && Gdx.input.getX() < MAIN_MENU_X_END && Gdx.input.getY() > MAIN_MENU_Y_START && Gdx.input.getY() < MAIN_MENU_Y_END) {
                 batch.draw(mainMenuButton, 685, 380, 220, 95);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && gameOver) {
-                    game.setScreen(new MainMenuScreen(game, openLevelNumber, music));
+                    game.setScreen(new MainMenuScreen(game, openLevelNumber, music, false));
                 }
             }
             // Ильюша, сладкий, этот код для тебя ;*
             if (Gdx.input.getX() > NEXT_X_START && Gdx.input.getX() < NEXT_X_END && Gdx.input.getY() > NEXT_Y_START && Gdx.input.getY() < NEXT_Y_END) {
                 batch.draw(nextLevelButton, 970, 380, 220, 95);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && gameOver) {
+                    boolean isMusicPlaying = music.isPlaying();
                     music.stopMusic();
                     music = new PutMusic("startMelody.mp3");
+                    if (isMusicPlaying) {
+                        music.playMusic();
+                    } else {
+                        music.stopMusic();
+                    }
                     game.setScreen(new SingleGameChooseScreen(game, openLevelNumber, music, true));
                 }
             }
@@ -366,7 +376,7 @@ public class GameScreen implements Screen {
             if (Gdx.input.getX() > MAIN_MENU2_X_START && Gdx.input.getX() < MAIN_MENU2_X_END && Gdx.input.getY() > MAIN_MENU2_Y_START && Gdx.input.getY() < MAIN_MENU2_Y_END) {
                 batch.draw(mainMenuButton2, 835, 385, 228, 95);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && gameOver) {
-                    game.setScreen(new MainMenuScreen(game, openLevelNumber, music));
+                    game.setScreen(new MainMenuScreen(game, openLevelNumber, music, false));
                 }
             }
         }
@@ -415,7 +425,7 @@ public class GameScreen implements Screen {
             }
             if (skillIsPressed && attacker.getSkill().equals("purification")) {
                 GameObject needed = heroes.get(0);
-                for (GameObject hero:heroes) {
+                for (GameObject hero : heroes) {
                     if (needed.getHealth() > hero.getHealth()) {
                         needed = hero;
                     }
@@ -499,7 +509,7 @@ public class GameScreen implements Screen {
             int count = 0;
             GameObject hero = heroes.get(0);
             if (checkRandom % 2 == 1) {
-                for (GameObject heros: heroes) {
+                for (GameObject heros : heroes) {
                     if (count >= 4) {
                         break;
                     }
@@ -535,7 +545,7 @@ public class GameScreen implements Screen {
                 hero = attackedHero;
                 agr = false;
             }
-            for (GameObject manaUpdate: heroes) { //добовляет ману
+            for (GameObject manaUpdate : heroes) { //добовляет ману
                 if (manaUpdate.getMana() < 100 && manaUpdate.getHealth() > 0) {
                     manaUpdate.setMana(manaUpdate.getMana() + 10);
                     if (manaUpdate.getMana() > 100) {
@@ -610,7 +620,7 @@ public class GameScreen implements Screen {
         messageForMonsters = "You powershoted " + gameObject.getName();
         attackedMonster = badCharacter2;
         monsterDamage = "-100 HP";
-        batch.draw(powerShot, attacker.getX() + 185,  attacker.getY() - 25, 150, 150);
+        batch.draw(powerShot, attacker.getX() + 185, attacker.getY() - 25, 150, 150);
         wait = true;
         gameObject.setHealth(Math.max(gameObject.getHealth() - 100, 0));
         batch.draw(powerShot, gameObject.getX(), gameObject.getY(), 150, 150);
