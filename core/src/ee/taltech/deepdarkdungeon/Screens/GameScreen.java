@@ -238,29 +238,16 @@ public class GameScreen implements Screen {
         batch.draw(background, 0, 0);
         batch.draw(attackbutton, VBOI_X, VBOI_Y, VBOI_WIDTH, VBOI_HEIGTH);
         batch.draw(defenceButton, VBOI_X, VBOI_Y - 70, VBOI_WIDTH, VBOI_HEIGTH);
-        batch.draw(goodCharacter1.getTexture(), goodCharacter1.getX(), goodCharacter1.getY(), 200, 220); // рисует персанажа (картинка)
-        batch.draw(goodCharacter2.getTexture(), goodCharacter2.getX(), goodCharacter2.getY(), 200, 220);
-        batch.draw(goodCharacter3.getTexture(), goodCharacter3.getX(), goodCharacter3.getY(), 200, 220);
-        batch.draw(goodCharacter4.getTexture(), goodCharacter4.getX(), goodCharacter4.getY(), 200, 220);
-        batch.draw(badCharacter1.getTexture(), badCharacter1.getX(), badCharacter1.getY(), 200, 220);
-        batch.draw(badCharacter2.getTexture(), badCharacter2.getX(), badCharacter2.getY(), 200, 220);
-        batch.draw(badCharacter3.getTexture(), badCharacter3.getX(), badCharacter3.getY(), 200, 220);
-        batch.draw(badCharacter4.getTexture(), badCharacter4.getX(), badCharacter4.getY(), 200, 220);
-        font.draw(batch, "Hp: " + badCharacter1.getHealth(), 1200, 400);
-        font.draw(batch, "Hp: " + badCharacter2.getHealth(), 1400, 400);
-        font.draw(batch, "Hp: " + badCharacter3.getHealth(), 1600, 400);
-        font.draw(batch, "Hp: " + badCharacter4.getHealth(), 1800, 400);
-        font.draw(batch, "Hp: " + goodCharacter1.getHealth(), 40, 400);
-        font.draw(batch, "Hp: " + goodCharacter2.getHealth(), 240, 400);
-        font.draw(batch, "Hp: " + goodCharacter3.getHealth(), 440, 400);
-        font.draw(batch, "Hp: " + goodCharacter4.getHealth(), 640, 400);
-        font.draw(batch, "Mn: " + goodCharacter1.getMana(), 115, 400);
-        font.draw(batch, "Mn: " + goodCharacter2.getMana(), 315, 400);
-        font.draw(batch, "Mn: " + goodCharacter3.getMana(), 515, 400);
-        font.draw(batch, "Mn: " + goodCharacter4.getMana(), 715, 400);
-        for (GameObject monster : monsters) {
+        for (GameObject hero : heroes) {
+            batch.draw(hero.getTexture(), hero.getX(), hero.getY(), 200, 220);
+            font.draw(batch, "Hp: " + hero.getHealth(), hero.getX() + 30, hero.getY() - 10);
+            font.draw(batch, "Mn: " + hero.getMana(), hero.getX() + 100, hero.getY() - 10);
+        }
+        for (GameObject monster: monsters) {
+            batch.draw(monster.getTexture(), monster.getX(), monster.getY(), 200, 220);
+            font.draw(batch, "Hp: " + monster.getHealth(), monster.getX() + 30, monster.getY() - 10);
             if (monster.getBadCharacterClass().equals(GameObject.BadCharacterClass.NECROMANCER)) {
-                font.draw(batch, "Mn: " + monster.getMana(), monster.getX(), monster.getY() - 50);
+                font.draw(batch, "Mn: " + monster.getMana(), monster.getX() + 100, monster.getY() - 10);
             }
         }
         if (attackAnimationStarted || sunstrikeAnimationStarted || monsterHealAnimationStarted || heroAttackAnimationStarted) {
