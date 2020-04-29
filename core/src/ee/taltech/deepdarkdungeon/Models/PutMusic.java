@@ -5,7 +5,7 @@ import com.badlogic.gdx.audio.Music;
 
 public class PutMusic {
     private Music music;
-    boolean playing = true;
+    private boolean playing = true;
 
     public PutMusic(String music) {
         this.music = Gdx.audio.newMusic(Gdx.files.internal(music));
@@ -38,5 +38,9 @@ public class PutMusic {
         if (playing) {
             this.music.play();
         }
+    }
+
+    public boolean isPlaying() {
+        return playing;
     }
 }
