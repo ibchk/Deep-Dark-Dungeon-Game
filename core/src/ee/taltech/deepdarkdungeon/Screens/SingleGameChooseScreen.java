@@ -259,9 +259,9 @@ public class SingleGameChooseScreen<FreeTypeFontParameter> implements Screen {
             batch.draw(level1Button2, 635, 290, 90, 97);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 neededBadCharacter1 = 1;
-                neededBadCharacter2 = 0;
-                neededBadCharacter3 = 0;
-                neededBadCharacter4 = 0;
+                neededBadCharacter2 = 1;
+                neededBadCharacter3 = 1;
+                neededBadCharacter4 = 1;
                 levelButtonLight_X = 628;
                 levelButtonLight_Y = 283;
                 lvlPlaying = 1;

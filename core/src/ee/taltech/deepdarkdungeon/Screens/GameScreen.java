@@ -51,6 +51,8 @@ public class GameScreen implements Screen {
     private static final int FRAME_ROWS_MONSTERS_ATTACK = 3;
     private static final int FRAME_COLS_MONSTERS_HEAL = 5;
     private static final int FRAME_ROWS_MONSTERS_HEAL = 4;
+    private static final int FRAME_COLS_POWERSHOT = 4;
+    private static final int FRAME_ROWS_POWERSHOT = 4;
 
 
     List<GameObject> heroes;
@@ -69,7 +71,7 @@ public class GameScreen implements Screen {
     private Texture nextLevelButton;
     private Texture mainMenuButton;
     private Texture heroesWinScreen;
-    private Texture powerShot;
+    private Texture powershot;
     private Texture attackbutton;
     private Texture attackbuttonacitve;
     private Texture background;
@@ -107,6 +109,8 @@ public class GameScreen implements Screen {
 
     private boolean addManaMonsters = false;
 
+    private boolean powershotStarted = false;
+
     Animation heroAttack;
     Texture heroAttackSheet;
     TextureRegion[] heroAttackFrames;
@@ -132,6 +136,12 @@ public class GameScreen implements Screen {
     TextureRegion[] monsterHealFrames;  // в этом массиве мы храним все кадры конкретной анимации
     TextureRegion currentMonsterHealFrame;
     float stateTimeMonsterHeal;
+
+    Animation powershotAnimation; // анимация
+    Texture powershotSheet; // текстура анимации
+    TextureRegion[] powershotFrames;  // в этом массиве мы храним все кадры конкретной анимации
+    TextureRegion currentPowershotFrame;
+    float stateTimePowershot;
 
     public GameScreen(List<GameObject> goodCharacters, List<GameObject> badCharacters, DeepDarkDungeonGame game, PutMusic music, int openLevelNumber, int lvlPlaying) {
         this.lvlPlaying = lvlPlaying;
@@ -165,7 +175,7 @@ public class GameScreen implements Screen {
         attackbuttonacitve = new Texture(Gdx.files.internal("atackButton2.png"));
         defenceButton = new Texture(Gdx.files.internal("defenceButton1.png"));
         aciveDefenceButton = new Texture(Gdx.files.internal("defenceButton2.png"));
-        powerShot = new Texture(Gdx.files.internal("pixil-frame-0_1.png"));
+        powershotSheet = new Texture(Gdx.files.internal("powershot.png"));
         heroesWinScreen = new Texture(Gdx.files.internal("You_Win_Screen.png"));
         mainMenuButton = new Texture(Gdx.files.internal("MainMenuSelected.png"));
         nextLevelButton = new Texture(Gdx.files.internal("NextLevelSelected.png"));
@@ -228,6 +238,20 @@ public class GameScreen implements Screen {
         monsterHealAnimation.setPlayMode(Animation.PlayMode.NORMAL);
         stateTimeMonsterHeal = 0f;
 
+        // Powershot animation:
+
+        TextureRegion[][] tmp5 = TextureRegion.split(powershotSheet, powershotSheet.getWidth() / FRAME_COLS_POWERSHOT, powershotSheet.getHeight() / FRAME_ROWS_POWERSHOT);
+        powershotFrames = new TextureRegion[FRAME_COLS_POWERSHOT * FRAME_ROWS_POWERSHOT];
+        int index5 = 0;
+        for (int i = 0; i < FRAME_ROWS_POWERSHOT; i++) {
+            for (int j = 0; j < FRAME_COLS_POWERSHOT; j++) {
+                powershotFrames[index5++] = tmp5[i][j];
+            }
+        }
+        powershotAnimation = new Animation(0.04f, powershotFrames);
+        powershotAnimation.setPlayMode(Animation.PlayMode.NORMAL);
+        stateTimePowershot = 0f;
+
     }
 
     @Override
@@ -250,7 +274,7 @@ public class GameScreen implements Screen {
                 font.draw(batch, "Mn: " + monster.getMana(), monster.getX() + 100, monster.getY() - 10);
             }
         }
-        if (attackAnimationStarted || sunstrikeAnimationStarted || monsterHealAnimationStarted || heroAttackAnimationStarted) {
+        if (attackAnimationStarted || sunstrikeAnimationStarted || monsterHealAnimationStarted || heroAttackAnimationStarted || powershotStarted) {
             font.draw(batch, "Monsters turn! " + stepCount, 100, 1000);
             font.draw(batch, messageForMonsters, 100, 950);
             if (monsterDamage.contains("30") && attackedMonster.equals(monsters.get(0))) {
@@ -271,6 +295,12 @@ public class GameScreen implements Screen {
                 font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 250);
             }
             flag++;
+            if (flag > 100 && powershotStarted) {
+                font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 250);
+                stateTimePowershot += Gdx.graphics.getDeltaTime();
+                currentPowershotFrame = (TextureRegion) powershotAnimation.getKeyFrame(stateTimePowershot);
+                batch.draw(currentPowershotFrame, attackedMonster.getX() - 40, attackedMonster.getY() - 80, 300, 320);
+            }
             if (flag > 100 && attackAnimationStarted) {
                 monsterDamage = "";
                 font.draw(batch, message, 100, 900);
@@ -307,6 +337,13 @@ public class GameScreen implements Screen {
                     batch.draw(currentSunstrikeFrame, badCharacter3.getX(), badCharacter3.getY(), 300, 320);
                     batch.draw(currentSunstrikeFrame, badCharacter4.getX(), badCharacter4.getY(), 300, 320);
                 }
+            }
+            if (powershotAnimation.isAnimationFinished(stateTimePowershot) && flag > 200) {
+                flag = 0;
+                powershotStarted = false;
+                stateTimePowershot = 0f;
+                stepCount++;
+                WHOWILLATTACK++;
             }
             if (heroAttack.isAnimationFinished(heroAttackStateTime) && flag > 200) {
                 flag = 0;
@@ -374,7 +411,7 @@ public class GameScreen implements Screen {
                 }
             }
         }
-        if (stepCount % 2 != 0 && !gameOver && !attackAnimationStarted && !sunstrikeAnimationStarted && !heroAttackAnimationStarted) {
+        if (stepCount % 2 != 0 && !gameOver && !attackAnimationStarted && !sunstrikeAnimationStarted && !heroAttackAnimationStarted && !powershotStarted) {
 
             if (addManaMonsters) {
                 for (GameObject monster : monsters) {
@@ -502,7 +539,7 @@ public class GameScreen implements Screen {
                     }
                 }
             }
-        } else if (stepCount % 2 == 0 && !gameOver && !attackAnimationStarted && !sunstrikeAnimationStarted && !monsterHealAnimationStarted && !heroAttackAnimationStarted) {
+        } else if (stepCount % 2 == 0 && !gameOver && !attackAnimationStarted && !sunstrikeAnimationStarted && !monsterHealAnimationStarted && !heroAttackAnimationStarted && !powershotStarted) {
             boolean clear = true;
             addManaMonsters = true;
             for (GameObject monster : monsters) {
@@ -626,18 +663,13 @@ public class GameScreen implements Screen {
     }
 
     private void powerShot(GameObject gameObject) {
-        messageForMonsters = "You powershoted " + gameObject.getName();
-        attackedMonster = badCharacter2;
+        messageForMonsters = "You powershoted and killed" + gameObject.getName();
+        attackedMonster = gameObject; // ошибка!!!!
         monsterDamage = "-100 HP";
-        batch.draw(powerShot, attacker.getX() + 185, attacker.getY() - 25, 150, 150);
-        wait = true;
         gameObject.setHealth(Math.max(gameObject.getHealth() - 100, 0));
-        batch.draw(powerShot, gameObject.getX(), gameObject.getY(), 150, 150);
         attacker.setMana(attacker.getMana() - 100);
-        wait = true;
-        WHOWILLATTACK++;
-        stepCount += 1;
         skillIsPressed = false;
+        powershotStarted = true;
     }
 
     private void defAttack(GameObject gameObject) {
