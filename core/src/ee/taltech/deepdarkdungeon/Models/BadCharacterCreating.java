@@ -12,7 +12,7 @@ public class BadCharacterCreating {
         GameObject character;
         switch (characters.get(neededCharacter % 4).getBadCharacterClass()) {
             case NECROMANCER:
-                character = new Necromancer(characters.get(neededCharacter % 4).getTexture(), characters.get(neededCharacter % 4).getName(), characters.get(neededCharacter % 4).health, characters.get(neededCharacter % 4).getPower(), goodCharacter.getX(), goodCharacter.getY(), characters.get(neededCharacter % 4).getWidth(), characters.get(neededCharacter % 4).getHeight(), characters.get(neededCharacter % 4).getBadCharacterClass(), characters.get(neededCharacter % 4).getCharacterType());
+                character = new Necromancer(characters.get(neededCharacter % 4).getTexture(), characters.get(neededCharacter % 4).getName(), characters.get(neededCharacter % 4).health, characters.get(neededCharacter % 4).getPower(), goodCharacter.getX(), goodCharacter.getY(), characters.get(neededCharacter % 4).getWidth(), characters.get(neededCharacter % 4).getHeight(), characters.get(neededCharacter % 4).getBadCharacterClass(), characters.get(neededCharacter % 4).getCharacterType(), 100);
                 break;
             case SKELETON_ARCHER:
                 character = new SkeletonArcher(characters.get(neededCharacter % 4).getTexture(), characters.get(neededCharacter % 4).getName(), characters.get(neededCharacter % 4).health, characters.get(neededCharacter % 4).getPower(), goodCharacter.getX(), goodCharacter.getY(), characters.get(neededCharacter % 4).getWidth(), characters.get(neededCharacter % 4).getHeight(), characters.get(neededCharacter % 4).getBadCharacterClass(), characters.get(neededCharacter % 4).getCharacterType());
@@ -26,7 +26,7 @@ public class BadCharacterCreating {
                 character = new Zombie(characters.get(neededCharacter % 4).getTexture(), characters.get(neededCharacter % 4).getName(), characters.get(neededCharacter % 4).health, characters.get(neededCharacter % 4).getPower(), goodCharacter.getX(), goodCharacter.getY(), characters.get(neededCharacter % 4).getWidth(), characters.get(neededCharacter % 4).getHeight(), characters.get(neededCharacter % 4).getBadCharacterClass(), characters.get(neededCharacter % 4).getCharacterType());
                 break;
             default:
-                character = new Necromancer(characters.get(neededCharacter % 4).getTexture(), characters.get(neededCharacter % 4).getName(), characters.get(neededCharacter % 4).health, characters.get(neededCharacter % 4).getPower(), goodCharacter.getX(), goodCharacter.getY(), characters.get(neededCharacter % 4).getWidth(), characters.get(neededCharacter % 4).getHeight(), characters.get(neededCharacter % 4).getBadCharacterClass(), characters.get(neededCharacter % 4).getCharacterType());
+                character = new Necromancer(characters.get(neededCharacter % 4).getTexture(), characters.get(neededCharacter % 4).getName(), characters.get(neededCharacter % 4).health, characters.get(neededCharacter % 4).getPower(), goodCharacter.getX(), goodCharacter.getY(), characters.get(neededCharacter % 4).getWidth(), characters.get(neededCharacter % 4).getHeight(), characters.get(neededCharacter % 4).getBadCharacterClass(), characters.get(neededCharacter % 4).getCharacterType(), 100);
         }
         return character;
     }

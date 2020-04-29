@@ -105,6 +105,8 @@ public class GameScreen implements Screen {
 
     private boolean monsterHealAnimationStarted = false;
 
+    private boolean addManaMonsters = false;
+
     Animation heroAttack;
     Texture heroAttackSheet;
     TextureRegion[] heroAttackFrames;
@@ -256,6 +258,11 @@ public class GameScreen implements Screen {
         font.draw(batch, "Mn: " + goodCharacter2.getMana(), 315, 400);
         font.draw(batch, "Mn: " + goodCharacter3.getMana(), 515, 400);
         font.draw(batch, "Mn: " + goodCharacter4.getMana(), 715, 400);
+        for (GameObject monster : monsters) {
+            if (monster.getBadCharacterClass().equals(GameObject.BadCharacterClass.NECROMANCER)) {
+                font.draw(batch, "Mn: " + monster.getMana(), monster.getX(), monster.getY() - 50);
+            }
+        }
         if (attackAnimationStarted || sunstrikeAnimationStarted || monsterHealAnimationStarted || heroAttackAnimationStarted) {
             font.draw(batch, "Monsters turn! " + stepCount, 100, 1000);
             font.draw(batch, messageForMonsters, 100, 950);
@@ -381,6 +388,19 @@ public class GameScreen implements Screen {
             }
         }
         if (stepCount % 2 != 0 && !gameOver && !attackAnimationStarted && !sunstrikeAnimationStarted && !heroAttackAnimationStarted) {
+
+            if (addManaMonsters) {
+                for (GameObject monster : monsters) {
+                    if (monster.getBadCharacterClass().equals(GameObject.BadCharacterClass.NECROMANCER) && monster.getHealth() > 0 && monster.getMana() < 100) {
+                        monster.setMana(monster.getMana() + 10);
+                        if (monster.getMana() > 100) {
+                            monster.setMana(100);
+                        }
+                    }
+                }
+                addManaMonsters = false;
+            }
+
             if (WHOWILLATTACK >= 4) {
                 WHOWILLATTACK = 0;
             }
@@ -497,6 +517,7 @@ public class GameScreen implements Screen {
             }
         } else if (stepCount % 2 == 0 && !gameOver && !attackAnimationStarted && !sunstrikeAnimationStarted && !monsterHealAnimationStarted && !heroAttackAnimationStarted) {
             boolean clear = true;
+            addManaMonsters = true;
             for (GameObject monster : monsters) {
                 if (monster.getHealth() > 0 && !monsterAttackedLast.contains(monster)) {
                     clear = false;
@@ -557,7 +578,7 @@ public class GameScreen implements Screen {
             for (GameObject monster : monsters) {
                 boolean attackFlag = true;
                 if (monster.getHealth() > 0 && !monsterAttackedLast.contains(monster)) {
-                    if (monster.getBadCharacterClass().equals(GameObject.BadCharacterClass.NECROMANCER)) {
+                    if (monster.getBadCharacterClass().equals(GameObject.BadCharacterClass.NECROMANCER) && monster.getMana() >= 30) {
                         for (GameObject monsterToHeal : monsters) {
                             if (monsterToHeal.getHealth() <= 30) {
                                 monsterHealAnimationStarted = true;
@@ -568,6 +589,7 @@ public class GameScreen implements Screen {
                                 attackFlag = false;
                                 monsterDamage = "+50 HP";
                                 attackedMonster = monsterToHeal;
+                                monster.setMana(monster.getMana() - 30);
                                 break;
                             }
                         }
