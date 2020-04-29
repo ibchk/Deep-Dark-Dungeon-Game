@@ -5,7 +5,7 @@ import ee.taltech.deepdarkdungeon.Models.GameObject;
 
 public class Warrior extends GameObject {
 
-    public Warrior(Texture picture, String name, int health, int power, int x, int y, double width, double height, CharacterClass characterClass, CharacterType characterType) {
+    public Warrior(Texture picture, String name, int health, int power, int x, int y, double width, double height, CharacterClass characterClass, CharacterType characterType, int place) {
         this.texture = picture;
         this.name = name;
         this.health = health;
@@ -18,5 +18,6 @@ public class Warrior extends GameObject {
         this.characterType = characterType;
         this.skills = "berserk call";
         this.mana = 100;
+        this.place = place;
     }
 }

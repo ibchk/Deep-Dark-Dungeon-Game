@@ -5,7 +5,7 @@ import ee.taltech.deepdarkdungeon.Models.GameObject;
 
 public class Archer extends GameObject {
 
-    public Archer(Texture picture, String name, int health, int power, int x, int y, double width, double height, CharacterClass characterClass, CharacterType characterType) {
+    public Archer(Texture picture, String name, int health, int power, int x, int y, double width, double height, CharacterClass characterClass, CharacterType characterType, int place) {
         this.name = name;
         this.health = health;
         this.mana = 100;
@@ -18,5 +18,6 @@ public class Archer extends GameObject {
         this.characterType = characterType;
         this.texture = picture;
         this.skills = "powershot";
+        this.place = place;
     }
 }

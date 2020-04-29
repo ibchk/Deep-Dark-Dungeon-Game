@@ -180,10 +180,10 @@ public class SingleGameChooseScreen<FreeTypeFontParameter> implements Screen {
         this.music = music;
         this.game = game;
         this.singleGame = singleGame;
-        goodCharacter1 = new Warrior(new Texture(Gdx.files.internal("GoodCharacter1.png")), "Char1", 100, 100, 0, 400, 200, 277, GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD1);
-        goodCharacter2 = new Archer(new Texture(Gdx.files.internal("GoodCharacter2.png")), "Char2", 100, 100, 200, 450, 200, 277, GameObject.CharacterClass.ARCHER, GameObject.CharacterType.GOOD2);
-        goodCharacter3 = new Magic(new Texture(Gdx.files.internal("GoodCharacter3.png")), "Char3", 200, 100, 400, 400, 200, 277, GameObject.CharacterClass.MAGIC, GameObject.CharacterType.GOOD3);
-        goodCharacter4 = new Paladin(new Texture(Gdx.files.internal("GoodCharacter4.png")), "Char4", 100, 100, 600, 450, 200, 277, GameObject.CharacterClass.PALADIN, GameObject.CharacterType.GOOD4);
+        goodCharacter1 = new Warrior(new Texture(Gdx.files.internal("GoodCharacter1.png")), "Char1", 100, 100, 0, 400, 200, 277, GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD1, 1);
+        goodCharacter2 = new Archer(new Texture(Gdx.files.internal("GoodCharacter2.png")), "Char2", 100, 100, 200, 450, 200, 277, GameObject.CharacterClass.ARCHER, GameObject.CharacterType.GOOD2, 2);
+        goodCharacter3 = new Magic(new Texture(Gdx.files.internal("GoodCharacter3.png")), "Char3", 200, 100, 400, 400, 200, 277, GameObject.CharacterClass.MAGIC, GameObject.CharacterType.GOOD3, 3);
+        goodCharacter4 = new Paladin(new Texture(Gdx.files.internal("GoodCharacter4.png")), "Char4", 100, 100, 600, 450, 200, 277, GameObject.CharacterClass.PALADIN, GameObject.CharacterType.GOOD4, 4);
         badCharacter1 = new Necromancer(new Texture(Gdx.files.internal("BadCharacter1.png")), "Necromancer", 0, 10, 1100, 450, 200, 277, GameObject.BadCharacterClass.NECROMANCER, GameObject.CharacterType.BAD1);
         badCharacter2 = new Zombie(new Texture(Gdx.files.internal("BadCharacter2.png")), "Zombie", 0, 10, 1300, 400, 200, 277, GameObject.BadCharacterClass.ZOMBIE, GameObject.CharacterType.BAD2);
         badCharacter3 = new SkeletonWarrior(new Texture(Gdx.files.internal("BadCharacter3.png")), "Skeleton Warrior", 0, 10, 1500, 450, 200, 277, GameObject.BadCharacterClass.SKELETON_WARRIOR, GameObject.CharacterType.BAD3);
@@ -484,7 +484,7 @@ public class SingleGameChooseScreen<FreeTypeFontParameter> implements Screen {
             batch.draw(startButton2, PLAY_BUTTON_X_START, PLAYBUTTON_Y_FORBUTTONCHANGE, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
             if (singleGame && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && neededBadCharacter1 != -101) {
                 badCharacters = Arrays.asList(new BadCharacterCreating().createCharacter(rightBadCharacters, neededBadCharacter1, badCharacter1), new BadCharacterCreating().createCharacter(rightBadCharacters, neededBadCharacter2, badCharacter2), new BadCharacterCreating().createCharacter(rightBadCharacters, neededBadCharacter3, badCharacter3), new BadCharacterCreating().createCharacter(rightBadCharacters, neededBadCharacter4, badCharacter4));
-                List<GameObject> rightCharactersList = new ArrayList<>(Arrays.asList(new CharacterCreating().createCharacter(characters, neededCharacter1, goodCharacter1), new CharacterCreating().createCharacter(characters, neededCharacter2, goodCharacter2), new CharacterCreating().createCharacter(characters, neededCharacter3, goodCharacter3), new CharacterCreating().createCharacter(characters, neededCharacter4, goodCharacter4)));
+                List<GameObject> rightCharactersList = new ArrayList<>(Arrays.asList(new CharacterCreating().createCharacter(characters, neededCharacter1, goodCharacter1, 1), new CharacterCreating().createCharacter(characters, neededCharacter2, goodCharacter2, 2), new CharacterCreating().createCharacter(characters, neededCharacter3, goodCharacter3, 3), new CharacterCreating().createCharacter(characters, neededCharacter4, goodCharacter4, 4)));
                 game.setScreen(new GameScreen(rightCharactersList, badCharacters, game, music, openLevelNumber, lvlPlaying));
             }
         }

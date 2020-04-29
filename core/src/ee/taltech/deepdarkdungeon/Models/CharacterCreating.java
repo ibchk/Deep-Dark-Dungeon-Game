@@ -8,25 +8,25 @@ import ee.taltech.deepdarkdungeon.Models.characterClasses.Warrior;
 import java.util.List;
 
 public class CharacterCreating {
-    public GameObject createCharacter(List<GameObject> characters, int neededCharacter, GameObject goodCharacter) {
+    public GameObject createCharacter(List<GameObject> characters, int neededCharacter, GameObject goodCharacter, int place) {
         GameObject character;
         switch (characters.get(neededCharacter % 4).getCharacterClass()) {
             case WARIOR:
-                character = new Warrior(characters.get(neededCharacter % 4).getTexture(), characters.get(neededCharacter % 4).getName(), characters.get(neededCharacter % 4).health, characters.get(neededCharacter % 4).getPower(), goodCharacter.getX(), goodCharacter.getY(), characters.get(neededCharacter % 4).getWidth(), characters.get(neededCharacter % 4).getHeight(), characters.get(neededCharacter % 4).getCharacterClass(), characters.get(neededCharacter % 4).getCharacterType());
+                character = new Warrior(characters.get(neededCharacter % 4).getTexture(), characters.get(neededCharacter % 4).getName(), characters.get(neededCharacter % 4).health, characters.get(neededCharacter % 4).getPower(), goodCharacter.getX(), goodCharacter.getY(), characters.get(neededCharacter % 4).getWidth(), characters.get(neededCharacter % 4).getHeight(), characters.get(neededCharacter % 4).getCharacterClass(), characters.get(neededCharacter % 4).getCharacterType(), place);
                 break;
             case MAGIC:
-                character = new Magic(characters.get(neededCharacter % 4).getTexture(), characters.get(neededCharacter % 4).getName(), characters.get(neededCharacter % 4).health, characters.get(neededCharacter % 4).getPower(), goodCharacter.getX(), goodCharacter.getY(), characters.get(neededCharacter % 4).getWidth(), characters.get(neededCharacter % 4).getHeight(), characters.get(neededCharacter % 4).getCharacterClass(), characters.get(neededCharacter % 4).getCharacterType());
+                character = new Magic(characters.get(neededCharacter % 4).getTexture(), characters.get(neededCharacter % 4).getName(), characters.get(neededCharacter % 4).health, characters.get(neededCharacter % 4).getPower(), goodCharacter.getX(), goodCharacter.getY(), characters.get(neededCharacter % 4).getWidth(), characters.get(neededCharacter % 4).getHeight(), characters.get(neededCharacter % 4).getCharacterClass(), characters.get(neededCharacter % 4).getCharacterType(), place);
                 break;
 
             case ARCHER:
-                character = new Archer(characters.get(neededCharacter % 4).getTexture(), characters.get(neededCharacter % 4).getName(), characters.get(neededCharacter % 4).health, characters.get(neededCharacter % 4).getPower(), goodCharacter.getX(), goodCharacter.getY(), characters.get(neededCharacter % 4).getWidth(), characters.get(neededCharacter % 4).getHeight(), characters.get(neededCharacter % 4).getCharacterClass(), characters.get(neededCharacter % 4).getCharacterType());
+                character = new Archer(characters.get(neededCharacter % 4).getTexture(), characters.get(neededCharacter % 4).getName(), characters.get(neededCharacter % 4).health, characters.get(neededCharacter % 4).getPower(), goodCharacter.getX(), goodCharacter.getY(), characters.get(neededCharacter % 4).getWidth(), characters.get(neededCharacter % 4).getHeight(), characters.get(neededCharacter % 4).getCharacterClass(), characters.get(neededCharacter % 4).getCharacterType(), place);
                 break;
 
             case PALADIN:
-                character = new Paladin(characters.get(neededCharacter % 4).getTexture(), characters.get(neededCharacter % 4).getName(), characters.get(neededCharacter % 4).health, characters.get(neededCharacter % 4).getPower(), goodCharacter.getX(), goodCharacter.getY(), characters.get(neededCharacter % 4).getWidth(), characters.get(neededCharacter % 4).getHeight(), characters.get(neededCharacter % 4).getCharacterClass(), characters.get(neededCharacter % 4).getCharacterType());
+                character = new Paladin(characters.get(neededCharacter % 4).getTexture(), characters.get(neededCharacter % 4).getName(), characters.get(neededCharacter % 4).health, characters.get(neededCharacter % 4).getPower(), goodCharacter.getX(), goodCharacter.getY(), characters.get(neededCharacter % 4).getWidth(), characters.get(neededCharacter % 4).getHeight(), characters.get(neededCharacter % 4).getCharacterClass(), characters.get(neededCharacter % 4).getCharacterType(), place);
                 break;
             default:
-                character = new Warrior(characters.get(neededCharacter % 4).getTexture(), characters.get(neededCharacter % 4).getName(), characters.get(neededCharacter % 4).health, characters.get(neededCharacter % 4).getPower(), goodCharacter.getX(), goodCharacter.getY(), characters.get(neededCharacter % 4).getWidth(), characters.get(neededCharacter % 4).getHeight(), characters.get(neededCharacter % 4).getCharacterClass(), characters.get(neededCharacter % 4).getCharacterType());
+                character = new Warrior(characters.get(neededCharacter % 4).getTexture(), characters.get(neededCharacter % 4).getName(), characters.get(neededCharacter % 4).health, characters.get(neededCharacter % 4).getPower(), goodCharacter.getX(), goodCharacter.getY(), characters.get(neededCharacter % 4).getWidth(), characters.get(neededCharacter % 4).getHeight(), characters.get(neededCharacter % 4).getCharacterClass(), characters.get(neededCharacter % 4).getCharacterType(), place);
         }
         return character;
     }
