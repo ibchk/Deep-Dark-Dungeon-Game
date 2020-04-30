@@ -686,7 +686,7 @@ public class GameScreen implements Screen {
         gameObject1.setHealth(Math.max(gameObject1.getHealth() - 30, 0));
         gameObject2.setHealth(Math.max(gameObject2.getHealth() - 30, 0));
         gameObject3.setHealth(Math.max(gameObject3.getHealth() - 30, 0));
-        attackedMonster = gameObject3;
+        attackedMonster = gameObject2;
         monsterDamage = "-30 HP";
         attacker.setMana(attacker.getMana() - 50);
         sunstrikeAnimationStarted = true;
@@ -697,7 +697,11 @@ public class GameScreen implements Screen {
         messageForMonsters = "You used sunstrike on " + gameObject2.getName() + " and nearby enemyes with damage 30";
         gameObject1.setHealth(Math.max(gameObject1.getHealth() - 30, 0));
         gameObject2.setHealth(Math.max(gameObject2.getHealth() - 30, 0));
-        attackedMonster = gameObject2;
+        if (gameObject1 == badCharacter1) {
+            attackedMonster = gameObject1;
+        } else {
+            attackedMonster = gameObject2;
+        }
         monsterDamage = "-30 HP";
         attacker.setMana(attacker.getMana() - 50);
         sunstrikeAnimationStarted = true;
