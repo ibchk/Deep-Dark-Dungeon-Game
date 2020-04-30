@@ -495,50 +495,26 @@ public class GameScreen implements Screen {
                 attackedMonster = badCharacter1;
                 agr = true;
             }
-            if (Gdx.input.getX() > badCharacter1.getX() && Gdx.input.getX() < badCharacter1.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > badCharacter1.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < badCharacter1.getY() + 300) {
-                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked && badCharacter1.getHealth() > 0) {
-                    defAttack(badCharacter1);
-                } else if (skillIsPressed && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && badCharacter1.getHealth() > 0) {
-                    if (attacker.getSkill().equals("powershot")) {
-                        powerShot(badCharacter1);
-                    } else if (attacker.getSkill().equals("sunstrike")) {
-                        sunstrike2(badCharacter1, badCharacter2);
+            for (GameObject monster : monsters) {
+                if (Gdx.input.getX() > monster.getX() && Gdx.input.getX() < monster.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > monster.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < monster.getY() + 300) {
+                    if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked && monster.getHealth() > 0) {
+                        defAttack(monster);
+                    } else if (skillIsPressed && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && monster.getHealth() > 0) {
+                        if (attacker.getSkill().equals("powershot")) {
+                            powerShot(monster);
+                        } else if (attacker.getSkill().equals("sunstrike") && monsters.indexOf(monster) == 0) {
+                            sunstrike2(badCharacter1, badCharacter2);
+                        } else if (attacker.getSkill().equals("sunstrike") && monsters.indexOf(monster) == 3) {
+                            sunstrike2(badCharacter3, badCharacter4);
+                        } else if (attacker.getSkill().equals("sunstrike") && monsters.indexOf(monster) == 2) {
+                            sunstrike(badCharacter2, badCharacter3, badCharacter4);
+                        } else if (attacker.getSkill().equals("sunstrike") && monsters.indexOf(monster) == 1) {
+                            sunstrike(badCharacter1, badCharacter2, badCharacter3);
+                        }
                     }
                 }
             }
-            if (Gdx.input.getX() > badCharacter2.getX() && Gdx.input.getX() < badCharacter2.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > badCharacter2.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < badCharacter2.getY() + 300) {
-                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked && badCharacter2.getHealth() > 0) {
-                    defAttack(badCharacter2);
-                } else if (skillIsPressed && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && badCharacter2.getHealth() > 0) {
-                    if (attacker.getSkill().equals("powershot")) {
-                        powerShot(badCharacter2);
-                    } else if (attacker.getSkill().equals("sunstrike")) {
-                        sunstrike(badCharacter1, badCharacter2, badCharacter3);
-                    }
-                }
-            }
-            if (Gdx.input.getX() > badCharacter3.getX() && Gdx.input.getX() < badCharacter3.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > badCharacter3.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < badCharacter3.getY() + 300) {
-                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked && badCharacter3.getHealth() > 0) {
-                    defAttack(badCharacter3);
-                } else if (skillIsPressed && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && badCharacter3.getHealth() > 0) {
-                    if (attacker.getSkill().equals("powershot")) {
-                        powerShot(badCharacter3);
-                    } else if (attacker.getSkill().equals("sunstrike")) {
-                        sunstrike(badCharacter2, badCharacter3, badCharacter4);
-                    }
-                }
-            }
-            if (Gdx.input.getX() > badCharacter4.getX() && Gdx.input.getX() < badCharacter4.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > badCharacter4.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < badCharacter4.getY() + 300) {
-                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked && badCharacter4.getHealth() > 0) {
-                    defAttack(badCharacter4);
-                } else if (skillIsPressed && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && badCharacter4.getHealth() > 0) {
-                    if (attacker.getSkill().equals("powershot")) {
-                        powerShot(badCharacter4);
-                    } else if (attacker.getSkill().equals("sunstrike")) {
-                        sunstrike2(badCharacter3, badCharacter4);
-                    }
-                }
-            }
+
         } else if (stepCount % 2 == 0 && !gameOver && !attackAnimationStarted && !sunstrikeAnimationStarted && !monsterHealAnimationStarted && !heroAttackAnimationStarted && !powershotStarted) {
             boolean clear = true;
             addManaMonsters = true;
