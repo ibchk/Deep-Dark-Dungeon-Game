@@ -12,16 +12,16 @@ import java.util.List;
 
 public class MPClient {
     int udpC = 5200;
-    int tcpC = 5291;
+    public int tcpC = 5291;
     String IPConnection = "localhost";
 
-    int myPlace;
-    boolean game = false;
-    List<String> enemy;
+    public int myPlace;
+    public boolean game = false;
+    public List<String> enemy;
 
     public Client client;
 
-    public MPClient() {
+    public MPClient(final List<String> chars) {
         client = new Client();
         new Thread(client).start();
 
@@ -32,7 +32,7 @@ public class MPClient {
 
                 //Prepare and send message to the server
                 Packets.ConnectToGame firstMessage = new Packets.ConnectToGame();
-                firstMessage.characters = new LinkedList<>(Arrays.asList("char1", "char2", "char2", "char3"));
+                firstMessage.characters = new LinkedList<>(chars);
                 c.sendTCP(firstMessage);
             }
 
@@ -91,9 +91,5 @@ public class MPClient {
         kryo.register(Packets.GameInfo.class);
         kryo.register(Packets.AllowToAttack.class);
         kryo.register(LinkedList.class);
-    }
-
-    public static void main(String[] args) {
-        MPClient gamer1 = new MPClient();
     }
 }
