@@ -6,9 +6,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.esotericsoftware.kryonet.Client;
 import ee.taltech.deepdarkdungeon.Client.MPClient;
 import ee.taltech.deepdarkdungeon.Models.GameObject;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class MultiplayerScreen implements Screen {
@@ -21,9 +23,13 @@ public class MultiplayerScreen implements Screen {
     private List<String> chars2;
     private MPClient client;
 
-    public MultiplayerScreen(MPClient client, List<GameObject> chars1) {
+    public MultiplayerScreen(List<GameObject> chars1) {
         this.chars1 = chars1;
-        this.client = client;
+        List<String> heroNames = new LinkedList<>();
+        for (GameObject hero : chars1) {
+            heroNames.add(hero.name);
+        }
+        this.client = new MPClient(heroNames);
         this.chars2 = client.enemy;
         System.out.println(chars1);
         System.out.println(chars2);
@@ -38,11 +44,13 @@ public class MultiplayerScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(135 / 255f, 206 / 255f, 235 / 255f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.begin();
-        batch.draw(background, 0, 0);
-        batch.end();
+        if (client.game) {
+            Gdx.gl.glClearColor(135 / 255f, 206 / 255f, 235 / 255f, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            batch.begin();
+            batch.draw(background, 0, 0);
+            batch.end();
+        }
     }
 
     @Override

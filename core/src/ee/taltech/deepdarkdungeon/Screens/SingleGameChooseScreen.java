@@ -177,11 +177,6 @@ public class SingleGameChooseScreen implements Screen {
     private Texture closeButton2;
     private Texture infoWindow;
 
-
-    public MPClient client;
-    public Packets packet;
-
-
     public SingleGameChooseScreen(DeepDarkDungeonGame game, int openLevelNumber, PutMusic music, boolean singleGame) {
         this.openLevelNumber = openLevelNumber;
         this.music = music;
@@ -496,15 +491,7 @@ public class SingleGameChooseScreen implements Screen {
                 game.setScreen(new GameScreen(rightCharactersList, badCharacters, game, music, openLevelNumber, lvlPlaying));
             } else if (!singleGame && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 List<GameObject> rightCharactersList = new ArrayList<>(Arrays.asList(new CharacterCreating().createCharacter(characters, neededCharacter1, goodCharacter1, 1), new CharacterCreating().createCharacter(characters, neededCharacter2, goodCharacter2, 2), new CharacterCreating().createCharacter(characters, neededCharacter3, goodCharacter3, 3), new CharacterCreating().createCharacter(characters, neededCharacter4, goodCharacter4, 4)));
-                List<String> heroNames = new LinkedList<>();
-                for (GameObject hero : rightCharactersList) {
-                    heroNames.add(hero.name);
-                }
-                this.client = new MPClient(heroNames);
-                client.client.run(); //TODO
-                if (client.game) {
-                    game.setScreen(new MultiplayerScreen(client, rightCharactersList));
-                }
+                game.setScreen(new MultiplayerScreen(rightCharactersList));
             }
         }
 
