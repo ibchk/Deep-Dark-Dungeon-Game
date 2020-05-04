@@ -15,10 +15,11 @@ import java.util.List;
 
 public class MultiplayerScreen implements Screen {
 
+
     private SpriteBatch batch;
     BitmapFont font = new BitmapFont();
     private Texture background;
-
+    private boolean write = true;
     private List<GameObject> chars1;
     private List<String> chars2;
     private MPClient client;
@@ -30,9 +31,6 @@ public class MultiplayerScreen implements Screen {
             heroNames.add(hero.name);
         }
         this.client = new MPClient(heroNames);
-        this.chars2 = client.enemy;
-        System.out.println(chars1);
-        System.out.println(chars2);
     }
 
 
@@ -45,6 +43,12 @@ public class MultiplayerScreen implements Screen {
     @Override
     public void render(float delta) {
         if (client.game) {
+            if (write) {
+                this.chars2 = client.enemy;
+                System.out.println(chars2);
+                System.out.println(chars1);
+                write = false;
+            }
             Gdx.gl.glClearColor(135 / 255f, 206 / 255f, 235 / 255f, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             batch.begin();
