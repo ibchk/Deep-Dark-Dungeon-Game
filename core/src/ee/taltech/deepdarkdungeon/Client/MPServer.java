@@ -31,7 +31,6 @@ public class MPServer {
             }
 
             public void received(Connection c, Object o) {
-
                 if (o instanceof Packets.ConnectToGame) {
                     if (players.size() == 0) {
                         players.add(((Packets.ConnectToGame) o).characters);

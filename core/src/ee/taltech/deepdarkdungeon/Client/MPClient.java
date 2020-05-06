@@ -18,6 +18,7 @@ public class MPClient {
     public int myPlace;
     public boolean game = false;
     public List<String> enemy;
+    public int whoAttack;
 
     public Client client;
 
@@ -66,6 +67,8 @@ public class MPClient {
                     // после мы делаем свой удар и шлем Packets.GameInfo на сервер, в ответ мы ничего не получаем.
                     // далее начинаем посылать Packets.AllowToAttack пока не получим в ответ Packets.GameInfo чтобы походить
                     // самим
+                } else if (o instanceof Packets.AllowToAttack) {
+                    whoAttack = ((Packets.AllowToAttack) o).gamer;
                 }
             }
         });
