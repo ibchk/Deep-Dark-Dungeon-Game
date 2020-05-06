@@ -11,7 +11,7 @@ import java.util.List;
 
 public class MPServer {
     int udpC = 5200;
-    int tcpC = 5291;
+    int tcpC = 5201;
     String IPConnection = "localhost";
     Server server;
 
@@ -31,7 +31,6 @@ public class MPServer {
             }
 
             public void received(Connection c, Object o) {
-
                 if (o instanceof Packets.ConnectToGame) {
                     if (players.size() == 0) {
                         players.add(((Packets.ConnectToGame) o).characters);

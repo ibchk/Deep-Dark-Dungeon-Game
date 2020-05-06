@@ -12,12 +12,13 @@ import java.util.List;
 
 public class MPClient {
     int udpC = 5200;
-    public int tcpC = 5291;
+    public int tcpC = 5201;
     String IPConnection = "localhost";
 
     public int myPlace;
     public boolean game = false;
     public List<String> enemy;
+    public int whoAttack;
 
     public Client client;
 
@@ -66,6 +67,8 @@ public class MPClient {
                     // после мы делаем свой удар и шлем Packets.GameInfo на сервер, в ответ мы ничего не получаем.
                     // далее начинаем посылать Packets.AllowToAttack пока не получим в ответ Packets.GameInfo чтобы походить
                     // самим
+                } else if (o instanceof Packets.AllowToAttack) {
+                    whoAttack = ((Packets.AllowToAttack) o).gamer;
                 }
             }
         });
