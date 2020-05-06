@@ -6,28 +6,30 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.esotericsoftware.kryonet.Client;
 import ee.taltech.deepdarkdungeon.Client.MPClient;
 import ee.taltech.deepdarkdungeon.Models.GameObject;
+import ee.taltech.deepdarkdungeon.Models.characterClasses.Archer;
+import ee.taltech.deepdarkdungeon.Models.characterClasses.Magic;
+import ee.taltech.deepdarkdungeon.Models.characterClasses.Paladin;
+import ee.taltech.deepdarkdungeon.Models.characterClasses.Warrior;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class MultiplayerScreen implements Screen {
 
-
     private SpriteBatch batch;
     BitmapFont font = new BitmapFont();
     private Texture background;
     private boolean write = true;
-    private List<GameObject> chars1;
-    private List<String> chars2;
+    private List<GameObject> myCharacters;
+    private List<GameObject> enemyCharacters;
     private MPClient client;
 
-    public MultiplayerScreen(List<GameObject> chars1) {
-        this.chars1 = chars1;
+    public MultiplayerScreen(List<GameObject> myChars) {
+        this.myCharacters = myChars;
         List<String> heroNames = new LinkedList<>();
-        for (GameObject hero : chars1) {
+        for (GameObject hero : myChars) {
             heroNames.add(hero.name);
         }
         this.client = new MPClient(heroNames);
@@ -44,10 +46,11 @@ public class MultiplayerScreen implements Screen {
     public void render(float delta) {
         if (client.game) {
             if (write) {
-                this.chars2 = client.enemy;
-                System.out.println(chars2);
-                System.out.println(chars1);
+                List<String> enemyCharactersString = client.enemy;
+                System.out.println(enemyCharactersString);
+                System.out.println(myCharacters);
                 write = false;
+                this.enemyCharacters = createEnemies(enemyCharactersString);
             }
             Gdx.gl.glClearColor(135 / 255f, 206 / 255f, 235 / 255f, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -81,5 +84,31 @@ public class MultiplayerScreen implements Screen {
     public void dispose() {
         batch.dispose();
         font.dispose();
+    }
+
+    public List<GameObject> createEnemies(List<String> enemyList) {
+        List<GameObject> enemyCharacterList = new LinkedList<>();
+        int place = 1;
+        for (String name : enemyList) {
+            GameObject enemy = null;
+            switch (name) {
+                case "Warrior":
+                    enemy = new Warrior(new Texture(Gdx.files.internal("GoodCharacter1.png")), "Warrior", 100, 100, 0, 400, 200, 277, GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD1, place);
+                    enemyCharacterList.add(enemy);
+                    break;
+                case "Archer":
+                    enemy = new Archer(new Texture(Gdx.files.internal("GoodCharacter2.png")), "Archer", 100, 100, 200, 450, 200, 277, GameObject.CharacterClass.ARCHER, GameObject.CharacterType.GOOD2, place);
+                    break;
+                case "Wizard":
+                    enemy = new Magic(new Texture(Gdx.files.internal("GoodCharacter3.png")), "Wizard", 200, 100, 400, 400, 200, 277, GameObject.CharacterClass.MAGIC, GameObject.CharacterType.GOOD3, place);
+                    break;
+                case "Paladin":
+                    enemy = new Paladin(new Texture(Gdx.files.internal("GoodCharacter4.png")), "Paladin", 100, 100, 600, 450, 200, 277, GameObject.CharacterClass.PALADIN, GameObject.CharacterType.GOOD4, place);
+                    break;
+            }
+            enemyCharacterList.add(enemy);
+            place++;
+        }
+        return enemyCharacterList;
     }
 }
