@@ -15,7 +15,8 @@ import ee.taltech.deepdarkdungeon.Models.characterClasses.Warrior;
 import java.awt.*;
 
 public abstract class GameObject {
-
+    public int mana;
+    public String skills;
     public BadCharacterClass badCharacterClass;
     public Rectangle bounds;
     public Sprite object;
@@ -25,10 +26,15 @@ public abstract class GameObject {
     public CharacterClass characterClass;
     public int power;
     public int health;
-    public double x;
-    public double y;
+    public int x;
+    public int y;
     public double width;
     public double height;
+    public int place;
+
+    public BadCharacterClass getBadCharacterClass() {
+        return badCharacterClass;
+    }
 
     public Texture getTexture() {
         return texture;
@@ -62,6 +68,10 @@ public abstract class GameObject {
         this.characterClass = characterClass;
     }
 
+    public String getSkill() {
+        return skills;
+    }
+
     public int getPower() {
         return power;
     }
@@ -74,23 +84,31 @@ public abstract class GameObject {
         return health;
     }
 
+    public int getMana() {
+        return mana;
+    }
+
+    public void setMana(int needed) {
+        this.mana = needed;
+    }
+
     public void setHealth(int health) {
         this.health = health;
     }
 
-    public double getX() {
+    public int getX() {
         return x;
     }
 
-    public void setX(double x) {
+    public void setX(int x) {
         this.x = x;
     }
 
-    public double getY() {
+    public int getY() {
         return y;
     }
 
-    public void setY(double y) {
+    public void setY(int y) {
         this.y = y;
     }
 
@@ -110,71 +128,13 @@ public abstract class GameObject {
         this.height = height;
     }
 
+    public int getPlace() {
+        return place;
+    }
 
     public enum CharacterClass {PALADIN, WARIOR, MAGIC, ARCHER}
+
     public enum BadCharacterClass {ZOMBIE, SKELETON_WARRIOR, SKELETON_ARCHER, NECROMANCER}
+
     public enum CharacterType {GOOD1, GOOD2, GOOD3, GOOD4, BAD1, BAD2, BAD3, BAD4}
-
-    public GameObject createCharacter(Texture texture, String name, CharacterType characterType, CharacterClass characterClass, int power, int health, double x, double y, double width, double height) {
-        GameObject object = null;
-        switch (characterType) {
-            case GOOD1:
-            case GOOD2:
-            case GOOD3:
-            case GOOD4:
-                if (characterClass == CharacterClass.WARIOR) {
-                    object = new Warrior(texture, name, health, power, x, y, width, height, characterClass, characterType);
-                }
-                if (characterClass == CharacterClass.PALADIN) {
-                    object = new Paladin(texture, name, health, power, x, y, width, height, characterClass, characterType);
-                }
-                if (characterClass == CharacterClass.MAGIC) {
-                    object = new Magic(texture, name, health, power, x, y, width, height, characterClass, characterType);
-                }
-                if (characterClass == CharacterClass.ARCHER) {
-                    object = new Archer(texture, name, health, power, x, y, width, height, characterClass, characterType);
-                }
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + characterType);
-        }
-        this.bounds = new Rectangle((int) x, (int) y, (int) width, (int) height);
-        this.object = new Sprite(getTexture());
-        return object;
-    }
-
-    public GameObject createBadCharacter(Texture texture, String name, CharacterType badCharacterType, BadCharacterClass badCharacterClass, int power, int health, double x, double y, double width, double height) {
-        GameObject object = null;
-        switch (badCharacterType) {
-            case BAD1:
-            case BAD2:
-            case BAD3:
-            case BAD4:
-                if (badCharacterClass == BadCharacterClass.ZOMBIE) {
-                    object = new Zombie(texture, name, health, power, x, y, width, height, badCharacterClass, badCharacterType);
-                }
-                if (badCharacterClass == BadCharacterClass.SKELETON_WARRIOR) {
-                    object = new SkeletonWarrior(texture, name, health, power, x, y, width, height, badCharacterClass, badCharacterType);
-                }
-                if (badCharacterClass == BadCharacterClass.SKELETON_ARCHER) {
-                    object = new SkeletonArcher(texture, name, health, power, x, y, width, height, badCharacterClass, badCharacterType);
-                }
-                if (badCharacterClass == BadCharacterClass.NECROMANCER) {
-                    object = new Necromancer(texture, name, health, power, x, y, width, height, badCharacterClass, badCharacterType);
-                }
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + badCharacterType);
-        }
-        this.bounds = new Rectangle((int) x, (int) y, (int) width, (int) height);
-        this.object = new Sprite(getTexture());
-        return object;
-    }
-
-    public void draw(SpriteBatch batch) {
-        object.setBounds((float) bounds.getX(), (float) bounds.getY(), (float) bounds.getWidth(), (float) bounds.getHeight());
-        object.draw(batch);
-    }
-
-
 }

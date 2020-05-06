@@ -5,10 +5,10 @@ import ee.taltech.deepdarkdungeon.Models.GameObject;
 
 public class Magic extends GameObject {
 
-    public Magic(Texture picture, String name, int health, int power, double x, double y, double width, double height, CharacterClass characterClass, CharacterType characterType) {
-        this.name = "Magic";
-        this.health = 100;
-        this.power = 20;
+    public Magic(Texture picture, String name, int health, int power, int x, int y, double width, double height, CharacterClass characterClass, CharacterType characterType, int place) {
+        this.name = name;
+        this.health = health;
+        this.power = power;
         this.x = x;
         this.y = y;
         this.width = width;
@@ -16,5 +16,8 @@ public class Magic extends GameObject {
         this.characterClass = characterClass;
         this.characterType = characterType;
         this.texture = picture;
+        this.skills = "sunstrike";
+        this.mana = 100;
+        this.place = place;
     }
 }
