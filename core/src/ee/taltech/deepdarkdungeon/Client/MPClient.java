@@ -12,7 +12,7 @@ import java.util.List;
 
 public class MPClient {
     int udpC = 5200;
-    public int tcpC = 5291;
+    public int tcpC = 5201;
     String IPConnection = "localhost";
 
     public int myPlace;

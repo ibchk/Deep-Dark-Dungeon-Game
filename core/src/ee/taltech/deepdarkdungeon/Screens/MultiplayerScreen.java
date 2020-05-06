@@ -13,6 +13,10 @@ import ee.taltech.deepdarkdungeon.Client.MPClient;
 import ee.taltech.deepdarkdungeon.DeepDarkDungeonGame;
 import ee.taltech.deepdarkdungeon.Models.GameObject;
 import ee.taltech.deepdarkdungeon.Models.PutMusic;
+import ee.taltech.deepdarkdungeon.Models.characterClasses.Archer;
+import ee.taltech.deepdarkdungeon.Models.characterClasses.Magic;
+import ee.taltech.deepdarkdungeon.Models.characterClasses.Paladin;
+import ee.taltech.deepdarkdungeon.Models.characterClasses.Warrior;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -66,7 +70,7 @@ public class MultiplayerScreen implements Screen {
     private static final int FRAME_COLS_AGR = 5;
     private static final int FRAME_ROWS_AGR = 5;
     private int gamer;
-
+    List<GameObject> enemyCharacters;
     DeepDarkDungeonGame game;
     boolean gameOver = false;
     boolean canbeattacked = false;
@@ -164,10 +168,10 @@ public class MultiplayerScreen implements Screen {
     TextureRegion currentAgrFrame;
     float stateTimeAgr;
 
-    public MultiplayerScreen(List<GameObject> chars1) {
-        this.myCharacters = chars1;
+    public MultiplayerScreen(List<GameObject> myChars) {
+        this.myCharacters = myChars;
         heroNames = new LinkedList<>();
-        for (GameObject hero : chars1) {
+        for (GameObject hero : myChars) {
             heroNames.add(hero.name);
         }
         this.client = new MPClient(heroNames);
@@ -294,15 +298,27 @@ public class MultiplayerScreen implements Screen {
     public void render(float delta) {
         if (client.game) {
             if (write) {
-                this.heroNames = client.enemy;
-                System.out.println(heroNames);
-                System.out.println(heroNames);
+                List<String> enemyCharactersString = client.enemy;
+                System.out.println(heroNames); //TODO
+                System.out.println(enemyCharactersString); // TODO
                 write = false;
                 gamer = client.myPlace;
+                this.enemyCharacters = createEnemies(enemyCharactersString);
+                badCharacter1 = enemyCharacters.get(0);
+                badCharacter2 = enemyCharacters.get(1);
+                badCharacter3 = enemyCharacters.get(2);
+                badCharacter4 = enemyCharacters.get(3);
+                goodCharacter1 = myCharacters.get(0);
+                goodCharacter2 = myCharacters.get(1);
+                goodCharacter3 = myCharacters.get(2);
+                goodCharacter4 = myCharacters.get(3);
+
             }
             Gdx.gl.glClearColor(135 / 255f, 206 / 255f, 235 / 255f, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            System.out.println("Ilja gay");
             batch.begin();
+            System.out.println("Ilja pidor");
             batch.draw(attackbutton, VBOI_X, VBOI_Y, VBOI_WIDTH, VBOI_HEIGTH);
             batch.draw(defenceButton, VBOI_X, VBOI_Y - 70, VBOI_WIDTH, VBOI_HEIGTH);
             batch.draw(background, 0, 0);
@@ -311,28 +327,26 @@ public class MultiplayerScreen implements Screen {
                 font.draw(batch, "Hp: " + hero.getHealth(), hero.getX() + 30, hero.getY() - 10);
                 font.draw(batch, "Mn: " + hero.getMana(), hero.getX() + 100, hero.getY() - 10);
             }
-            for (GameObject monster : monsters) {
+            for (GameObject monster :enemyCharacters) {
                 batch.draw(monster.getTexture(), monster.getX(), monster.getY(), 200, 220);
                 font.draw(batch, "Hp: " + monster.getHealth(), monster.getX() + 30, monster.getY() - 10);
-                if (monster.getBadCharacterClass().equals(GameObject.BadCharacterClass.NECROMANCER)) {
-                    font.draw(batch, "Mn: " + monster.getMana(), monster.getX() + 100, monster.getY() - 10);
-                }
+                font.draw(batch, "Mn: " + monster.getMana(), monster.getX() + 100, monster.getY() - 10);
             }
             if (gamer == client.whoAttack && ((attackAnimationStarted || sunstrikeAnimationStarted || monsterHealAnimationStarted || heroAttackAnimationStarted || powershotStarted || heroHealStarted || agrAnimationStarted))) {
                 font.draw(batch, "Monsters turn! " + stepCount, 100, 1000);
                 font.draw(batch, messageForMonsters, 100, 950);
-                if (monsterDamage.contains("30") && attackedMonster.equals(monsters.get(0))) {
+                if (monsterDamage.contains("30") && attackedMonster.equals(enemyCharacters.get(0))) {
                     font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 250);
                     font.draw(batch, monsterDamage, attackedMonster.getX() + 290, attackedMonster.getY() + 200);
-                } else if (monsterDamage.contains("30") && attackedMonster.equals(monsters.get(1))) {
+                } else if (monsterDamage.contains("30") && attackedMonster.equals(enemyCharacters.get(1))) {
                     font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 250);
                     font.draw(batch, monsterDamage, attackedMonster.getX() + 290, attackedMonster.getY() + 300);
                     font.draw(batch, monsterDamage, attackedMonster.getX() - 100, attackedMonster.getY() + 300);
-                } else if (monsterDamage.contains("30") && attackedMonster.equals(monsters.get(2))) {
+                } else if (monsterDamage.contains("30") && attackedMonster.equals(enemyCharacters.get(2))) {
                     font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 250);
                     font.draw(batch, monsterDamage, attackedMonster.getX() + 290, attackedMonster.getY() + 200);
                     font.draw(batch, monsterDamage, attackedMonster.getX() - 100, attackedMonster.getY() + 200);
-                } else if (monsterDamage.contains("30") && attackedMonster.equals(monsters.get(3))) {
+                } else if (monsterDamage.contains("30") && attackedMonster.equals(enemyCharacters.get(3))) {
                     font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 250);
                     font.draw(batch, monsterDamage, attackedMonster.getX() - 100, attackedMonster.getY() + 300);
                 } else {
@@ -375,18 +389,18 @@ public class MultiplayerScreen implements Screen {
                     monsterDamage = "";
                     stateTime += Gdx.graphics.getDeltaTime();
                     currentSunstrikeFrame = (TextureRegion) sunstrikeAnimation.getKeyFrame(stateTime);
-                    if (attackedMonster.equals(monsters.get(0))) {
+                    if (attackedMonster.equals(enemyCharacters.get(0))) {
                         batch.draw(currentSunstrikeFrame, badCharacter1.getX() - 30, badCharacter1.getY(), 300, 320);
                         batch.draw(currentSunstrikeFrame, badCharacter2.getX() - 30, badCharacter2.getY(), 300, 320);
-                    } else if (attackedMonster.equals(monsters.get(1))) {
+                    } else if (attackedMonster.equals(enemyCharacters.get(1))) {
                         batch.draw(currentSunstrikeFrame, badCharacter1.getX() - 30, badCharacter1.getY(), 300, 320);
                         batch.draw(currentSunstrikeFrame, badCharacter2.getX() - 30, badCharacter2.getY(), 300, 320);
                         batch.draw(currentSunstrikeFrame, badCharacter3.getX() - 30, badCharacter3.getY(), 300, 320);
-                    } else if (attackedMonster.equals(monsters.get(2))) {
+                    } else if (attackedMonster.equals(enemyCharacters.get(2))) {
                         batch.draw(currentSunstrikeFrame, badCharacter2.getX() - 30, badCharacter2.getY(), 300, 320);
                         batch.draw(currentSunstrikeFrame, badCharacter3.getX() - 30, badCharacter3.getY(), 300, 320);
                         batch.draw(currentSunstrikeFrame, badCharacter4.getX() - 30, badCharacter4.getY(), 300, 320);
-                    } else if (attackedMonster.equals(monsters.get(3))) {
+                    } else if (attackedMonster.equals(enemyCharacters.get(3))) {
                         batch.draw(currentSunstrikeFrame, badCharacter3.getX() - 30, badCharacter3.getY(), 300, 320);
                         batch.draw(currentSunstrikeFrame, badCharacter4.getX() - 30, badCharacter4.getY(), 300, 320);
                     }
@@ -476,9 +490,8 @@ public class MultiplayerScreen implements Screen {
                     }
                 }
                 if (stepCount % 2 != 0 && !gameOver && !attackAnimationStarted && !sunstrikeAnimationStarted && !heroAttackAnimationStarted && !powershotStarted && !heroHealStarted && !agrAnimationStarted) {
-
                     if (addManaMonsters) {
-                        for (GameObject monster :monsters) {
+                        for (GameObject monster :enemyCharacters) {
                             if (monster.getBadCharacterClass().equals(GameObject.BadCharacterClass.NECROMANCER) && monster.getHealth() > 0 && monster.getMana() < 100) {
                                 monster.setMana(monster.getMana() + 10);
                                 if (monster.getMana() > 100) {
@@ -554,28 +567,28 @@ public class MultiplayerScreen implements Screen {
                         agr = true;
                         agrAnimationStarted = true;
                     }
-                    for (GameObject monster : monsters) {
+                    for (GameObject monster : enemyCharacters) {
                         if (Gdx.input.getX() > monster.getX() && Gdx.input.getX() < monster.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > monster.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < monster.getY() + 300) {
                             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked && monster.getHealth() > 0) {
                                 defAttack(monster);
                             } else if (skillIsPressed && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && monster.getHealth() > 0) {
                                 if (attacker.getSkill().equals("powershot")) {
                                     powerShot(monster);
-                                } else if (attacker.getSkill().equals("sunstrike") && monsters.indexOf(monster) == 0) {
+                                } else if (attacker.getSkill().equals("sunstrike") && enemyCharacters.indexOf(monster) == 0) {
                                     sunstrike2(badCharacter1, badCharacter2);
-                                } else if (attacker.getSkill().equals("sunstrike") && monsters.indexOf(monster) == 3) {
+                                } else if (attacker.getSkill().equals("sunstrike") && enemyCharacters.indexOf(monster) == 3) {
                                     sunstrike2(badCharacter3, badCharacter4);
-                                } else if (attacker.getSkill().equals("sunstrike") && monsters.indexOf(monster) == 2) {
+                                } else if (attacker.getSkill().equals("sunstrike") && enemyCharacters.indexOf(monster) == 2) {
                                     sunstrike(badCharacter2, badCharacter3, badCharacter4);
-                                } else if (attacker.getSkill().equals("sunstrike") && monsters.indexOf(monster) == 1) {
+                                } else if (attacker.getSkill().equals("sunstrike") && enemyCharacters.indexOf(monster) == 1) {
                                     sunstrike(badCharacter1, badCharacter2, badCharacter3);
                                 }
                             }
                         }
                     }
                 }
-                batch.end();
             }
+            batch.end();
         }
     }
 
@@ -649,5 +662,38 @@ public class MultiplayerScreen implements Screen {
         attacker.setMana(attacker.getMana() - 50);
         sunstrikeAnimationStarted = true;
         skillIsPressed = false;
+    }
+
+    public List<GameObject> createEnemies(List<String> enemyList) {
+        List<GameObject> enemyCharacterList = new LinkedList<>();
+        int place = 1;
+        int x = 900; // +200
+        int y = 400; // 450 ili 400
+        for (String name : enemyList) {
+            x += 200;
+            if (place % 2 == 1) {
+                y = 450;
+            } else {
+                y = 400;
+            }
+            GameObject enemy = null;
+            switch (name) {
+                case "Warrior":
+                    enemy = new Warrior(new Texture(Gdx.files.internal("GoodCharacter1.png")), "Warrior", 100, 100, x, y, 200, 277, GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD1, place);
+                    break;
+                case "Archer":
+                    enemy = new Archer(new Texture(Gdx.files.internal("GoodCharacter2.png")), "Archer", 100, 100, x, y, 200, 277, GameObject.CharacterClass.ARCHER, GameObject.CharacterType.GOOD2, place);
+                    break;
+                case "Wizard":
+                    enemy = new Magic(new Texture(Gdx.files.internal("GoodCharacter3.png")), "Wizard", 200, 100, x, y, 200, 277, GameObject.CharacterClass.MAGIC, GameObject.CharacterType.GOOD3, place);
+                    break;
+                case "Paladin":
+                    enemy = new Paladin(new Texture(Gdx.files.internal("GoodCharacter4.png")), "Paladin", 100, 100, x, y, 200, 277, GameObject.CharacterClass.PALADIN, GameObject.CharacterType.GOOD4, place);
+                    break;
+            }
+            enemyCharacterList.add(enemy);
+            place++;
+        }
+        return enemyCharacterList;
     }
 }

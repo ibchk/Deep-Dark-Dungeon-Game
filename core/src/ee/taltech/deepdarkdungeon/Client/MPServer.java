@@ -11,7 +11,7 @@ import java.util.List;
 
 public class MPServer {
     int udpC = 5200;
-    int tcpC = 5291;
+    int tcpC = 5201;
     String IPConnection = "localhost";
     Server server;
 
