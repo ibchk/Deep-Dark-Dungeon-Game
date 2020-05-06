@@ -23,8 +23,7 @@ public class Packets {
         public int gamer;
         public int characterWhoBeat;
         public int damagedCharacter;
-        public int animation;
-        public boolean sunstrike;
+        public boolean animation;
     }
 
     // этот запрос посылается когда мы не знаем можем ли мы ходить, ждем пока не получим GameInfo

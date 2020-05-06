@@ -6,19 +6,23 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 public class MPClient {
     int udpC = 5200;
-    public int tcpC = 5201;
+    public int tcpC = 5221;
     String IPConnection = "localhost";
 
     public int myPlace;
     public boolean game = false;
     public List<String> enemy;
-    public int whoAttack;
+    public boolean myTurn;
+
+    public int characterWhoAttacked;
+    public int attachedCharacter;
+    public boolean skillUsed;
+
 
     public Client client;
 
@@ -67,8 +71,10 @@ public class MPClient {
                     // после мы делаем свой удар и шлем Packets.GameInfo на сервер, в ответ мы ничего не получаем.
                     // далее начинаем посылать Packets.AllowToAttack пока не получим в ответ Packets.GameInfo чтобы походить
                     // самим
-                } else if (o instanceof Packets.AllowToAttack) {
-                    whoAttack = ((Packets.AllowToAttack) o).gamer;
+                    myTurn = true;
+                    characterWhoAttacked = ((Packets.GameInfo) o).characterWhoBeat;
+                    attachedCharacter = ((Packets.GameInfo) o).damagedCharacter;
+                    skillUsed = ((Packets.GameInfo) o).animation;
                 }
             }
         });
@@ -80,6 +86,22 @@ public class MPClient {
         }
     }
 
+    public void canIAttack() {
+        Packets.AllowToAttack ask = new Packets.AllowToAttack();
+        ask.gamer = myPlace;
+        client.sendTCP(ask);
+    }
+
+    public void sendGameInfo(int characterWhoAttacked, int attackedCharacter, boolean skill) {
+        System.out.println("Game info sended");
+        myTurn = false;
+        Packets.GameInfo myInfo = new Packets.GameInfo();
+        myInfo.gamer = myPlace;
+        myInfo.characterWhoBeat = characterWhoAttacked;
+        myInfo.damagedCharacter = attackedCharacter;
+        myInfo.animation = skill;
+        client.sendTCP(myInfo);
+    }
 
 //    public void askIfCanAttack() {
 //        Packets.Packet01Message p1cords = new Packets.Packet01Message();

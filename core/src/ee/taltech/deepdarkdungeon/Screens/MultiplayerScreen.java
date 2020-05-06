@@ -97,7 +97,13 @@ public class MultiplayerScreen implements Screen {
     boolean agr = false;
     boolean sunstrikeAnimationStarted = false;
     boolean heroAttackAnimationStarted = false;
-    int flag = 0;
+
+
+    public int enemyWhoAttacked; //TODO
+    public int myAttackedCharacter;
+    public boolean enemyUsedSkill;
+
+    public boolean calculateDamage = true;
 
     private String monsterDamage = "";
 
@@ -261,13 +267,14 @@ public class MultiplayerScreen implements Screen {
                 goodCharacter4 = myCharacters.get(3);
 
             }
+            client.canIAttack();
             Gdx.gl.glClearColor(135 / 255f, 206 / 255f, 235 / 255f, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             batch.begin();
             batch.draw(background, 0, 0);
             batch.draw(attackbutton, VBOI_X, VBOI_Y, VBOI_WIDTH, VBOI_HEIGTH);
             batch.draw(defenceButton, VBOI_X, VBOI_Y - 70, VBOI_WIDTH, VBOI_HEIGTH);
-            if (myPlace == client.whoAttack) {
+            if (client.myTurn) {
                 font.draw(batch, "Your turn!", 300, 700);
             }
             for (GameObject hero : myCharacters) {
@@ -319,7 +326,7 @@ public class MultiplayerScreen implements Screen {
                     }
                 }
             }
-            if ((myPlace == client.whoAttack) && !gameOver && !sunstrikeAnimationStarted && !heroAttackAnimationStarted && !powershotStarted && !heroHealStarted && !agrAnimationStarted) {
+            if ((client.myTurn) && !gameOver) { // && !sunstrikeAnimationStarted && !heroAttackAnimationStarted && !powershotStarted && !heroHealStarted && !agrAnimationStarted
                 if (addManaMonsters) { //TODO
                     for (GameObject monster :enemyCharacters) {
                         if (monster.getBadCharacterClass().equals(GameObject.BadCharacterClass.NECROMANCER) && monster.getHealth() > 0 && monster.getMana() < 100) {
@@ -332,10 +339,37 @@ public class MultiplayerScreen implements Screen {
                     addManaMonsters = false;
                 }
 
+                this.enemyWhoAttacked = client.characterWhoAttacked;
+                this.myAttackedCharacter = client.attachedCharacter;
+                this.enemyUsedSkill = client.skillUsed;
+
+                GameObject badCharacter = null;
+                GameObject myAttackedHero = null;
+
+                for (GameObject enemy : enemyCharacters) {
+                    if (enemy.getPlace() == enemyWhoAttacked) {
+                        badCharacter = enemy;
+                        break;
+                    }
+                }
+
+                for (GameObject hero : myCharacters) {
+                    if (hero.getPlace() == myAttackedCharacter) {
+                        myAttackedHero = hero;
+                        break;
+                    }
+                }
+
+                if (calculateDamage && !enemyUsedSkill && !(myAttackedHero == null) && !(badCharacter == null)) {
+                    attacker = badCharacter;
+                    attackUs(myAttackedHero);
+                }
+
                 if (WHOWILLATTACK >= 4) {
                     WHOWILLATTACK = 0;
                 }
                 while (myCharacters.get(WHOWILLATTACK).getHealth() == 0) {
+                    System.out.println("hui");
                     WHOWILLATTACK++;
                     if (WHOWILLATTACK >= 4) {
                         WHOWILLATTACK = 0;
@@ -417,8 +451,8 @@ public class MultiplayerScreen implements Screen {
                     }
                 }
             }
+            batch.end();
         }
-        batch.end();
     }
 
     @Override
@@ -457,13 +491,24 @@ public class MultiplayerScreen implements Screen {
         powershotStarted = true;
     }
 
-    private void defAttack(GameObject gameObject) {
+    private void defAttack(GameObject gameObject) { //TODO
         messageForMonsters = "You attacked " + gameObject.getName();
         attackedMonster = gameObject;
         monsterDamage = "-" + attacker.getPower() + " HP";
         gameObject.setHealth(Math.max(gameObject.getHealth() - attacker.getPower(), 0));
         canbeattacked = false;
-        heroAttackAnimationStarted = true;
+        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), false); // //TODO: пока не сделаны скилы всегда фолс
+        calculateDamage = true;
+    }
+
+    private void attackUs(GameObject gameObject) { //TODO
+        System.out.println("attackUs");
+        messageForMonsters = "You attacked " + gameObject.getName();
+        attackedMonster = gameObject;
+        monsterDamage = "-" + attacker.getPower() + " HP";
+        gameObject.setHealth(Math.max(gameObject.getHealth() - attacker.getPower(), 0));
+        canbeattacked = false;
+        calculateDamage = false;
     }
 
     private void sunstrike(GameObject gameObject1, GameObject gameObject2, GameObject gameObject3) {
