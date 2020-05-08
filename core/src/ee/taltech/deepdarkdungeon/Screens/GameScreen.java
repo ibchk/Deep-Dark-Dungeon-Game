@@ -484,7 +484,6 @@ public class GameScreen implements Screen {
             }
         }
         if (stepCount % 2 != 0 && !gameOver && !attackAnimationStarted && !sunstrikeAnimationStarted && !heroAttackAnimationStarted && !powershotStarted && !heroHealStarted && !agrAnimationStarted) {
-
             if (addManaMonsters) {
                 for (GameObject monster : monsters) {
                     if (monster.getBadCharacterClass().equals(GameObject.BadCharacterClass.NECROMANCER) && monster.getHealth() > 0 && monster.getMana() < 100) {
