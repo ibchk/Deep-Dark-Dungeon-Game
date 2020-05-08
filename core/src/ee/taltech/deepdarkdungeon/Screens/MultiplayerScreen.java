@@ -597,6 +597,7 @@ public class MultiplayerScreen implements Screen {
         monsterDamage = "+30 HP";
         attackedMonster = needed;
         calculateDamage = true;
+        WHOWILLATTACK++;
         client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true);
     }
 
