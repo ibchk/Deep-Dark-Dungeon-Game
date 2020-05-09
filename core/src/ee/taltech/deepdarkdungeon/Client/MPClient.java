@@ -104,7 +104,7 @@ public class MPClient {
     }
 
 //    public void askIfCanAttack() {
-//        Packets.Packet01Message p1cords = new Packets.Packet01Message();
+//        Packets. p1cords = new Packets.Packet01Message();
 //        p1cords.message = message;
 //        client.sendTCP(p1cords);
 //    }
