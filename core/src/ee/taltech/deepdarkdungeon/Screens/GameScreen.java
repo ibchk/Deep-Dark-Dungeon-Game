@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import ee.taltech.deepdarkdungeon.DeepDarkDungeonGame;
 import ee.taltech.deepdarkdungeon.Models.GameObject;
 import ee.taltech.deepdarkdungeon.Models.PutMusic;
+import ee.taltech.deepdarkdungeon.animation.AnimationClass;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -117,50 +118,28 @@ public class GameScreen implements Screen {
 
     private boolean agrAnimationStarted = false;
 
-    Animation heroAttack;
     Texture heroAttackSheet;
-    TextureRegion[] heroAttackFrames;
-    TextureRegion currentHeroAttackFrames;
+    AnimationClass heroAttackAnimation;
 
-    float heroAttackStateTime;
+    Texture sunstrikeSheet;
+    AnimationClass sunstrikeAnimation;
 
-    Animation sunstrikeAnimation; // анимация
-    Texture sunstrikeSheet; // текстура анимации
-    TextureRegion[] sunstrikeFrames;  // в этом массиве мы храним все кадры конкретной анимации
-    TextureRegion currentSunstrikeFrame; // текуший кадр анимации
+    Texture monsterAttackSheet;
+    AnimationClass monsterAttackAnimation;
 
-    float stateTime; // количество секунд прошедших с начала анимации
+    Texture monsterHealSheet;
+    AnimationClass monsterHealAnimation;
 
-    Animation monsterAttackAnimation; // анимация
-    Texture monsterAttackSheet; // текстура анимации
-    TextureRegion[] monsterAttackFrames;  // в этом массиве мы храним все кадры конкретной анимации
-    TextureRegion currentMonsterAttackFrame; // текуший кадр анимации
-    float stateTimeMonsterAttack;
+    Texture powershotSheet;
+    AnimationClass powershotAnimation;
 
-    Animation monsterHealAnimation; // анимация
-    Texture monsterHealSheet; // текстура анимации
-    TextureRegion[] monsterHealFrames;  // в этом массиве мы храним все кадры конкретной анимации
-    TextureRegion currentMonsterHealFrame;
-    float stateTimeMonsterHeal;
+    Texture heroHealSheet;
+    AnimationClass heroHealAnimation;
 
-    Animation powershotAnimation; // анимация
-    Texture powershotSheet; // текстура анимации
-    TextureRegion[] powershotFrames;  // в этом массиве мы храним все кадры конкретной анимации
-    TextureRegion currentPowershotFrame;
-    float stateTimePowershot;
+    Texture agrSheet;
+    AnimationClass agrAnimation;
 
-    Animation heroHealAnimation; // анимация
-    Texture heroHealSheet; // текстура анимации
-    TextureRegion[] heroHealFrames;  // в этом массиве мы храним все кадры конкретной анимации
-    TextureRegion currentHeroHealFrame;
-    float stateTimeHeroHeal;
-
-    Animation agrAnimation; // анимация
-    Texture agrSheet; // текстура анимации
-    TextureRegion[] agrFrames;  // в этом массиве мы храним все кадры конкретной анимации
-    TextureRegion currentAgrFrame;
-    float stateTimeAgr;
-
+//TODO
 
     public GameScreen(List<GameObject> goodCharacters, List<GameObject> badCharacters, DeepDarkDungeonGame game, PutMusic music, int openLevelNumber, int lvlPlaying) {
         this.lvlPlaying = lvlPlaying;
@@ -207,100 +186,19 @@ public class GameScreen implements Screen {
         heroHealSheet = new Texture(Gdx.files.internal("heroHealAnimation.png"));
         agrSheet = new Texture(Gdx.files.internal("agrAnimation.png"));
 
-        TextureRegion[][] tmp4 = TextureRegion.split(heroAttackSheet, heroAttackSheet.getWidth() / HERO_FRAME_COLS, heroAttackSheet.getHeight() / HERO_FRAME_ROWS);
-        heroAttackFrames = new TextureRegion[HERO_FRAME_ROWS * HERO_FRAME_COLS];
-        int index4 = 0;
-        for (int i = 0; i < HERO_FRAME_ROWS; i++) {
-            for (int j = 0; j < HERO_FRAME_COLS; j++) {
-                heroAttackFrames[index4++] = tmp4[i][j];
-            }
-        }
-        heroAttack = new Animation(0.04f, heroAttackFrames);
-        heroAttack.setPlayMode(Animation.PlayMode.NORMAL);
-        heroAttackStateTime = 0f;
-        // Дальше идет конструктор анимации: (это анимация санстрайка здесь менять ничего не нужно)
-        TextureRegion[][] tmp = TextureRegion.split(sunstrikeSheet, sunstrikeSheet.getWidth() / FRAME_COLS, sunstrikeSheet.getHeight() / FRAME_ROWS);
-        sunstrikeFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-        int index = 0;
-        for (int i = 0; i < FRAME_ROWS; i++) {
-            for (int j = 0; j < FRAME_COLS; j++) {
-                sunstrikeFrames[index++] = tmp[i][j];
-            }
-        }
-        sunstrikeAnimation = new Animation(0.02f, sunstrikeFrames);
-        sunstrikeAnimation.setPlayMode(Animation.PlayMode.NORMAL);
-        stateTime = 0f;
+        heroAttackAnimation =  new AnimationClass(heroAttackSheet, HERO_FRAME_ROWS, HERO_FRAME_COLS);
 
-        // Monster Attack Animation:
+        sunstrikeAnimation = new AnimationClass(sunstrikeSheet, FRAME_ROWS, FRAME_COLS);
 
-        TextureRegion[][] tmp2 = TextureRegion.split(monsterAttackSheet, monsterAttackSheet.getWidth() / FRAME_COLS_MONSTERS_ATTACK, monsterAttackSheet.getHeight() / FRAME_ROWS_MONSTERS_ATTACK);
-        monsterAttackFrames = new TextureRegion[FRAME_COLS_MONSTERS_ATTACK * FRAME_ROWS_MONSTERS_ATTACK];
-        int index2 = 0;
-        for (int i = 0; i < FRAME_ROWS_MONSTERS_ATTACK; i++) {
-            for (int j = 0; j < FRAME_COLS_MONSTERS_ATTACK; j++) {
-                monsterAttackFrames[index2++] = tmp2[i][j];
-            }
-        }
-        monsterAttackAnimation = new Animation(0.04f, monsterAttackFrames);
-        monsterAttackAnimation.setPlayMode(Animation.PlayMode.NORMAL);
-        stateTimeMonsterAttack = 0f;
+        monsterAttackAnimation = new AnimationClass(monsterAttackSheet, FRAME_ROWS_MONSTERS_ATTACK, FRAME_COLS_MONSTERS_ATTACK);
 
-        // Monster Heal Animation:
+        monsterHealAnimation = new AnimationClass(monsterHealSheet, FRAME_ROWS_MONSTERS_HEAL, FRAME_COLS_MONSTERS_HEAL);
 
-        TextureRegion[][] tmp3 = TextureRegion.split(monsterHealSheet, monsterHealSheet.getWidth() / FRAME_COLS_MONSTERS_HEAL, monsterHealSheet.getHeight() / FRAME_ROWS_MONSTERS_HEAL);
-        monsterHealFrames = new TextureRegion[FRAME_COLS_MONSTERS_HEAL * FRAME_ROWS_MONSTERS_HEAL];
-        int index3 = 0;
-        for (int i = 0; i < FRAME_ROWS_MONSTERS_HEAL; i++) {
-            for (int j = 0; j < FRAME_COLS_MONSTERS_HEAL; j++) {
-                monsterHealFrames[index3++] = tmp3[i][j];
-            }
-        }
-        monsterHealAnimation = new Animation(0.04f, monsterHealFrames);
-        monsterHealAnimation.setPlayMode(Animation.PlayMode.NORMAL);
-        stateTimeMonsterHeal = 0f;
+        powershotAnimation = new AnimationClass(powershotSheet, FRAME_ROWS_POWERSHOT, FRAME_COLS_POWERSHOT);
 
-        // Powershot animation:
+        heroHealAnimation = new AnimationClass(heroHealSheet, FRAME_ROWS_HERO_HEAL, FRAME_COLS_HERO_HEAL);
 
-        TextureRegion[][] tmp5 = TextureRegion.split(powershotSheet, powershotSheet.getWidth() / FRAME_COLS_POWERSHOT, powershotSheet.getHeight() / FRAME_ROWS_POWERSHOT);
-        powershotFrames = new TextureRegion[FRAME_COLS_POWERSHOT * FRAME_ROWS_POWERSHOT];
-        int index5 = 0;
-        for (int i = 0; i < FRAME_ROWS_POWERSHOT; i++) {
-            for (int j = 0; j < FRAME_COLS_POWERSHOT; j++) {
-                powershotFrames[index5++] = tmp5[i][j];
-            }
-        }
-        powershotAnimation = new Animation(0.04f, powershotFrames);
-        powershotAnimation.setPlayMode(Animation.PlayMode.NORMAL);
-        stateTimePowershot = 0f;
-
-        // Hero Heal animation:
-
-        TextureRegion[][] tmp6 = TextureRegion.split(heroHealSheet, heroHealSheet.getWidth() / FRAME_COLS_HERO_HEAL, heroHealSheet.getHeight() / FRAME_ROWS_HERO_HEAL);
-        heroHealFrames = new TextureRegion[FRAME_COLS_HERO_HEAL * FRAME_ROWS_HERO_HEAL];
-        int index6 = 0;
-        for (int i = 0; i < FRAME_ROWS_HERO_HEAL; i++) {
-            for (int j = 0; j < FRAME_COLS_HERO_HEAL; j++) {
-                heroHealFrames[index6++] = tmp6[i][j];
-            }
-        }
-        heroHealAnimation = new Animation(0.04f, heroHealFrames);
-        heroHealAnimation.setPlayMode(Animation.PlayMode.NORMAL);
-        stateTimeHeroHeal = 0f;
-
-        // Agr animation:
-
-        TextureRegion[][] tmp7 = TextureRegion.split(agrSheet, agrSheet.getWidth() / FRAME_COLS_AGR, agrSheet.getHeight() / FRAME_ROWS_AGR);
-        agrFrames = new TextureRegion[FRAME_COLS_AGR * FRAME_ROWS_AGR];
-        int index7 = 0;
-        for (int i = 0; i < FRAME_ROWS_AGR; i++) {
-            for (int j = 0; j < FRAME_COLS_AGR; j++) {
-                agrFrames[index7++] = tmp7[i][j];
-            }
-        }
-        agrAnimation = new Animation(0.04f, agrFrames);
-        agrAnimation.setPlayMode(Animation.PlayMode.NORMAL);
-        stateTimeAgr = 0f;
-
+        agrAnimation = new AnimationClass(agrSheet, FRAME_ROWS_AGR, FRAME_COLS_AGR);
     }
 
     @Override
@@ -346,101 +244,94 @@ public class GameScreen implements Screen {
             flag++;
             if (flag > 100 && agrAnimationStarted) {
                 font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 250);
-                stateTimeAgr += Gdx.graphics.getDeltaTime();
-                currentAgrFrame = (TextureRegion) agrAnimation.getKeyFrame(stateTimeAgr);
-                batch.draw(currentAgrFrame, attackedMonster.getX() - 40, attackedMonster.getY() - 50, 300, 320);
+                agrAnimation.startAnimation();
+                batch.draw(agrAnimation.currentFrame, attackedMonster.getX() - 40, attackedMonster.getY() - 50, 300, 320);
             } else if (flag > 100 && powershotStarted) {
                 font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 250);
-                stateTimePowershot += Gdx.graphics.getDeltaTime();
-                currentPowershotFrame = (TextureRegion) powershotAnimation.getKeyFrame(stateTimePowershot);
-                batch.draw(currentPowershotFrame, attackedMonster.getX() - 40, attackedMonster.getY() - 80, 300, 320);
+                powershotAnimation.startAnimation();
+                batch.draw(powershotAnimation.currentFrame, attackedMonster.getX() - 40, attackedMonster.getY() - 80, 300, 320);
             } else if (flag > 100 && heroHealStarted) {
                 font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 250);
-                stateTimeHeroHeal += Gdx.graphics.getDeltaTime();
-                currentHeroHealFrame = (TextureRegion) heroHealAnimation.getKeyFrame(stateTimeHeroHeal);
-                batch.draw(currentHeroHealFrame, attackedMonster.getX() - 30, attackedMonster.getY() - 80, 300, 320);
+                heroHealAnimation.startAnimation();
+                batch.draw(heroHealAnimation.currentFrame, attackedMonster.getX() - 30, attackedMonster.getY() - 80, 300, 320);
             } else if (flag > 100 && attackAnimationStarted) {
                 monsterDamage = "";
                 font.draw(batch, message, 100, 900);
                 font.draw(batch, heroDamage, attackedHero.getX() + 90, attackedHero.getY() + 250);
-                stateTimeMonsterAttack += Gdx.graphics.getDeltaTime();
-                currentMonsterAttackFrame = (TextureRegion) monsterAttackAnimation.getKeyFrame(stateTimeMonsterAttack);
-                batch.draw(currentMonsterAttackFrame, attackedHero.getX(), attackedHero.getY() - 20, 300, 320);
+                monsterAttackAnimation.startAnimation();
+                batch.draw(monsterAttackAnimation.currentFrame, attackedHero.getX(), attackedHero.getY() - 20, 300, 320);
             } else if (flag > 100 && monsterHealAnimationStarted) {
                 font.draw(batch, message, 100, 900);
-                stateTimeMonsterHeal += Gdx.graphics.getDeltaTime();
-                currentMonsterHealFrame = (TextureRegion) monsterHealAnimation.getKeyFrame(stateTimeMonsterHeal);
-                batch.draw(currentMonsterHealFrame, attackedMonster.getX() - 50, attackedMonster.getY() - 40, 300, 320);
+                monsterHealAnimation.startAnimation();
+                batch.draw(monsterHealAnimation.currentFrame, attackedMonster.getX() - 50, attackedMonster.getY() - 40, 300, 320);
             } else if (flag > 100 && heroAttackAnimationStarted) {
                 font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 250);
-                heroAttackStateTime += Gdx.graphics.getDeltaTime();
-                currentHeroAttackFrames = (TextureRegion) heroAttack.getKeyFrame(heroAttackStateTime);
-                batch.draw(currentHeroAttackFrames, attackedMonster.getX() - 40, attackedMonster.getY() - 50, 300, 320);
+                heroAttackAnimation.startAnimation();
+                batch.draw(heroAttackAnimation.currentFrame, attackedMonster.getX() - 40, attackedMonster.getY() - 50, 300, 320);
             } else if (flag > 100 && sunstrikeAnimationStarted) {
                 monsterDamage = "";
-                stateTime += Gdx.graphics.getDeltaTime();
-                currentSunstrikeFrame = (TextureRegion) sunstrikeAnimation.getKeyFrame(stateTime);
+                sunstrikeAnimation.startAnimation();
                 if (attackedMonster.equals(monsters.get(0))) {
-                    batch.draw(currentSunstrikeFrame, badCharacter1.getX() - 30, badCharacter1.getY(), 300, 320);
-                    batch.draw(currentSunstrikeFrame, badCharacter2.getX()- 30, badCharacter2.getY(), 300, 320);
+                    batch.draw(sunstrikeAnimation.currentFrame, badCharacter1.getX() - 30, badCharacter1.getY(), 300, 320);
+                    batch.draw(sunstrikeAnimation.currentFrame, badCharacter2.getX()- 30, badCharacter2.getY(), 300, 320);
                 } else if (attackedMonster.equals(monsters.get(1))) {
-                    batch.draw(currentSunstrikeFrame, badCharacter1.getX()- 30, badCharacter1.getY(), 300, 320);
-                    batch.draw(currentSunstrikeFrame, badCharacter2.getX()- 30, badCharacter2.getY(), 300, 320);
-                    batch.draw(currentSunstrikeFrame, badCharacter3.getX()- 30, badCharacter3.getY(), 300, 320);
+                    batch.draw(sunstrikeAnimation.currentFrame, badCharacter1.getX()- 30, badCharacter1.getY(), 300, 320);
+                    batch.draw(sunstrikeAnimation.currentFrame, badCharacter2.getX()- 30, badCharacter2.getY(), 300, 320);
+                    batch.draw(sunstrikeAnimation.currentFrame, badCharacter3.getX()- 30, badCharacter3.getY(), 300, 320);
                 } else if (attackedMonster.equals(monsters.get(2))) {
-                    batch.draw(currentSunstrikeFrame, badCharacter2.getX()- 30, badCharacter2.getY(), 300, 320);
-                    batch.draw(currentSunstrikeFrame, badCharacter3.getX()- 30, badCharacter3.getY(), 300, 320);
-                    batch.draw(currentSunstrikeFrame, badCharacter4.getX()- 30, badCharacter4.getY(), 300, 320);
+                    batch.draw(sunstrikeAnimation.currentFrame, badCharacter2.getX()- 30, badCharacter2.getY(), 300, 320);
+                    batch.draw(sunstrikeAnimation.currentFrame, badCharacter3.getX()- 30, badCharacter3.getY(), 300, 320);
+                    batch.draw(sunstrikeAnimation.currentFrame, badCharacter4.getX()- 30, badCharacter4.getY(), 300, 320);
                 } else if (attackedMonster.equals(monsters.get(3))) {
-                    batch.draw(currentSunstrikeFrame, badCharacter3.getX()- 30, badCharacter3.getY(), 300, 320);
-                    batch.draw(currentSunstrikeFrame, badCharacter4.getX()- 30, badCharacter4.getY(), 300, 320);
+                    batch.draw(sunstrikeAnimation.currentFrame, badCharacter3.getX()- 30, badCharacter3.getY(), 300, 320);
+                    batch.draw(sunstrikeAnimation.currentFrame, badCharacter4.getX()- 30, badCharacter4.getY(), 300, 320);
                 }
             }
-            if (agrAnimation.isAnimationFinished(stateTimeAgr)) {
+            if (agrAnimation.animation.isAnimationFinished(agrAnimation.stateTime)) {
                 flag = 0;
                 agrAnimationStarted = false;
-                stateTimeAgr = 0f;
+                agrAnimation.stateTime = 0f;
                 stepCount++;
                 WHOWILLATTACK++;
             }
-            if (heroHealAnimation.isAnimationFinished(stateTimeHeroHeal) && flag > 200) {
+            if (heroHealAnimation.animation.isAnimationFinished(heroHealAnimation.stateTime) && flag > 200) {
                 flag = 0;
                 heroHealStarted = false;
-                stateTimeHeroHeal = 0f;
+                heroHealAnimation.stateTime = 0f;
                 stepCount++;
                 WHOWILLATTACK++;
             }
-            if (powershotAnimation.isAnimationFinished(stateTimePowershot) && flag > 200) {
+            if (powershotAnimation.animation.isAnimationFinished(powershotAnimation.stateTime) && flag > 200) {
                 flag = 0;
                 powershotStarted = false;
-                stateTimePowershot = 0f;
+                powershotAnimation.stateTime = 0f;
                 stepCount++;
                 WHOWILLATTACK++;
             }
-            if (heroAttack.isAnimationFinished(heroAttackStateTime) && flag > 200) {
+            if (heroAttackAnimation.animation.isAnimationFinished(heroAttackAnimation.stateTime) && flag > 200) { //heroAttack.isAnimationFinished(heroAttackStateTime)
                 flag = 0;
                 heroAttackAnimationStarted = false;
-                heroAttackStateTime = 0f;
+                heroAttackAnimation.stateTime = 0f;
                 stepCount++;
                 WHOWILLATTACK++;
             }
-            if (monsterAttackAnimation.isAnimationFinished(stateTimeMonsterAttack) && flag > 200) {
+            if (monsterAttackAnimation.animation.isAnimationFinished(monsterAttackAnimation.stateTime) && flag > 200) {
                 flag = 0;
                 attackAnimationStarted = false;
-                stateTimeMonsterAttack = 0f;
+                monsterAttackAnimation.stateTime = 0f;
                 stepCount++;
             }
-            if (sunstrikeAnimation.isAnimationFinished(stateTime) && flag > 200) {
+            if (sunstrikeAnimation.animation.isAnimationFinished(sunstrikeAnimation.stateTime) && flag > 200) {
                 flag = 0;
                 sunstrikeAnimationStarted = false;
-                stateTime = 0f;
+                sunstrikeAnimation.stateTime = 0f;
                 stepCount++;
                 WHOWILLATTACK++;
             }
-            if (monsterHealAnimation.isAnimationFinished(stateTimeMonsterHeal) && flag > 200) {
+            if (monsterHealAnimation.animation.isAnimationFinished(monsterHealAnimation.stateTime) && flag > 200) {
                 flag = 0;
                 monsterHealAnimationStarted = false;
-                stateTimeMonsterHeal = 0f;
+                monsterHealAnimation.stateTime = 0f;
                 stepCount++;
             }
         }
