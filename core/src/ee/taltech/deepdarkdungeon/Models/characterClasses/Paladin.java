@@ -19,5 +19,6 @@ public class Paladin extends GameObject {
         this.skills = "purification";
         this.mana = 100;
         this.place = place;
+        this.description = "";
     }
 }

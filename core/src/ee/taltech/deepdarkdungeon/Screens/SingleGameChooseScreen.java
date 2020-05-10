@@ -145,6 +145,7 @@ public class SingleGameChooseScreen implements Screen {
     int neededBadCharacter3;
     int neededBadCharacter4;
     BitmapFont font = new BitmapFont();
+    BitmapFont descriptionFont = new BitmapFont();
     PutMusic music;
     Preferences prefs = Gdx.app.getPreferences("my-preferences");
     List<GameObject> badCharacters;
@@ -519,6 +520,10 @@ public class SingleGameChooseScreen implements Screen {
             font.draw(batch, "Health: " + objectForInfo.getHealth(), INFOWINDOW_START_X + 60, INFOWINDOW_START_Y + INFOWINDOW_HEIGHT - FORTHCHAR_HEIGHT - 135);
             font.draw(batch, "Power: " + objectForInfo.getPower(), INFOWINDOW_START_X + 60, INFOWINDOW_START_Y + INFOWINDOW_HEIGHT - FORTHCHAR_HEIGHT - 165);
             font.draw(batch, "Mana: " + objectForInfo.getMana(), INFOWINDOW_START_X + 60, INFOWINDOW_START_Y + INFOWINDOW_HEIGHT - FORTHCHAR_HEIGHT - 195);
+            fontColor = new Color(Color.rgb888(0f, 0f, 66f));
+            font.setColor(new Color(fontColor));
+            font.getData().setScale(2.5f);
+            font.draw(batch, objectForInfo.getDescription(), INFOWINDOW_START_X + 300, INFOWINDOW_START_Y + INFOWINDOW_HEIGHT - FORTHCHAR_HEIGHT +100);
             if (Gdx.input.getX() > INFOWINDOW_START_X + INFOWINDOW_WIDTH - 100 && Gdx.input.getX() < INFOWINDOW_START_X + INFOWINDOW_WIDTH - 40 && Gdx.input.getY() > INFOWINDOW_START_Y && Gdx.input.getY() < INFOWINDOW_START_Y + 60) {
                 batch.draw(closeButton2, INFOWINDOW_START_X + INFOWINDOW_WIDTH - 100, INFOWINDOW_START_Y + INFOWINDOW_HEIGHT - 100, 60, 60);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {

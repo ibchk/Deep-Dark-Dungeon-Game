@@ -31,6 +31,7 @@ public abstract class GameObject {
     public double width;
     public double height;
     public int place;
+    public String description;
 
     public BadCharacterClass getBadCharacterClass() {
         return badCharacterClass;
@@ -137,4 +138,8 @@ public abstract class GameObject {
     public enum BadCharacterClass {ZOMBIE, SKELETON_WARRIOR, SKELETON_ARCHER, NECROMANCER}
 
     public enum CharacterType {GOOD1, GOOD2, GOOD3, GOOD4, BAD1, BAD2, BAD3, BAD4}
+
+    public String getDescription() {
+        return description;
+    }
 }

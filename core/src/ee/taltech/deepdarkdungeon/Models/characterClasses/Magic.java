@@ -19,5 +19,6 @@ public class Magic extends GameObject {
         this.skills = "sunstrike";
         this.mana = 100;
         this.place = place;
+        this.description = "";
     }
 }

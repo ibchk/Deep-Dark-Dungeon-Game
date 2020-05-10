@@ -19,5 +19,12 @@ public class Warrior extends GameObject {
         this.skills = "berserk call";
         this.mana = 100;
         this.place = place;
+        this.description = "The Warrior fills the role of tanking,\n" +
+                "he is the most enduring of all \n" +
+                "creatures in the universe. Arms, fury,\n" +
+                "and protection are the Warrior's \n" +
+                "specializations. Warrior is a basic\n" +
+                "fighter and it's hard to imagine some\n" +
+                "fight without his participation.";
     }
 }
