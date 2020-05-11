@@ -153,14 +153,26 @@ public class InfoAboutUsScreen implements Screen, InputProcessor {
         if (Gdx.input.getX() < UP_X + UP_BUTTON_WIDTH && Gdx.input.getX() > UP_X && Gdx.input.getY() < DeepDarkDungeonGame.HEIGHT - UP_Y - 27 && Gdx.input.getY() > DeepDarkDungeonGame.HEIGHT - UP_Y - 27 - UP_BUTTON_HEIGHT) {
             game.batch.draw(MUSICBUTTON2, UP_X, UP_Y, UP_BUTTON_WIDTH, UP_BUTTON_HEIGHT);
             if (Gdx.input.isTouched() && TEXTY > TEXTHEIGHESTPLACE) {
-                TEXTY = TEXTY - 2.5;
+                TEXTY -= 3;
+                SCREENSHOT_Y -= 3;
+                ATTACKBUTTON_Y -= 3;
+                HEALBUTTON_Y -= 3;
+                POWERSHOTBUTTON_Y -= 3;
+                SUNSTRIKEBUTTON_Y -= 3;
+                DEFBUTTON_Y -= 3;
             }
         }
         game.batch.draw(DOWNBUTTON, DOWN_X, DOWN_Y, DOWN_BUTTON_WIDTH, DOWN_BUTTON_HEIGHT);
         if (Gdx.input.getX() < DOWN_X + DOWN_BUTTON_WIDTH && Gdx.input.getX() > DOWN_X && Gdx.input.getY() < DeepDarkDungeonGame.HEIGHT - DOWN_Y - 27 && Gdx.input.getY() > DeepDarkDungeonGame.HEIGHT - DOWN_Y - 27 - DOWN_BUTTON_HEIGHT) {
             game.batch.draw(MUSICBUTTON2, DOWN_X, DOWN_Y, DOWN_BUTTON_WIDTH, DOWN_BUTTON_HEIGHT);
             if (Gdx.input.isTouched() && TEXTY < TEXTLOWESTPLACE) {
-                TEXTY = TEXTY + 2.5;
+                TEXTY += 3;
+                SCREENSHOT_Y += 3;
+                ATTACKBUTTON_Y += 3;
+                HEALBUTTON_Y += 3;
+                POWERSHOTBUTTON_Y += 3;
+                SUNSTRIKEBUTTON_Y += 3;
+                DEFBUTTON_Y += 3;
             }
         }
         game.batch.draw(BACKBUTTON, BACKBUTTON_X_START, BACKBUTTON_Y_START, BACK_BUTTON_WIDTH, BACK_BUTTON_HEIGHT);
