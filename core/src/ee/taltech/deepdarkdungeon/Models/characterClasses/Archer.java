@@ -19,6 +19,13 @@ public class Archer extends GameObject {
         this.texture = picture;
         this.skills = "powershot";
         this.place = place;
-        this.description = "";
+        this.description = "Archer worship a nature god by\n" +
+                "protecting nature and slaying foul\n" +
+                "creatures. Good ranger will often\n" +
+                "act as the guardian of others by\n" +
+                "repelling \"evil\" forces and protecting\n" +
+                "the weak. Enemies experience fear\n" +
+                "at the sight of archers, as their\n" +
+                "deadly arrows kill immediately.";
     }
 }
