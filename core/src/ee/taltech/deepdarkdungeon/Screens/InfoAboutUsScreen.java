@@ -35,43 +35,48 @@ public class InfoAboutUsScreen implements Screen, InputProcessor {
     Texture BACKBUTTON2;
     int openLevelNumber;
     PutMusic music;
-    int wheelMoved = 0;
+    Texture SCREENSHOT = new Texture("playerChooseScreenshot.png");
+    Texture ATACKBUTTON = new Texture("atackButton1.png");
+    Texture HEALBUTTON = new Texture("healButton1.png");
+    Texture POWERSHOTBUTTON = new Texture("powershotButton1.png");
+    Texture SUNSTRIKEBUTTON = new Texture("sunstrikeButton1.png");
+    Texture DEFBUTTON = new Texture("defenceButton1.png");
 
-    String text = "Kommunistlik ühiskonnakorraldus\n" +
-            "Teoorias\n" +
-            "Kommunism või kommunistlik ühiskonnakorraldus kui teoreetiline sotsiaalne ja majanduslik süsteem on egalitaarse ühiskonna tüüp, kus ei ole eraomandit ega sotsiaalseid klasse, riiki ega perekonda. Kommunismis on kõik varad ja tootmisvahendid ühiskondlikus omandis ja kõik inimesed on võrdsed nii sotsiaalselt kui majanduslikult. Kuulsaim kommunistliku ühiskonna põhimõte on: Igaühelt vastavalt tema võimalustele ja igaühele vastavalt tema vajadustele. Kommunistliku ühiskonna teoreetilised alused esinevad näiteks Friedrich Engelsi teoses \"Perekonna, riigi ja eraomandi tekkimine\".\n" +
+    String text = "HOW TO START???\n" +
             "\n" +
-            "Praktikas\n" +
-            "\"Kommunism\", \"kommunistlik riik\" ja \"kommunistlik režiim\" on läänemaailmas laialdaselt kasutatavad terminid kommunistliku partei võimu all olevate riikide ja neis valitseva korra kohta.\n" +
+            "1. Choose between single and multiplayer game.\n" +
             "\n" +
-            "Oma korra nimetamisel kasutati \"kommunismi\" asemel väljendeid \"sotsialism\" ja \"sotsialistlik riik\", sest vastavalt teooriale pidi sotsialism olema alles üleminekuaste kommunismile.\n" +
+            "2. Select 4 characters for whom you will play. Think over\n" +
+            "game tactics when choosing characters, as the outcome of\n" +
+            "the match depends on this. There is info button on top of\n" +
+            "each character, where is a detailed information about\n" +
+            "selected character.\n" +
             "\n" +
-            "Kommunistlik ideoloogia\n" +
-            "Kommunism kui ideoloogia või teooria on vaadete, seisukohtade, ideede süsteem või maailmavaade, mis toetab ja põhjendab kommunistiku ühiskonnakorralduse loomist ning arendab selle loomise ideid. Kommunist on inimene, kes toetab kommunismi ideoloogiat. Selles tähenduses kasutas seda mõistet näiteks Lenin, rõhutades \"kommunismi õppimise\" vajadust.\n" +
+            "3. If single game, choose level.\n" +
             "\n" +
-            "Kommunistlik liikumine\n" +
-            "Kommunism kui poliitiline liikumine on osa laiemast, sotsialistlikust liikumisest. Selles tähenduses kasutas seda mõistet näiteks Lenin oma teoses \"\"Pahempoolsuse\" lastehaigus kommunismis\". Kommunistid erinevad sotsialistidest näiteks selle poolest, et nad pooldavad kapitalistlikult ühiskonnalt kommunistlikusse ideaalühiskonda üleminekut revolutsioonilisel teel. 21. sajandi sotsiaaldemokraatial ei ole enam kommunistidega kuigi palju ühiseid vaateid, ehkki Karl Marx, Friedrich Engels jt on mõlema liikumise jaoks autoriteedid.\n" +
+            "4. Click ==>> START\n" +
             "\n" +
-            "Sõna ajalugu\n" +
-            "Sõnad \"kommunism\" ja \"kommunist\" tulid kasutusele Prantsusmaal pärast 1830. aasta revolutsiooni. Tavakeelde jõudsid nad 1840ndatel. Aastal 1840 korraldati Pariisis esimene communist banquet. Terminit kasutati ka utoopilise sotsialisti Étienne Cabet' toetajate nimetamisel. Sõna 'kommunism' tuleb prantsuse keelest, kus seda võib tõlkida nii kommuun, omavalitsuslik küla ehk kogukond kui ka communauté, ühisomand. Hiljem marksistid kasutasid seda sõna nii, et selles sisaldusid mõlemad elemendid. Sõna 'kommunism' tuli kasutusele Inglismaal prantsuse kommunistidest maapagulaste kaudu ja sel oli võitluslik tähendus vastandina rahumeelsele mõistele 'sotsialism'. Seepärast kasutasid Karl Marx ja Friedrich Engels seda sõna 'kommunism' Kommunistliku partei manifestis.\n" +
+            "HOW TO PLAY???\n" +
             "\n" +
-            "Kommunismi kuriteod\n" +
-            "Lähemalt artiklis Kommunismi kuriteod\n" +
+            "The game takes place in turn ==>> First beats > second beats > first beats...\n" +
             "\n" +
-            "Kõige tuntumaks on sõna 'kommunism' teinud Nõukogude Liidus 1917–1991 valitsenud režiim, mis hukutas kümneid miljoneid inimesi.\n" +
+            "If your turn:\n" +
             "\n" +
-            "1917–1991 Nõukogude Liidus toimunu ja tema poolt naaberriikides kordasaadetu on 20. sajandi üks suuremaid inimsusvastaseid kuritegusid. Ka ükski teine kommunistlik režiim ei ole võimul püsinud ilma ulatuslike inimsusvastaste kuritegude toimepanekuta ning demokraatlikke vabadusi ja opositsioonilisi poliitilisi organisatsioone lämmatamata. Kommunism on üks totalitaarseid ideoloogiaid koos fašismi, äärmusteokraatia ja teistega. Prantsuse ajaloolaste \"Kommunismi musta raamatu\" andmeil on kommunistlikud režiimid hävitanud üle 100 miljoni inimese.\n" +
+            "1. Click on atack button\n" +
             "\n" +
-            "Kommunismi voolud\n" +
-            "Kommunism on aja jooksul omandanud eri vorme, mis konkretiseerivad algset õpetust, aga sageli ka hälbivad teatud määral sellest. Näiteks on mitmel pool tekkinud rahvuskommunism, mis teoorias peaks olema kommunismi internatsionalistlikule põhimõttele risti vastupidine.\n" +
+            "2. Click on the enemy character, who you wanna beat.\n" +
             "\n" +
-            "Suuremad kommunismivoolud on:\n" +
+            "Also depending on the character you have a superpower:\n" +
             "\n" +
-            "eurokommunism\n" +
-            "leninism\n" +
-            "maoism\n" +
-            "stalinism\n" +
-            "trotskism";
+            "1. Archer - POWERSHOT ==>> Sniper strike, instant kill.\n" +
+            "\n" +
+            "2. Wizard - SUNSTRIKE ==>> Stabs the enemy and his neighbors on left and right.\n" +
+            "\n" +
+            "3. Paladin - HEAL ==>> Heals the weakest character.\n" +
+            "\n" +
+            "4. Warrior - BERSERK CALL ==>> The next blow of the opponent will be on this character.\n" +
+            "\n" +
+            "If single game and you win, the next lvl will be unlocked.";
 
     private static final int TEXTHEIGHESTPLACE = 950;
     private static int TEXTLOWESTPLACE = 0;
@@ -82,6 +87,18 @@ public class InfoAboutUsScreen implements Screen, InputProcessor {
     private static final int UP_BUTTON_HEIGHT = 100;
     private static final int UP_X = 1765;
     private static final int UP_Y = 900;
+    private static final int SCREENSHOT_X = 1000;
+    private static int SCREENSHOT_Y = 500;
+    private static final int ATTACKBUTTON_X = 540;
+    private static int ATTACKBUTTON_Y = 207;
+    private static final int HEALBUTTON_X = 900;
+    private static int HEALBUTTON_Y = -193;
+    private static final int POWERSHOTBUTTON_X = 940;
+    private static int POWERSHOTBUTTON_Y = -40;
+    private static final int SUNSTRIKEBUTTON_X = 1290;
+    private static int SUNSTRIKEBUTTON_Y = -120;
+    private static final int DEFBUTTON_X = 1390;
+    private static int DEFBUTTON_Y = -270;
 
     private static final int DOWN_BUTTON_WIDTH = 112;
     private static final int DOWN_BUTTON_HEIGHT = 100;
@@ -103,12 +120,12 @@ public class InfoAboutUsScreen implements Screen, InputProcessor {
         Matcher matcher = pattern.matcher(text);
         TEXTLOWESTPLACE = (int) (matcher.results().count() + 1) * 40;
         Gdx.input.setInputProcessor(this);
+        font.setColor(new Color(Color.rgb888(0f, 0f, 72f)));
+        font.getData().setScale(2);
     }
 
     @Override
     public void show() {
-        font.setColor(new Color(Color.rgb888(0f, 0f, 85f)));
-        font.getData().setScale(2);
         MUSICBUTTON1 = new Texture("musicButton1.png");
         MUSICBUTTON2 = new Texture("musicButton2.png");
         BACKGROUND = new Texture("infoPageBackground.png");
@@ -124,6 +141,12 @@ public class InfoAboutUsScreen implements Screen, InputProcessor {
         game.batch.begin();
         game.batch.draw(BACKGROUND, 0, 0, DeepDarkDungeonGame.WIDTH, DeepDarkDungeonGame.HEIGHT);
         font.draw(game.batch, text, TEXTX, (int) TEXTY);
+        game.batch.draw(SCREENSHOT, SCREENSHOT_X, SCREENSHOT_Y, 663, 420);
+        game.batch.draw(ATACKBUTTON, ATTACKBUTTON_X, ATTACKBUTTON_Y, 100, 100);
+        game.batch.draw(HEALBUTTON, HEALBUTTON_X, HEALBUTTON_Y, 100, 100);
+        game.batch.draw(POWERSHOTBUTTON, POWERSHOTBUTTON_X, POWERSHOTBUTTON_Y, 100, 100);
+        game.batch.draw(SUNSTRIKEBUTTON, SUNSTRIKEBUTTON_X, SUNSTRIKEBUTTON_Y, 100, 100);
+        game.batch.draw(DEFBUTTON, DEFBUTTON_X, DEFBUTTON_Y, 100, 100);
         game.batch.draw(UPBUTTON, UP_X, UP_Y, UP_BUTTON_WIDTH, UP_BUTTON_HEIGHT);
         game.batch.draw(BACKGROUND2, 0, 0, DeepDarkDungeonGame.WIDTH, DeepDarkDungeonGame.HEIGHT);
         game.batch.draw(UPBUTTON, UP_X, UP_Y, UP_BUTTON_WIDTH, UP_BUTTON_HEIGHT);
@@ -213,9 +236,21 @@ public class InfoAboutUsScreen implements Screen, InputProcessor {
     @Override
     public boolean scrolled(int amount) {
         if (amount == 1 && TEXTY < TEXTLOWESTPLACE) {
-            TEXTY = TEXTY + 30;
+            TEXTY += 30;
+            SCREENSHOT_Y += 30;
+            ATTACKBUTTON_Y += 30;
+            HEALBUTTON_Y += 30;
+            POWERSHOTBUTTON_Y += 30;
+            SUNSTRIKEBUTTON_Y += 30;
+            DEFBUTTON_Y += 30;
         } else if (amount == -1 && TEXTY > TEXTHEIGHESTPLACE) {
-            TEXTY = TEXTY - 30;
+            TEXTY -= 30;
+            SCREENSHOT_Y -= 30;
+            ATTACKBUTTON_Y -= 30;
+            HEALBUTTON_Y -= 30;
+            POWERSHOTBUTTON_Y -= 30;
+            SUNSTRIKEBUTTON_Y -= 30;
+            DEFBUTTON_Y -= 30;
         }
         return false;
     }

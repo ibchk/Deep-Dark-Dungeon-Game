@@ -19,5 +19,12 @@ public class Magic extends GameObject {
         this.skills = "sunstrike";
         this.mana = 100;
         this.place = place;
+        this.description = "The wizard is a \"genius student\" of\n" +
+                "arcane magic, who has studied the\n" +
+                "subject for years. Thanks to powerful\n" +
+                "spell-casters, there is a possibility to\n" +
+                "attack three enemies at the same\n" +
+                "time. Mage is very valuable, if you\n" +
+                "use his power properly.";
     }
 }
