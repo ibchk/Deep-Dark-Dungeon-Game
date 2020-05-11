@@ -328,6 +328,15 @@ public class MultiplayerScreen implements Screen {
                         break;
                     }
                 }
+                if (WHOWILLATTACK >= 4) {
+                    WHOWILLATTACK = 0;
+                }
+                while (myCharacters.get(WHOWILLATTACK).getHealth() == 0) {
+                    WHOWILLATTACK++;
+                    if (WHOWILLATTACK >= 4) {
+                        WHOWILLATTACK = 0;
+                    }
+                }
                 if (calculateDamage && !enemyUsedSkill && !(myAttackedHero == null) && !(badCharacter == null)) {
                     attacker = badCharacter;
                     attackUs(myAttackedHero);
@@ -348,15 +357,8 @@ public class MultiplayerScreen implements Screen {
                         }
                     } else if (badCharacter.getSkill().equals("purification")) {
                         healThem();
-                    }
-                }
-                if (WHOWILLATTACK >= 4) {
-                    WHOWILLATTACK = 0;
-                }
-                while (myCharacters.get(WHOWILLATTACK).getHealth() == 0) {
-                    WHOWILLATTACK++;
-                    if (WHOWILLATTACK >= 4) {
-                        WHOWILLATTACK = 0;
+                    } else if (badCharacter.getSkill().equals("berserk call")){
+                        defAttack(badCharacter);
                     }
                 }
                 attacker = myCharacters.get(WHOWILLATTACK);
@@ -389,12 +391,15 @@ public class MultiplayerScreen implements Screen {
                     heal();
                 }
                 if (skillIsPressed && attacker.getSkill().equals("berserk call")) {
+                    attackedMonster = attacker;
                     skillIsPressed = false;
+                    WHOWILLATTACK++;
                     attacker.setMana(attacker.getMana() - 40);
                     attackedHero = attacker;
                     messageForMonsters = attacker.getName() + " used berserk call";
                     monsterDamage = "";
-                    attackedMonster = attacker;
+                    calculateDamage = true;
+                    client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true); //TODO
                 }
                 for (GameObject monster : enemyCharacters) {
                     if (Gdx.input.getX() > monster.getX() && Gdx.input.getX() < monster.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > monster.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < monster.getY() + 300) {
