@@ -145,7 +145,6 @@ public class SingleGameChooseScreen implements Screen {
     int neededBadCharacter3;
     int neededBadCharacter4;
     BitmapFont font = new BitmapFont();
-    BitmapFont descriptionFont = new BitmapFont();
     PutMusic music;
     Preferences prefs = Gdx.app.getPreferences("my-preferences");
     List<GameObject> badCharacters;
