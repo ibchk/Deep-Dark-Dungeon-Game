@@ -71,8 +71,7 @@ public class MultiplayerScreen implements Screen {
     boolean gameOver = false;
     boolean canbeattacked = false;
     boolean skillIsPressed = false;
-    String message = "";
-    String messageForMonsters;
+    String messageForMonsters = "";
     private long stepCount = 1;
     private Texture monstersWinScreen;
     private Texture mainMenuButton2;
@@ -199,9 +198,6 @@ public class MultiplayerScreen implements Screen {
             this.enemyWhoAttacked = client.characterWhoAttacked;
             this.myAttackedCharacter = client.attachedCharacter;
             this.enemyUsedSkill = client.skillUsed;
-            if (client.myTurn) {
-                font.draw(batch, "Your turn!", 300, 700);
-            }
             for (GameObject hero : myCharacters) {
                 batch.draw(hero.getTexture(), hero.getX(), hero.getY(), 200, 220);
                 font.draw(batch, "Hp: " + hero.getHealth(), hero.getX() + 30, hero.getY() - 10);
@@ -212,10 +208,8 @@ public class MultiplayerScreen implements Screen {
                 font.draw(batch, "Hp: " + monster.getHealth(), monster.getX() + 30, monster.getY() - 10);
                 font.draw(batch, "Mn: " + monster.getMana(), monster.getX() + 100, monster.getY() - 10);
             }
-
+            font.draw(batch, messageForMonsters, 100, 950);
             if (animationStarted) { //TODO:
-                font.draw(batch, "Monsters turn! " + stepCount, 100, 1000);
-                font.draw(batch, messageForMonsters, 100, 950);
                 if (currentAnimation.equals(sunstrikeAnimation)) {
                     if (attackedMonster.equals(myCharacters.get(0)) || attackedMonster.equals(enemyCharacters.get(0))) {
                         font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 250);
@@ -234,7 +228,6 @@ public class MultiplayerScreen implements Screen {
                     }
                 }
                 font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 250);
-                font.draw(batch, message, 100, 900);
                 currentAnimation.startAnimation();
                 if (currentAnimation.equals(sunstrikeAnimation)) {
                     if (attackedMonster.equals(myCharacters.get(0)) || attackedMonster.equals(enemyCharacters.get(0))) {
@@ -301,6 +294,12 @@ public class MultiplayerScreen implements Screen {
                     }
                 }
             }
+            System.out.println(client.myTurn);
+            if (client.myTurn) {
+                font.draw(batch, "Your turn! ", 100, 1000);
+            } else {
+                font.draw(batch, "Enemy turn! ", 100, 1000);
+            }
             if ((client.myTurn) && !gameOver && !animationStarted) {
                 if (addManaMonsters) { //TODO
                     for (GameObject monster :enemyCharacters) {
@@ -365,11 +364,7 @@ public class MultiplayerScreen implements Screen {
                 font.draw(batch, attacker.getHealth() + "", 360, 200);
                 font.draw(batch, "Mana: ", 300, 150);
                 font.draw(batch, attacker.getMana() + "", 360, 150);
-                font.draw(batch, "Your turn! " + stepCount, 100, 1000);
                 batch.draw(attacker.getTexture(), 40, 130, 200, 220);
-                if (stepCount > 1) {
-                    font.draw(batch, "In last step " + message, 100, 900);
-                }
                 if (Gdx.input.getX() < VBOI_X + VBOI_WIDTH && Gdx.input.getX() > VBOI_X && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() <= VBOI_Y + VBOI_HEIGTH + 30 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() >= VBOI_Y + 25) {
                     batch.draw(attackbuttonacitve, VBOI_X, VBOI_Y, VBOI_WIDTH, VBOI_HEIGTH);
                     if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
@@ -618,16 +613,16 @@ public class MultiplayerScreen implements Screen {
             GameObject enemy = null;
             switch (name) {
                 case "Warrior":
-                    enemy = new Warrior(new Texture(Gdx.files.internal("GoodCharacter1.png")), "Warrior", 100, 100, x, y, 200, 277, GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD1, place);
+                    enemy = new Warrior(new Texture(Gdx.files.internal("GoodCharacter1Reversed.png")), "Warrior", 100, 100, x, y, 200, 277, GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD1, place);
                     break;
                 case "Archer":
-                    enemy = new Archer(new Texture(Gdx.files.internal("GoodCharacter2.png")), "Archer", 100, 100, x, y, 200, 277, GameObject.CharacterClass.ARCHER, GameObject.CharacterType.GOOD2, place);
+                    enemy = new Archer(new Texture(Gdx.files.internal("GoodCharacter2Reversed.png")), "Archer", 100, 100, x, y, 200, 277, GameObject.CharacterClass.ARCHER, GameObject.CharacterType.GOOD2, place);
                     break;
                 case "Wizard":
-                    enemy = new Magic(new Texture(Gdx.files.internal("GoodCharacter3.png")), "Wizard", 200, 100, x, y, 200, 277, GameObject.CharacterClass.MAGIC, GameObject.CharacterType.GOOD3, place);
+                    enemy = new Magic(new Texture(Gdx.files.internal("GoodCharacter3Reversed.png")), "Wizard", 200, 100, x, y, 200, 277, GameObject.CharacterClass.MAGIC, GameObject.CharacterType.GOOD3, place);
                     break;
                 case "Paladin":
-                    enemy = new Paladin(new Texture(Gdx.files.internal("GoodCharacter4.png")), "Paladin", 100, 100, x, y, 200, 277, GameObject.CharacterClass.PALADIN, GameObject.CharacterType.GOOD4, place);
+                    enemy = new Paladin(new Texture(Gdx.files.internal("GoodCharacter4Reversed.png")), "Paladin", 100, 100, x, y, 200, 277, GameObject.CharacterClass.PALADIN, GameObject.CharacterType.GOOD4, place);
                     break;
             }
             enemyCharacterList.add(enemy);
