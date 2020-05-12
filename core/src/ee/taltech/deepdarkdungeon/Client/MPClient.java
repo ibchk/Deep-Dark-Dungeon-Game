@@ -4,6 +4,8 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import javafx.scene.ParallelCamera;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -11,8 +13,8 @@ import java.util.List;
 
 public class MPClient {
     int udpC = 5200;
-    public int tcpC = 5291;
-    String IPConnection = "localhost";
+    public int tcpC = 5201;
+    String IPConnection = "193.40.255.16";
 
     public int myPlace;
     public boolean game = false;
@@ -51,6 +53,7 @@ public class MPClient {
                     Packets.AllowToStart allowToStart = new Packets.AllowToStart();
                     myPlace = ((Packets.ConnectToGame) o).place;
                     allowToStart.gamer = ((Packets.ConnectToGame) o).place;
+                    allowToStart.allow = false;
                     c.sendTCP(allowToStart);
                 } else if (o instanceof Packets.AllowToStart) {
                     if (((Packets.AllowToStart) o).allow) {
@@ -59,13 +62,15 @@ public class MPClient {
                         enemy = ((Packets.AllowToStart) o).anotherGamerCharacters;
                         Packets.AllowToAttack allowToSend = new Packets.AllowToAttack();
                         allowToSend.gamer = myPlace;
-                        System.out.println("started");
                         c.sendTCP(allowToSend);
                     } else {
-                        c.sendTCP(o);
+                        Packets.AllowToStart newO = new Packets.AllowToStart();
+                        newO.allow = ((Packets.AllowToStart) o).allow;
+                        newO.anotherGamerCharacters = ((Packets.AllowToStart) o).anotherGamerCharacters;
+                        newO.gamer = ((Packets.AllowToStart) o).gamer;
+                        c.sendTCP(newO);
                     }
                 } else if (o instanceof Packets.GameInfo) {
-                    System.out.println("I'm the first!!!!");
                     // тут мы получаем информацию об ударе от соперника и ее воспроизвоодим у себя в игре.
                     // ПРИ ПЕРВОМ ПОЛУЧЕНИИ Packets.GameInfo У НЕГО ПАРАМЕТРЫ НЕ ИНИЦИАЛЕЗИРОВАНЫ.
                     // после мы делаем свой удар и шлем Packets.GameInfo на сервер, в ответ мы ничего не получаем.

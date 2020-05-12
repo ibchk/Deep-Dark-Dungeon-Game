@@ -2,7 +2,6 @@ package ee.taltech.deepdarkdungeon.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import ee.taltech.deepdarkdungeon.Client.MPServer;
 import ee.taltech.deepdarkdungeon.DeepDarkDungeonGame;
 
 import java.io.IOException;
