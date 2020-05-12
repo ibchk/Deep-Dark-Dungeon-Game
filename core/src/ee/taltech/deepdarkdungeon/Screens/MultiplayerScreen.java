@@ -105,9 +105,11 @@ public class MultiplayerScreen implements Screen {
     private String monsterDamage = "";
 
     private GameObject attackedMonster;
-    private GameObject attackedHero;
 
     private boolean addManaMonsters = false;
+
+    private boolean agrUsed = false;
+    private GameObject heroUsedAgr;
 
 
     public MultiplayerScreen(List<GameObject> myChars) {
@@ -134,7 +136,7 @@ public class MultiplayerScreen implements Screen {
     Texture agrSheet;
     AnimationClass agrAnimation;
 
-    AnimationClass currentAnimation; //TODO
+    AnimationClass currentAnimation;
     boolean animationStarted = false;
 
 
@@ -174,7 +176,7 @@ public class MultiplayerScreen implements Screen {
             if (write) {
                 List<String> enemyCharactersString = client.enemy;
                 System.out.println(heroNames);
-                System.out.println(enemyCharactersString); // TODO
+                System.out.println(enemyCharactersString);
                 write = false;
                 myPlace = client.myPlace;
                 this.enemyCharacters = createEnemies(enemyCharactersString);
@@ -205,56 +207,58 @@ public class MultiplayerScreen implements Screen {
             }
             for (GameObject monster :enemyCharacters) {
                 batch.draw(monster.getTexture(), monster.getX(), monster.getY(), 200, 220);
-                font.draw(batch, "Hp: " + monster.getHealth(), monster.getX() + 30, monster.getY() - 10);
-                font.draw(batch, "Mn: " + monster.getMana(), monster.getX() + 100, monster.getY() - 10);
+                font.draw(batch, "Hp: " + monster.getHealth(), monster.getX() + 50, monster.getY() - 10);
             }
             font.draw(batch, messageForMonsters, 100, 950);
-            if (animationStarted) { //TODO:
+
+            if (animationStarted) { // TODO
                 if (currentAnimation.equals(sunstrikeAnimation)) {
                     if (attackedMonster.equals(myCharacters.get(0)) || attackedMonster.equals(enemyCharacters.get(0))) {
-                        font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 250);
-                        font.draw(batch, monsterDamage, attackedMonster.getX() + 290, attackedMonster.getY() + 200);
+                        font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 150);
+                        font.draw(batch, monsterDamage, attackedMonster.getX() + 290, attackedMonster.getY() + 100);
                     } else if (attackedMonster.equals(myCharacters.get(1)) || attackedMonster.equals(enemyCharacters.get(1))) {
-                        font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 250);
-                        font.draw(batch, monsterDamage, attackedMonster.getX() + 290, attackedMonster.getY() + 300);
-                        font.draw(batch, monsterDamage, attackedMonster.getX() - 100, attackedMonster.getY() + 300);
+                        font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 150);
+                        font.draw(batch, monsterDamage, attackedMonster.getX() + 290, attackedMonster.getY() + 200);
+                        font.draw(batch, monsterDamage, attackedMonster.getX() - 100, attackedMonster.getY() + 200);
                     } else if (attackedMonster.equals(myCharacters.get(2)) || attackedMonster.equals(enemyCharacters.get(2))) {
-                        font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 250);
+                        font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 150);
                         font.draw(batch, monsterDamage, attackedMonster.getX() + 290, attackedMonster.getY() + 200);
                         font.draw(batch, monsterDamage, attackedMonster.getX() - 100, attackedMonster.getY() + 200);
                     } else if (attackedMonster.equals(myCharacters.get(3)) || attackedMonster.equals(enemyCharacters.get(3))) {
-                        font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 250);
-                        font.draw(batch, monsterDamage, attackedMonster.getX() - 100, attackedMonster.getY() + 300);
+                        font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 150);
+                        font.draw(batch, monsterDamage, attackedMonster.getX() - 100, attackedMonster.getY() + 200);
                     }
                 }
                 font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 250);
                 currentAnimation.startAnimation();
                 if (currentAnimation.equals(sunstrikeAnimation)) {
                     if (attackedMonster.equals(myCharacters.get(0)) || attackedMonster.equals(enemyCharacters.get(0))) {
-                        batch.draw(sunstrikeAnimation.currentFrame, badCharacter1.getX() - 30, badCharacter1.getY(), 300, 320);
-                        batch.draw(sunstrikeAnimation.currentFrame, badCharacter2.getX()- 30, badCharacter2.getY(), 300, 320);
+                        batch.draw(sunstrikeAnimation.currentFrame, attackedMonster.getX(), attackedMonster.getY(), 300, 320);
+                        batch.draw(sunstrikeAnimation.currentFrame, attackedMonster.getX() + 290, attackedMonster.getY(), 300, 320);
                     } else if (attackedMonster.equals(myCharacters.get(1)) || attackedMonster.equals(enemyCharacters.get(1))) {
-                        batch.draw(sunstrikeAnimation.currentFrame, badCharacter1.getX()- 30, badCharacter1.getY(), 300, 320);
-                        batch.draw(sunstrikeAnimation.currentFrame, badCharacter2.getX()- 30, badCharacter2.getY(), 300, 320);
-                        batch.draw(sunstrikeAnimation.currentFrame, badCharacter3.getX()- 30, badCharacter3.getY(), 300, 320);
+                        batch.draw(sunstrikeAnimation.currentFrame, attackedMonster.getX(), attackedMonster.getY(), 300, 320);
+                        batch.draw(sunstrikeAnimation.currentFrame, attackedMonster.getX() + 290, attackedMonster.getY(), 300, 320);
+                        batch.draw(sunstrikeAnimation.currentFrame, attackedMonster.getX() - 290, attackedMonster.getY(), 300, 320);
                     } else if (attackedMonster.equals(myCharacters.get(2)) || attackedMonster.equals(enemyCharacters.get(2))) {
-                        batch.draw(sunstrikeAnimation.currentFrame, badCharacter2.getX()- 30, badCharacter2.getY(), 300, 320);
-                        batch.draw(sunstrikeAnimation.currentFrame, badCharacter3.getX()- 30, badCharacter3.getY(), 300, 320);
-                        batch.draw(sunstrikeAnimation.currentFrame, badCharacter4.getX()- 30, badCharacter4.getY(), 300, 320);
+                        batch.draw(sunstrikeAnimation.currentFrame, attackedMonster.getX(), attackedMonster.getY(), 300, 320);
+                        batch.draw(sunstrikeAnimation.currentFrame, attackedMonster.getX() + 290, attackedMonster.getY(), 300, 320);
+                        batch.draw(sunstrikeAnimation.currentFrame, attackedMonster.getX() - 290, attackedMonster.getY(), 300, 320);
                     } else if (attackedMonster.equals(myCharacters.get(3)) || attackedMonster.equals(enemyCharacters.get(3))) {
-                        batch.draw(sunstrikeAnimation.currentFrame, badCharacter3.getX() - 30, badCharacter3.getY(), 300, 320);
-                        batch.draw(sunstrikeAnimation.currentFrame, badCharacter4.getX() - 30, badCharacter4.getY(), 300, 320);
+                        batch.draw(sunstrikeAnimation.currentFrame, attackedMonster.getX(), attackedMonster.getY(), 300, 320);
+                        batch.draw(sunstrikeAnimation.currentFrame, attackedMonster.getX() - 290, attackedMonster.getY(), 300, 320);
                     }
                 } else {
                     batch.draw(currentAnimation.currentFrame, attackedMonster.getX() - 40, attackedMonster.getY() - 50, 300, 320);
                 }
-                if ((currentAnimation.equals(agrAnimation) && currentAnimation.animation.isAnimationFinished(currentAnimation.stateTime)) || (currentAnimation.animation.isAnimationFinished(currentAnimation.stateTime))) {
+                if (currentAnimation.animation.isAnimationFinished(currentAnimation.stateTime)) {
                     animationStarted = false;
                     currentAnimation.stateTime = 0f;
                     stepCount++;
+                    if (currentAnimation.equals(agrAnimation)) {
+                        agrUsed = true;
+                    }
                 }
             }
-
 
             if (badCharacter1.getHealth() == 0 && badCharacter2.getHealth() == 0 && badCharacter3.getHealth() == 0 && badCharacter4.getHealth() == 0) {
                 if (lvlPlaying == openLevelNumber) {
@@ -294,15 +298,14 @@ public class MultiplayerScreen implements Screen {
                     }
                 }
             }
-            System.out.println(client.myTurn);
             if (client.myTurn) {
                 font.draw(batch, "Your turn! ", 100, 1000);
             } else {
                 font.draw(batch, "Enemy turn! ", 100, 1000);
             }
             if ((client.myTurn) && !gameOver && !animationStarted) {
-                if (addManaMonsters) { //TODO
-                    for (GameObject monster :enemyCharacters) {
+                if (addManaMonsters) {
+                    for (GameObject monster :myCharacters) {
                         if (monster.getHealth() > 0 && monster.getMana() < 100) {
                             monster.setMana(monster.getMana() + 10);
                             if (monster.getMana() > 100) {
@@ -357,8 +360,8 @@ public class MultiplayerScreen implements Screen {
                         }
                     } else if (badCharacter.getSkill().equals("purification")) {
                         healThem();
-                    } else if (badCharacter.getSkill().equals("berserk call")){
-                        defAttack(badCharacter);
+                    } else if (badCharacter.getSkill().equals("berserk call")){//TODO
+                        agr(attacker);
                     }
                 }
                 attacker = myCharacters.get(WHOWILLATTACK);
@@ -367,6 +370,10 @@ public class MultiplayerScreen implements Screen {
                 font.draw(batch, "Mana: ", 300, 150);
                 font.draw(batch, attacker.getMana() + "", 360, 150);
                 batch.draw(attacker.getTexture(), 40, 130, 200, 220);
+                if (agrUsed && heroUsedAgr != null) {
+                    agrUsed = false;
+                    defAttack(heroUsedAgr);
+                }
                 if (Gdx.input.getX() < VBOI_X + VBOI_WIDTH && Gdx.input.getX() > VBOI_X && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() <= VBOI_Y + VBOI_HEIGTH + 30 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() >= VBOI_Y + 25) {
                     batch.draw(attackbuttonacitve, VBOI_X, VBOI_Y, VBOI_WIDTH, VBOI_HEIGTH);
                     if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
@@ -395,11 +402,12 @@ public class MultiplayerScreen implements Screen {
                     skillIsPressed = false;
                     WHOWILLATTACK++;
                     attacker.setMana(attacker.getMana() - 40);
-                    attackedHero = attacker;
                     messageForMonsters = attacker.getName() + " used berserk call";
                     monsterDamage = "";
                     calculateDamage = true;
-                    client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true); //TODO
+                    animationStarted = true;
+                    currentAnimation = agrAnimation;
+                    client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true);
                 }
                 for (GameObject monster : enemyCharacters) {
                     if (Gdx.input.getX() > monster.getX() && Gdx.input.getX() < monster.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > monster.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < monster.getY() + 300) {
@@ -451,6 +459,14 @@ public class MultiplayerScreen implements Screen {
         font.dispose();
     }
 
+    private void agr(GameObject gameObject) {
+        animationStarted = true;
+        currentAnimation = agrAnimation;
+        attackedMonster = gameObject;
+        calculateDamage = false;
+        heroUsedAgr = gameObject;
+    }
+
     private void powerShot(GameObject gameObject) {
         messageForMonsters = "You powershoted and killed" + gameObject.getName();
         attackedMonster = gameObject;
@@ -461,8 +477,8 @@ public class MultiplayerScreen implements Screen {
         calculateDamage = true;
         animationStarted = true;
         currentAnimation = powershotAnimation;
-        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true);
         WHOWILLATTACK++;
+        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true);
     }
 
     private void powerShotUs(GameObject gameObject) {
@@ -482,12 +498,13 @@ public class MultiplayerScreen implements Screen {
         monsterDamage = "-" + attacker.getPower() + " HP";
         gameObject.setHealth(Math.max(gameObject.getHealth() - attacker.getPower(), 0));
         canbeattacked = false;
-        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), false);
         calculateDamage = true;
         WHOWILLATTACK++;
         addManaMonsters = true;
         animationStarted = true;
+        skillIsPressed = false;
         currentAnimation = heroAttackAnimation;
+        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), false);
     }
 
     private void attackUs(GameObject gameObject) {
@@ -511,11 +528,11 @@ public class MultiplayerScreen implements Screen {
         canbeattacked = false;
         animationStarted = true;
         currentAnimation = sunstrikeAnimation;
-        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true);
         skillIsPressed = false;
         calculateDamage = true;
         WHOWILLATTACK++;
         addManaMonsters = true;
+        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true);
     }
 
     private void sunstrikeUs(GameObject gameObject1, GameObject gameObject2, GameObject gameObject3) {
@@ -545,9 +562,10 @@ public class MultiplayerScreen implements Screen {
         WHOWILLATTACK++;
         animationStarted = true;
         currentAnimation = sunstrikeAnimation;
-        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true);
         calculateDamage = true;
         addManaMonsters = true;
+        skillIsPressed = false;
+        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true);
     }
 
     private void sunstrike2Us(GameObject gameObject1, GameObject gameObject2) {
@@ -599,7 +617,7 @@ public class MultiplayerScreen implements Screen {
         skillIsPressed = false;
         monsterDamage = "+30 HP";
         attackedMonster = needed;
-        messageForMonsters = "You healed " + needed.getName();
+        messageForMonsters = needed.getName() + " was healed!";
         animationStarted = true;
         currentAnimation = heroHealAnimation;
     }
