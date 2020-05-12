@@ -491,7 +491,7 @@ public class SingleGameChooseScreen implements Screen {
                 game.setScreen(new GameScreen(rightCharactersList, badCharacters, game, music, openLevelNumber, lvlPlaying));
             } else if (!singleGame && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 List<GameObject> rightCharactersList = new ArrayList<>(Arrays.asList(new CharacterCreating().createCharacter(characters, neededCharacter1, goodCharacter1, 1), new CharacterCreating().createCharacter(characters, neededCharacter2, goodCharacter2, 2), new CharacterCreating().createCharacter(characters, neededCharacter3, goodCharacter3, 3), new CharacterCreating().createCharacter(characters, neededCharacter4, goodCharacter4, 4)));
-                game.setScreen(new MultiplayerScreen(rightCharactersList));
+                game.setScreen(new MultiplayerScreen(rightCharactersList, game, music, openLevelNumber));
             }
         }
 

@@ -5,10 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import ee.taltech.deepdarkdungeon.Client.MPClient;
 import ee.taltech.deepdarkdungeon.DeepDarkDungeonGame;
 import ee.taltech.deepdarkdungeon.Models.GameObject;
@@ -35,18 +33,6 @@ public class MultiplayerScreen implements Screen {
     private List<String> heroNames;
     private MPClient client;
     private int WHOWILLATTACK = 0;
-    private static final int WIN_SCREEN_X = 650;
-    private static final int WIN_SCREEN_Y = 350;
-    private static final int WIN_SCREEN_WIDTH = 592;
-    private static final int WIN_SCREEN_HEIGHT = 341;
-    private static final int MAIN_MENU_X_START = 690;
-    private static final int MAIN_MENU_Y_START = 580;
-    private static final int MAIN_MENU_X_END = 900;
-    private static final int MAIN_MENU_Y_END = 675;
-    private static final int NEXT_X_START = 970;
-    private static final int NEXT_Y_START = 580;
-    private static final int NEXT_X_END = 1185;
-    private static final int NEXT_Y_END = 675;
     private static final int LOST_SCREEN_X = 650;
     private static final int LOST_SCREEN_Y = 350;
     private static final int LOST_SCREEN_WIDTH = 592;
@@ -65,19 +51,14 @@ public class MultiplayerScreen implements Screen {
     private static final int FRAME_ROWS_HERO_HEAL = 5;
     private static final int FRAME_COLS_AGR = 5;
     private static final int FRAME_ROWS_AGR = 5;
-    private int myPlace; // TODO
     List<GameObject> enemyCharacters;
     DeepDarkDungeonGame game;
     boolean gameOver = false;
     boolean canbeattacked = false;
     boolean skillIsPressed = false;
     String messageForMonsters = "";
-    private long stepCount = 1;
     private Texture monstersWinScreen;
     private Texture mainMenuButton2;
-    private Texture nextLevelButton;
-    private Texture mainMenuButton;
-    private Texture heroesWinScreen;
     private Texture attackbutton;
     private Texture attackbuttonacitve;
     private Texture defenceButton;
@@ -91,9 +72,8 @@ public class MultiplayerScreen implements Screen {
     private GameObject badCharacter3;
     private GameObject badCharacter4;
     private GameObject attacker;
-    PutMusic music;
-    int openLevelNumber;
-    int lvlPlaying;
+    private PutMusic music;
+    private int openLevelNumber;
 
 
     public int enemyWhoAttacked;
@@ -112,13 +92,24 @@ public class MultiplayerScreen implements Screen {
     private GameObject heroUsedAgr;
 
 
-    public MultiplayerScreen(List<GameObject> myChars) {
+
+    public MultiplayerScreen(List<GameObject> myChars, DeepDarkDungeonGame game, PutMusic music, int openLevelNumber) {
+        this.game = game;
+        this.music = music;
+        this.openLevelNumber = openLevelNumber;
         this.myCharacters = myChars;
         heroNames = new LinkedList<>();
         for (GameObject hero : myChars) {
             heroNames.add(hero.name);
         }
         this.client = new MPClient(heroNames);
+        boolean playing = music.isPlaying();
+        this.music.setMusic("gameMelody.mp3");
+        if (playing) {
+            this.music.playMusic();
+        } else {
+            this.music.stopMusic();
+        }
     }
 
     Texture heroAttackSheet;
@@ -149,9 +140,6 @@ public class MultiplayerScreen implements Screen {
         defenceButton = new Texture(Gdx.files.internal("defenceButton1.png"));
         aciveDefenceButton = new Texture(Gdx.files.internal("defenceButton2.png"));
         powershotSheet = new Texture(Gdx.files.internal("powershot.png"));
-        heroesWinScreen = new Texture(Gdx.files.internal("You_Win_Screen.png"));
-        mainMenuButton = new Texture(Gdx.files.internal("MainMenuSelected.png"));
-        nextLevelButton = new Texture(Gdx.files.internal("NextLevelSelected.png"));
         monstersWinScreen = new Texture(Gdx.files.internal("YouLostScreen.png"));
         mainMenuButton2 = new Texture(Gdx.files.internal("MainMenuSelected2.png"));
         sunstrikeSheet = new Texture(Gdx.files.internal("explosionAttack.png"));
@@ -178,7 +166,6 @@ public class MultiplayerScreen implements Screen {
                 System.out.println(heroNames);
                 System.out.println(enemyCharactersString);
                 write = false;
-                myPlace = client.myPlace;
                 this.enemyCharacters = createEnemies(enemyCharactersString);
                 badCharacter1 = enemyCharacters.get(0);
                 badCharacter2 = enemyCharacters.get(1);
@@ -211,7 +198,7 @@ public class MultiplayerScreen implements Screen {
             }
             font.draw(batch, messageForMonsters, 100, 950);
 
-            if (animationStarted) { // TODO
+            if (animationStarted) {
                 if (currentAnimation.equals(sunstrikeAnimation)) {
                     if (attackedMonster.equals(enemyCharacters.get(0))) {
                         font.draw(batch, monsterDamage, attackedMonster.getX() + 90, attackedMonster.getY() + 230);
@@ -282,51 +269,23 @@ public class MultiplayerScreen implements Screen {
                 if (currentAnimation.animation.isAnimationFinished(currentAnimation.stateTime)) {
                     animationStarted = false;
                     currentAnimation.stateTime = 0f;
-                    stepCount++;
                     if (currentAnimation.equals(agrAnimation)) {
                         agrUsed = true;
                     }
                 }
             }
 
-            if (badCharacter1.getHealth() == 0 && badCharacter2.getHealth() == 0 && badCharacter3.getHealth() == 0 && badCharacter4.getHealth() == 0) {
-                if (lvlPlaying == openLevelNumber) {
-                    openLevelNumber++;
-                }
-                gameOver = true;
-                batch.draw(heroesWinScreen, WIN_SCREEN_X, WIN_SCREEN_Y, WIN_SCREEN_WIDTH, WIN_SCREEN_HEIGHT);
-                if (Gdx.input.getX() > MAIN_MENU_X_START && Gdx.input.getX() < MAIN_MENU_X_END && Gdx.input.getY() > MAIN_MENU_Y_START && Gdx.input.getY() < MAIN_MENU_Y_END) {
-                    batch.draw(mainMenuButton, 685, 380, 220, 95);
-                    if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && gameOver) {
-                        game.setScreen(new MainMenuScreen(game, openLevelNumber, music, false));
-                    }
-                }
-                // Ильюша, сладкий, этот код для тебя ;*
-                if (Gdx.input.getX() > NEXT_X_START && Gdx.input.getX() < NEXT_X_END && Gdx.input.getY() > NEXT_Y_START && Gdx.input.getY() < NEXT_Y_END) {
-                    batch.draw(nextLevelButton, 970, 380, 220, 95);
-                    if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && gameOver) {
-                        boolean isMusicPlaying = music.isPlaying();
-                        music.stopMusic();
-                        music = new PutMusic("startMelody.mp3");
-                        if (isMusicPlaying) {
-                            music.playMusic();
-                        } else {
-                            music.stopMusic();
-                        }
-                        game.setScreen(new SingleGameChooseScreen(game, openLevelNumber, music, true));
-                    }
-                }
-            }
-            if (goodCharacter1.getHealth() == 0 && goodCharacter2.getHealth() == 0 && goodCharacter3.getHealth() == 0 && goodCharacter4.getHealth() == 0 ) {
+            if ((badCharacter1.getHealth() == 0 && badCharacter2.getHealth() == 0 && badCharacter3.getHealth() == 0 && badCharacter4.getHealth() == 0) || goodCharacter1.getHealth() == 0 && goodCharacter2.getHealth() == 0 && goodCharacter3.getHealth() == 0 && goodCharacter4.getHealth() == 0) {
                 gameOver = true;
                 batch.draw(monstersWinScreen, LOST_SCREEN_X, LOST_SCREEN_Y, LOST_SCREEN_WIDTH, LOST_SCREEN_HEIGHT);
                 if (Gdx.input.getX() > MAIN_MENU2_X_START && Gdx.input.getX() < MAIN_MENU2_X_END && Gdx.input.getY() > MAIN_MENU2_Y_START && Gdx.input.getY() < MAIN_MENU2_Y_END) {
                     batch.draw(mainMenuButton2, 835, 385, 228, 95);
                     if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && gameOver) {
-                        game.setScreen(new MainMenuScreen(game, openLevelNumber, music, false));
+                        game.setScreen(new MainMenuScreen(game, openLevelNumber, music, false)); // TODO: хуй его знает что делать с openLevelNumber; нужно дисконнектнуться от сервера
                     }
                 }
             }
+
             if (client.myTurn) {
                 font.draw(batch, "Your turn! ", 100, 1000);
             } else {
@@ -389,7 +348,7 @@ public class MultiplayerScreen implements Screen {
                         }
                     } else if (badCharacter.getSkill().equals("purification")) {
                         healThem();
-                    } else if (badCharacter.getSkill().equals("berserk call")){//TODO
+                    } else if (badCharacter.getSkill().equals("berserk call")){
                         agr(attacker);
                     }
                 }
@@ -665,16 +624,16 @@ public class MultiplayerScreen implements Screen {
             GameObject enemy = null;
             switch (name) {
                 case "Warrior":
-                    enemy = new Warrior(new Texture(Gdx.files.internal("GoodCharacter1Reversed.png")), "Warrior", 100, 100, x, y, 200, 277, GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD1, place);
+                    enemy = new Warrior(new Texture(Gdx.files.internal("GoodCharacter1Reversed.png")), "Warrior", 0, 100, x, y, 200, 277, GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD1, place);
                     break;
                 case "Archer":
-                    enemy = new Archer(new Texture(Gdx.files.internal("GoodCharacter2Reversed.png")), "Archer", 100, 100, x, y, 200, 277, GameObject.CharacterClass.ARCHER, GameObject.CharacterType.GOOD2, place);
+                    enemy = new Archer(new Texture(Gdx.files.internal("GoodCharacter2Reversed.png")), "Archer", 0, 100, x, y, 200, 277, GameObject.CharacterClass.ARCHER, GameObject.CharacterType.GOOD2, place);
                     break;
                 case "Wizard":
-                    enemy = new Magic(new Texture(Gdx.files.internal("GoodCharacter3Reversed.png")), "Wizard", 200, 100, x, y, 200, 277, GameObject.CharacterClass.MAGIC, GameObject.CharacterType.GOOD3, place);
+                    enemy = new Magic(new Texture(Gdx.files.internal("GoodCharacter3Reversed.png")), "Wizard", 0, 100, x, y, 200, 277, GameObject.CharacterClass.MAGIC, GameObject.CharacterType.GOOD3, place);
                     break;
                 case "Paladin":
-                    enemy = new Paladin(new Texture(Gdx.files.internal("GoodCharacter4Reversed.png")), "Paladin", 100, 100, x, y, 200, 277, GameObject.CharacterClass.PALADIN, GameObject.CharacterType.GOOD4, place);
+                    enemy = new Paladin(new Texture(Gdx.files.internal("GoodCharacter4Reversed.png")), "Paladin", 0, 100, x, y, 200, 277, GameObject.CharacterClass.PALADIN, GameObject.CharacterType.GOOD4, place);
                     break;
             }
             enemyCharacterList.add(enemy);

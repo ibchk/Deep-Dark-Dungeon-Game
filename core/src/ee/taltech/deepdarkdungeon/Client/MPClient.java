@@ -4,8 +4,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-import javafx.scene.ParallelCamera;
-import javafx.scene.layout.Pane;
+
 
 import java.io.IOException;
 import java.util.LinkedList;
