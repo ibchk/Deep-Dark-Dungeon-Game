@@ -89,7 +89,7 @@ public class MultiplayerScreen implements Screen {
     private boolean addManaMonsters = false;
 
     private boolean agrUsed = false;
-    private GameObject heroUsedAgr;
+    public GameObject heroUsedAgr;
 
 
 
@@ -281,7 +281,7 @@ public class MultiplayerScreen implements Screen {
                 if (Gdx.input.getX() > MAIN_MENU2_X_START && Gdx.input.getX() < MAIN_MENU2_X_END && Gdx.input.getY() > MAIN_MENU2_Y_START && Gdx.input.getY() < MAIN_MENU2_Y_END) {
                     batch.draw(mainMenuButton2, 835, 385, 228, 95);
                     if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && gameOver) {
-                        game.setScreen(new MainMenuScreen(game, openLevelNumber, music, false)); // TODO: хуй его знает что делать с openLevelNumber; нужно дисконнектнуться от сервера
+                        game.setScreen(new MainMenuScreen(game, openLevelNumber, music, false)); // TODO: хуй его знает что делать с openLevelNumber, после игры в мультиплеер он будет 1; нужно дисконнектнуться от сервера
                     }
                 }
             }
@@ -360,6 +360,7 @@ public class MultiplayerScreen implements Screen {
                 batch.draw(attacker.getTexture(), 40, 130, 200, 220);
                 if (agrUsed && heroUsedAgr != null) {
                     agrUsed = false;
+                    System.out.println(heroUsedAgr.getPlace()); //TODO: короче, ошибка здесь, он не переписывает героя который юзал агр, как исправлять я не ебу, время 3 часа ночи бляд
                     defAttack(heroUsedAgr);
                 }
                 if (Gdx.input.getX() < VBOI_X + VBOI_WIDTH && Gdx.input.getX() > VBOI_X && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() <= VBOI_Y + VBOI_HEIGTH + 30 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() >= VBOI_Y + 25) {
@@ -452,7 +453,7 @@ public class MultiplayerScreen implements Screen {
         currentAnimation = agrAnimation;
         attackedMonster = gameObject;
         calculateDamage = false;
-        heroUsedAgr = gameObject;
+        heroUsedAgr = attackedMonster;
     }
 
     private void powerShot(GameObject gameObject) {
@@ -624,16 +625,16 @@ public class MultiplayerScreen implements Screen {
             GameObject enemy = null;
             switch (name) {
                 case "Warrior":
-                    enemy = new Warrior(new Texture(Gdx.files.internal("GoodCharacter1Reversed.png")), "Warrior", 0, 100, x, y, 200, 277, GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD1, place);
+                    enemy = new Warrior(new Texture(Gdx.files.internal("GoodCharacter1Reversed.png")), "Warrior", 100, 100, x, y, 200, 277, GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD1, place);
                     break;
                 case "Archer":
-                    enemy = new Archer(new Texture(Gdx.files.internal("GoodCharacter2Reversed.png")), "Archer", 0, 100, x, y, 200, 277, GameObject.CharacterClass.ARCHER, GameObject.CharacterType.GOOD2, place);
+                    enemy = new Archer(new Texture(Gdx.files.internal("GoodCharacter2Reversed.png")), "Archer", 100, 100, x, y, 200, 277, GameObject.CharacterClass.ARCHER, GameObject.CharacterType.GOOD2, place);
                     break;
                 case "Wizard":
-                    enemy = new Magic(new Texture(Gdx.files.internal("GoodCharacter3Reversed.png")), "Wizard", 0, 100, x, y, 200, 277, GameObject.CharacterClass.MAGIC, GameObject.CharacterType.GOOD3, place);
+                    enemy = new Magic(new Texture(Gdx.files.internal("GoodCharacter3Reversed.png")), "Wizard", 200, 100, x, y, 200, 277, GameObject.CharacterClass.MAGIC, GameObject.CharacterType.GOOD3, place);
                     break;
                 case "Paladin":
-                    enemy = new Paladin(new Texture(Gdx.files.internal("GoodCharacter4Reversed.png")), "Paladin", 0, 100, x, y, 200, 277, GameObject.CharacterClass.PALADIN, GameObject.CharacterType.GOOD4, place);
+                    enemy = new Paladin(new Texture(Gdx.files.internal("GoodCharacter4Reversed.png")), "Paladin", 100, 100, x, y, 200, 277, GameObject.CharacterClass.PALADIN, GameObject.CharacterType.GOOD4, place);
                     break;
             }
             enemyCharacterList.add(enemy);
