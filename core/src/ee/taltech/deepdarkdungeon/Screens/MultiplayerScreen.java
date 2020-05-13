@@ -101,7 +101,6 @@ public class MultiplayerScreen implements Screen {
     public GameObject heroUsedAgr;
 
 
-
     public MultiplayerScreen(List<GameObject> myChars, DeepDarkDungeonGame game, PutMusic music, int openLevelNumber) {
         this.game = game;
         this.music = music;
@@ -151,7 +150,8 @@ public class MultiplayerScreen implements Screen {
         powershotButton = new Texture(Gdx.files.internal("powershotButton2.png"));
         powershotButtonActive = new Texture(Gdx.files.internal("powershotButton1.png"));
         sunstrikeButton = new Texture(Gdx.files.internal("sunstrikeButton2.png"));
-        sunstrikeButtonActive = new Texture(Gdx.files.internal("sunstrikeButton1.png"));healButton = new Texture(Gdx.files.internal("healButton2.png"));
+        sunstrikeButtonActive = new Texture(Gdx.files.internal("sunstrikeButton1.png"));
+        healButton = new Texture(Gdx.files.internal("healButton2.png"));
         healButtonActive = new Texture(Gdx.files.internal("healButton1.png"));
         powershotButton = new Texture(Gdx.files.internal("powershotButton2.png"));
         powershotButtonActive = new Texture(Gdx.files.internal("powershotButton1.png"));
@@ -173,7 +173,7 @@ public class MultiplayerScreen implements Screen {
         heroIcon = new Texture(Gdx.files.internal("heroIcon.png"));
         backgroundIcons = new Texture(Gdx.files.internal("backgroundIcons.png"));
 
-        heroAttackAnimation =  new AnimationClass(heroAttackSheet, HERO_FRAME_ROWS, HERO_FRAME_COLS);
+        heroAttackAnimation = new AnimationClass(heroAttackSheet, HERO_FRAME_ROWS, HERO_FRAME_COLS);
 
         sunstrikeAnimation = new AnimationClass(sunstrikeSheet, FRAME_ROWS, FRAME_COLS);
 
@@ -208,19 +208,8 @@ public class MultiplayerScreen implements Screen {
             }
             if ((goodCharacter1.getHealth() == 0 && goodCharacter2.getHealth() == 0 && goodCharacter3.getHealth() == 0 && goodCharacter4.getHealth() == 0)) {
                 gameOver = true;
-                System.out.println("Zashol");
+                System.out.println(client.gameOver);
                 client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), false, gameOver);
-            }
-            if (client.gameOver) {
-                System.out.println("ja ebal");
-                batch.draw(monstersWinScreen, LOST_SCREEN_X, LOST_SCREEN_Y, LOST_SCREEN_WIDTH, LOST_SCREEN_HEIGHT);
-                if (Gdx.input.getX() > MAIN_MENU2_X_START && Gdx.input.getX() < MAIN_MENU2_X_END && Gdx.input.getY() > MAIN_MENU2_Y_START && Gdx.input.getY() < MAIN_MENU2_Y_END) {
-                    batch.draw(mainMenuButton2, 835, 385, 228, 95);
-                    if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                        client.client.close();
-                        game.setScreen(new MainMenuScreen(game, openLevelNumber, music, false)); // TODO: хуй его знает что делать с openLevelNumber, после игры в мультиплеер он будет 1; нужно дисконнектнуться от сервера
-                    }
-                }
             }
             if (WHOWILLATTACK >= 4) {
                 WHOWILLATTACK = 0;
@@ -242,6 +231,7 @@ public class MultiplayerScreen implements Screen {
             batch.draw(heroIcon, 30, 120);
             batch.draw(backgroundIcons, 250, 113);
             batch.draw(attackbutton, VBOI_X, VBOI_Y, VBOI_WIDTH, VBOI_HEIGTH);
+
             GameObject myHero = myCharacters.get(WHOWILLATTACK);
             switch (myHero.getName()) {
                 case "Warrior":
@@ -266,9 +256,20 @@ public class MultiplayerScreen implements Screen {
                 font.draw(batch, "Hp: " + hero.getHealth(), hero.getX() + 30, hero.getY() - 10);
                 font.draw(batch, "Mn: " + hero.getMana(), hero.getX() + 100, hero.getY() - 10);
             }
-            for (GameObject monster :enemyCharacters) {
+            for (GameObject monster : enemyCharacters) {
                 batch.draw(monster.getTexture(), monster.getX(), monster.getY(), 200, 220);
                 font.draw(batch, "Hp: " + monster.getHealth(), monster.getX() + 50, monster.getY() - 10);
+            }
+            if (client.gameOver) {
+                System.out.println("ja ebal");
+                batch.draw(monstersWinScreen, LOST_SCREEN_X, LOST_SCREEN_Y, LOST_SCREEN_WIDTH, LOST_SCREEN_HEIGHT);
+                if (Gdx.input.getX() > MAIN_MENU2_X_START && Gdx.input.getX() < MAIN_MENU2_X_END && Gdx.input.getY() > MAIN_MENU2_Y_START && Gdx.input.getY() < MAIN_MENU2_Y_END) {
+                    batch.draw(mainMenuButton2, 835, 385, 228, 95);
+                    if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                        client.client.close();
+                        game.setScreen(new MainMenuScreen(game, openLevelNumber, music, false)); // TODO: хуй его знает что делать с openLevelNumber, после игры в мультиплеер он будет 1; нужно дисконнектнуться от сервера
+                    }
+                }
             }
             if (animationStarted) {
                 if (currentAnimation.equals(sunstrikeAnimation)) {
@@ -355,7 +356,7 @@ public class MultiplayerScreen implements Screen {
             System.out.println("hui");
             if ((client.myTurn) && !gameOver && !animationStarted) {
                 if (addManaMonsters) {
-                    for (GameObject monster :myCharacters) {
+                    for (GameObject monster : myCharacters) {
                         if (monster.getHealth() > 0 && monster.getMana() < 100) {
                             monster.setMana(monster.getMana() + 10);
                             if (monster.getMana() > 100) {
@@ -403,7 +404,7 @@ public class MultiplayerScreen implements Screen {
                         }
                     } else if (badCharacter.getSkill().equals("purification")) {
                         healThem();
-                    } else if (badCharacter.getSkill().equals("berserk call")){
+                    } else if (badCharacter.getSkill().equals("berserk call")) {
                         agr(attacker);
                     }
                 }
@@ -674,6 +675,7 @@ public class MultiplayerScreen implements Screen {
         animationStarted = true;
         currentAnimation = heroHealAnimation;
     }
+
     public List<GameObject> createEnemies(List<String> enemyList) {
         List<GameObject> enemyCharacterList = new LinkedList<>();
         int place = 1;

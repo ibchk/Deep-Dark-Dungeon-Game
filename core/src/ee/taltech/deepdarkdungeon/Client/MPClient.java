@@ -101,6 +101,7 @@ public class MPClient {
     }
 
     public void sendGameInfo(int characterWhoAttacked, int attackedCharacter, boolean skill, boolean gameOver) {
+        this.gameOver = gameOver;
         System.out.println("Game info sended");
         myTurn = false;
         Packets.GameInfo myInfo = new Packets.GameInfo();
