@@ -263,8 +263,8 @@ public class SingleGameChooseScreen implements Screen {
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 neededBadCharacter1 = 1;
                 neededBadCharacter2 = 1;
-                neededBadCharacter3 = 1;
-                neededBadCharacter4 = 1;
+                neededBadCharacter3 = 2;
+                neededBadCharacter4 = 2;
                 levelButtonLight_X = 628;
                 levelButtonLight_Y = 283;
                 lvlPlaying = 1;
@@ -279,10 +279,10 @@ public class SingleGameChooseScreen implements Screen {
             if (Gdx.input.getX() < 775 + 90 && Gdx.input.getX() > 775 && 663 < Gdx.input.getY() && Gdx.input.getY() < 760) {
                 batch.draw(level2Button2, 775, 290, 90, 97);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                    neededBadCharacter1 = 1;
+                    neededBadCharacter1 = 0;
                     neededBadCharacter2 = 1;
-                    neededBadCharacter3 = 1;
-                    neededBadCharacter4 = 1;
+                    neededBadCharacter3 = 2;
+                    neededBadCharacter4 = 2;
                     levelButtonLight_X = 768;
                     levelButtonLight_Y = 283;
                     lvlPlaying = 2;
@@ -299,9 +299,9 @@ public class SingleGameChooseScreen implements Screen {
                 batch.draw(level3Button2, 915, 290, 90, 97);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                     neededBadCharacter1 = 0;
-                    neededBadCharacter2 = 1;
-                    neededBadCharacter3 = 2;
-                    neededBadCharacter4 = 3;
+                    neededBadCharacter2 = 0;
+                    neededBadCharacter3 = 1;
+                    neededBadCharacter4 = 2;
                     levelButtonLight_X = 908;
                     levelButtonLight_Y = 283;
                     lvlPlaying = 3;
@@ -317,10 +317,10 @@ public class SingleGameChooseScreen implements Screen {
             if (Gdx.input.getX() < 1055 + 90 && Gdx.input.getX() > 1055 && 663 < Gdx.input.getY() && Gdx.input.getY() < 760) {
                 batch.draw(level4Button2, 1055, 290, 90, 97);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                    neededBadCharacter1 = 2;
-                    neededBadCharacter2 = 2;
+                    neededBadCharacter1 = 0;
+                    neededBadCharacter2 = 1;
                     neededBadCharacter3 = 2;
-                    neededBadCharacter4 = 2;
+                    neededBadCharacter4 = 1;
                     levelButtonLight_X = 1048;
                     levelButtonLight_Y = 283;
                     lvlPlaying = 4;
@@ -336,10 +336,10 @@ public class SingleGameChooseScreen implements Screen {
             if (Gdx.input.getX() < 1195 + 90 && Gdx.input.getX() > 1195 && 663 < Gdx.input.getY() && Gdx.input.getY() < 760) {
                 batch.draw(level5Button2, 1195, 290, 90, 97);
                 if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                    neededBadCharacter1 = 0;
-                    neededBadCharacter2 = 0;
-                    neededBadCharacter3 = 0;
-                    neededBadCharacter4 = 0;
+                    neededBadCharacter1 = 1;
+                    neededBadCharacter2 = 2;
+                    neededBadCharacter3 = 3;
+                    neededBadCharacter4 = 2;
                     levelButtonLight_X = 1188;
                     levelButtonLight_Y = 283;
                     lvlPlaying = 5;
