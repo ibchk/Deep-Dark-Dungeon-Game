@@ -195,21 +195,22 @@ public class MultiplayerScreen implements Screen {
                 WHOWILLATTACK = 0;
             }
         }
-        if (write) {
-            List<String> enemyCharactersString = client.enemy;
-            write = false;
-            this.enemyCharacters = createEnemies(enemyCharactersString);
-            badCharacter1 = enemyCharacters.get(0);
-            badCharacter2 = enemyCharacters.get(1);
-            badCharacter3 = enemyCharacters.get(2);
-            badCharacter4 = enemyCharacters.get(3);
-            goodCharacter1 = myCharacters.get(0);
-            goodCharacter2 = myCharacters.get(1);
-            goodCharacter3 = myCharacters.get(2);
-            goodCharacter4 = myCharacters.get(3);
-
-        }
         if (client.game) {
+            System.out.println("hui");
+            if (write) {
+                List<String> enemyCharactersString = client.enemy;
+                write = false;
+                this.enemyCharacters = createEnemies(enemyCharactersString);
+                badCharacter1 = enemyCharacters.get(0);
+                badCharacter2 = enemyCharacters.get(1);
+                badCharacter3 = enemyCharacters.get(2);
+                badCharacter4 = enemyCharacters.get(3);
+                goodCharacter1 = myCharacters.get(0);
+                goodCharacter2 = myCharacters.get(1);
+                goodCharacter3 = myCharacters.get(2);
+                goodCharacter4 = myCharacters.get(3);
+
+            }
             if (!client.myTurn) {
                 client.canIAttack();
             }
@@ -456,18 +457,19 @@ public class MultiplayerScreen implements Screen {
                     }
                 }
             }
-            batch.end();
-        }
-        if (((badCharacter1.getHealth() == 0 && badCharacter2.getHealth() == 0 && badCharacter3.getHealth() == 0 && badCharacter4.getHealth() == 0) || goodCharacter1.getHealth() == 0 && goodCharacter2.getHealth() == 0 && goodCharacter3.getHealth() == 0 && goodCharacter4.getHealth() == 0) && !animationStarted) {
-            gameOver = true;
-            batch.draw(monstersWinScreen, LOST_SCREEN_X, LOST_SCREEN_Y, LOST_SCREEN_WIDTH, LOST_SCREEN_HEIGHT);
-            if (Gdx.input.getX() > MAIN_MENU2_X_START && Gdx.input.getX() < MAIN_MENU2_X_END && Gdx.input.getY() > MAIN_MENU2_Y_START && Gdx.input.getY() < MAIN_MENU2_Y_END) {
-                batch.draw(mainMenuButton2, 835, 385, 228, 95);
-                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && gameOver) {
-                    client.client.close();
-                    game.setScreen(new MainMenuScreen(game, openLevelNumber, music, false));
+
+            if (((badCharacter1.getHealth() == 0 && badCharacter2.getHealth() == 0 && badCharacter3.getHealth() == 0 && badCharacter4.getHealth() == 0) || goodCharacter1.getHealth() == 0 && goodCharacter2.getHealth() == 0 && goodCharacter3.getHealth() == 0 && goodCharacter4.getHealth() == 0) && !animationStarted) {
+                gameOver = true;
+                batch.draw(monstersWinScreen, LOST_SCREEN_X, LOST_SCREEN_Y, LOST_SCREEN_WIDTH, LOST_SCREEN_HEIGHT);
+                if (Gdx.input.getX() > MAIN_MENU2_X_START && Gdx.input.getX() < MAIN_MENU2_X_END && Gdx.input.getY() > MAIN_MENU2_Y_START && Gdx.input.getY() < MAIN_MENU2_Y_END) {
+                    batch.draw(mainMenuButton2, 835, 385, 228, 95);
+                    if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && gameOver) {
+                        client.client.close();
+                        game.setScreen(new MainMenuScreen(game, openLevelNumber, music, false)); // TODO: хуй его знает что делать с openLevelNumber, после игры в мультиплеер он будет 1; нужно дисконнектнуться от сервера
+                    }
                 }
             }
+            batch.end();
         }
     }
 
