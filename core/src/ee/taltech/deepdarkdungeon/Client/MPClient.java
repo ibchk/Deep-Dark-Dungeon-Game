@@ -15,7 +15,7 @@ public class MPClient {
     public int tcpC = 5201;
     String IPConnection = "193.40.255.16"; //193.40.255.16  java -jar main-1.0.1.jar
 
-    public int myPlace;
+    public List<Integer> myPlace;
     public boolean game = false;
     public List<String> enemy;
     public boolean myTurn;
