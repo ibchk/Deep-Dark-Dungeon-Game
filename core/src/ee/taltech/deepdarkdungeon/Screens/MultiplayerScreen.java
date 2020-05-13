@@ -240,16 +240,7 @@ public class MultiplayerScreen implements Screen {
             batch.draw(heroIcon, 30, 120);
             batch.draw(backgroundIcons, 250, 113);
             batch.draw(attackbutton, VBOI_X, VBOI_Y, VBOI_WIDTH, VBOI_HEIGTH);
-            if (!client.client.isConnected()) {
-                batch.draw(monstersWinScreen, LOST_SCREEN_X, LOST_SCREEN_Y, LOST_SCREEN_WIDTH, LOST_SCREEN_HEIGHT);
-                if (Gdx.input.getX() > MAIN_MENU2_X_START && Gdx.input.getX() < MAIN_MENU2_X_END && Gdx.input.getY() > MAIN_MENU2_Y_START && Gdx.input.getY() < MAIN_MENU2_Y_END) {
-                    batch.draw(mainMenuButton2, 835, 385, 228, 95);
-                    if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                        client.client.close();
-                        game.setScreen(new MainMenuScreen(game, openLevelNumber, music, false));
-                    }
-                }
-            }
+
             GameObject myHero = myCharacters.get(WHOWILLATTACK);
             switch (myHero.getName()) {
                 case "Warrior":
@@ -278,7 +269,8 @@ public class MultiplayerScreen implements Screen {
                 batch.draw(monster.getTexture(), monster.getX(), monster.getY(), 200, 220);
                 font.draw(batch, "Hp: " + monster.getHealth(), monster.getX() + 50, monster.getY() - 10);
             }
-            if (client.gameOver) {
+            if (!client.client.isConnected() || client.gameOver) {
+                gameOver = true;
                 batch.draw(monstersWinScreen, LOST_SCREEN_X, LOST_SCREEN_Y, LOST_SCREEN_WIDTH, LOST_SCREEN_HEIGHT);
                 if (Gdx.input.getX() > MAIN_MENU2_X_START && Gdx.input.getX() < MAIN_MENU2_X_END && Gdx.input.getY() > MAIN_MENU2_Y_START && Gdx.input.getY() < MAIN_MENU2_Y_END) {
                     batch.draw(mainMenuButton2, 835, 385, 228, 95);
