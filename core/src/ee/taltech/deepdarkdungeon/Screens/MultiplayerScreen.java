@@ -163,7 +163,7 @@ public class MultiplayerScreen implements Screen {
         aciveDefenceButton = new Texture(Gdx.files.internal("defenceButton2.png"));
 
         powershotSheet = new Texture(Gdx.files.internal("powershot.png"));
-        monstersWinScreen = new Texture(Gdx.files.internal("YouLostScreen.png"));
+        monstersWinScreen = new Texture(Gdx.files.internal("GameOver.png"));
         mainMenuButton2 = new Texture(Gdx.files.internal("MainMenuSelected2.png"));
         sunstrikeSheet = new Texture(Gdx.files.internal("explosionAttack.png"));
         heroAttackSheet = new Texture(Gdx.files.internal("atacka.png"));
@@ -268,7 +268,7 @@ public class MultiplayerScreen implements Screen {
             for (GameObject monster : enemyCharacters) {
                 batch.draw(monster.getTexture(), monster.getX(), monster.getY(), 200, 220);
                 font.draw(batch, "Hp: " + monster.getHealth(), monster.getX() + 50, monster.getY() - 10);
-            }
+            }//TODO
             if (!client.client.isConnected() || client.gameOver) {
                 gameOver = true;
                 batch.draw(monstersWinScreen, LOST_SCREEN_X, LOST_SCREEN_Y, LOST_SCREEN_WIDTH, LOST_SCREEN_HEIGHT);
