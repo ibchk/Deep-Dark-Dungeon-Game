@@ -186,27 +186,10 @@ public class MultiplayerScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        if (client.gameOver) {
-            batch.draw(monstersWinScreen, LOST_SCREEN_X, LOST_SCREEN_Y, LOST_SCREEN_WIDTH, LOST_SCREEN_HEIGHT);
-            if (Gdx.input.getX() > MAIN_MENU2_X_START && Gdx.input.getX() < MAIN_MENU2_X_END && Gdx.input.getY() > MAIN_MENU2_Y_START && Gdx.input.getY() < MAIN_MENU2_Y_END) {
-                batch.draw(mainMenuButton2, 835, 385, 228, 95);
-                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                    client.client.close();
-                    game.setScreen(new MainMenuScreen(game, openLevelNumber, music, false)); // TODO: хуй его знает что делать с openLevelNumber, после игры в мультиплеер он будет 1; нужно дисконнектнуться от сервера
-                }
-            }
-        }
-        if (WHOWILLATTACK >= 4) {
-            WHOWILLATTACK = 0;
-        }
-        while (myCharacters.get(WHOWILLATTACK).getHealth() == 0) {
-            WHOWILLATTACK++;
-            if (WHOWILLATTACK >= 4) {
-                WHOWILLATTACK = 0;
-            }
-        }
+
+
+        System.out.println("perezashol");
         if (client.game) {
-            System.out.println("hui");
             if (write) {
                 List<String> enemyCharactersString = client.enemy;
                 write = false;
@@ -222,6 +205,35 @@ public class MultiplayerScreen implements Screen {
             }
             if (!client.myTurn) {
                 client.canIAttack();
+            }
+            if ((goodCharacter1.getHealth() == 0 && goodCharacter2.getHealth() == 0 && goodCharacter3.getHealth() == 0 && goodCharacter4.getHealth() == 0)) {
+                gameOver = true;
+                System.out.println("Zashol");
+                client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), false, gameOver);
+            }
+            if (client.gameOver) {
+                System.out.println("ja ebal");
+                batch.draw(monstersWinScreen, LOST_SCREEN_X, LOST_SCREEN_Y, LOST_SCREEN_WIDTH, LOST_SCREEN_HEIGHT);
+                if (Gdx.input.getX() > MAIN_MENU2_X_START && Gdx.input.getX() < MAIN_MENU2_X_END && Gdx.input.getY() > MAIN_MENU2_Y_START && Gdx.input.getY() < MAIN_MENU2_Y_END) {
+                    batch.draw(mainMenuButton2, 835, 385, 228, 95);
+                    if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                        client.client.close();
+                        game.setScreen(new MainMenuScreen(game, openLevelNumber, music, false)); // TODO: хуй его знает что делать с openLevelNumber, после игры в мультиплеер он будет 1; нужно дисконнектнуться от сервера
+                    }
+                }
+            }
+            if (WHOWILLATTACK >= 4) {
+                WHOWILLATTACK = 0;
+            }
+            while (myCharacters.get(WHOWILLATTACK).getHealth() == 0) {
+                if (goodCharacter1.getHealth() == 0 && goodCharacter2.getHealth() == 0 && goodCharacter3.getHealth() == 0 && goodCharacter4.getHealth() == 0) {
+                    break;
+                }
+                System.out.println("NIkita pidr");
+                WHOWILLATTACK++;
+                if (WHOWILLATTACK >= 4) {
+                    WHOWILLATTACK = 0;
+                }
             }
             Gdx.gl.glClearColor(135 / 255f, 206 / 255f, 235 / 255f, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -334,16 +346,13 @@ public class MultiplayerScreen implements Screen {
                     }
                 }
             }
-            if ((goodCharacter1.getHealth() == 0 && goodCharacter2.getHealth() == 0 && goodCharacter3.getHealth() == 0 && goodCharacter4.getHealth() == 0)) {
-                gameOver = true;
-                client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), false, gameOver);
-            }
             font.draw(batch, messageForMonsters, 100, 950);
             if (client.myTurn) {
                 font.draw(batch, "Your turn! ", 100, 1000);
             } else {
                 font.draw(batch, "Enemy turn! ", 100, 1000);
             }
+            System.out.println("hui");
             if ((client.myTurn) && !gameOver && !animationStarted) {
                 if (addManaMonsters) {
                     for (GameObject monster :myCharacters) {
@@ -374,7 +383,9 @@ public class MultiplayerScreen implements Screen {
                 }
                 if (calculateDamage && !enemyUsedSkill && !(myAttackedHero == null) && !(badCharacter == null)) {
                     attacker = badCharacter;
+                    System.out.println("pizda");
                     attackUs(myAttackedHero);
+
                 }
                 if (calculateDamage && enemyUsedSkill && !(myAttackedHero == null) && !(badCharacter == null)) {
                     attacker = badCharacter;
@@ -548,6 +559,7 @@ public class MultiplayerScreen implements Screen {
     }
 
     private void attackUs(GameObject gameObject) {
+        System.out.println(gameObject.getName());
         messageForMonsters = "Your " + gameObject.getName() + " was attacked!";
         attackedMonster = gameObject;
         monsterDamage = "-" + attacker.getPower() + " HP";
@@ -555,6 +567,7 @@ public class MultiplayerScreen implements Screen {
         calculateDamage = false;
         animationStarted = true;
         currentAnimation = heroAttackAnimation;
+        System.out.println("Ilya");
     }
 
     private void sunstrike(GameObject gameObject1, GameObject gameObject2, GameObject gameObject3) {
