@@ -337,7 +337,6 @@ public class MultiplayerScreen implements Screen {
             if ((goodCharacter1.getHealth() == 0 && goodCharacter2.getHealth() == 0 && goodCharacter3.getHealth() == 0 && goodCharacter4.getHealth() == 0)) {
                 gameOver = true;
                 client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), false, gameOver);
-                }
             }
             font.draw(batch, messageForMonsters, 100, 950);
             if (client.myTurn) {
@@ -471,6 +470,7 @@ public class MultiplayerScreen implements Screen {
                 }
             }
             batch.end();
+        }
     }
 
     @Override
