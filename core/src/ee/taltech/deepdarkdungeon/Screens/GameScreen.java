@@ -82,7 +82,10 @@ public class GameScreen implements Screen {
     private Texture powershotButtonActive;
     private Texture sunstrikeButton;
     private Texture sunstrikeButtonActive;
+
     private Texture background;
+    private Texture background2;
+
     private Texture heroIcon;
     private Texture defenceButton;
     private Texture aciveDefenceButton;
@@ -165,7 +168,10 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         batch = new SpriteBatch();
+
         background = new Texture(Gdx.files.internal("dungeonBackground.png"));
+        background2 = new Texture(Gdx.files.internal("background2.png"));
+
         heroIcon = new Texture(Gdx.files.internal("heroIcon.png"));
         backgroundIcons = new Texture(Gdx.files.internal("backgroundIcons.png"));
         attackbutton = new Texture(Gdx.files.internal("atackButton1.png"));
@@ -220,7 +226,14 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(135 / 255f, 206 / 255f, 235 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
-        batch.draw(background, 0, 0, 1920, 1080);
+
+        //TODO: вставляй бэкграунды сюда:
+        if (openLevelNumber == 1) {
+            batch.draw(background, 0, 0);
+        } else if (openLevelNumber == 2) {
+            batch.draw(background2, 0, 0);
+        }
+
         batch.draw(heroIcon, 30, 120);
         batch.draw(backgroundIcons, 250, 113);
         batch.draw(attackbutton, VBOI_X, VBOI_Y, VBOI_WIDTH, VBOI_HEIGTH);
