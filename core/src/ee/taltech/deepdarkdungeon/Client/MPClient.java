@@ -13,7 +13,7 @@ import java.util.List;
 public class MPClient {
     int udpC = 5200;
     public int tcpC = 5201;
-    String IPConnection = "localhost"; //193.40.255.16
+    String IPConnection = "193.40.255.16"; //193.40.255.16
 
     public int myPlace;
     public boolean game = false;
@@ -28,6 +28,7 @@ public class MPClient {
     public Client client;
 
     public MPClient(final List<String> chars) {
+
         client = new Client();
         new Thread(client).start();
 
@@ -47,7 +48,6 @@ public class MPClient {
             }
 
             public void received(Connection c, Object o) {
-
                 if (o instanceof Packets.ConnectToGame) {
                     Packets.AllowToStart allowToStart = new Packets.AllowToStart();
                     myPlace = ((Packets.ConnectToGame) o).place;
@@ -115,10 +115,10 @@ public class MPClient {
 
     private void registerPackets() {
         Kryo kryo = client.getKryo();
+        kryo.register(LinkedList.class);
         kryo.register(Packets.ConnectToGame.class);
         kryo.register(Packets.AllowToStart.class);
         kryo.register(Packets.GameInfo.class);
         kryo.register(Packets.AllowToAttack.class);
-        kryo.register(LinkedList.class);
     }
 }
