@@ -149,6 +149,11 @@ public class MultiplayerScreen implements Screen {
         powershotButton = new Texture(Gdx.files.internal("powershotButton2.png"));
         powershotButtonActive = new Texture(Gdx.files.internal("powershotButton1.png"));
         sunstrikeButton = new Texture(Gdx.files.internal("sunstrikeButton2.png"));
+        sunstrikeButtonActive = new Texture(Gdx.files.internal("sunstrikeButton1.png"));healButton = new Texture(Gdx.files.internal("healButton2.png"));
+        healButtonActive = new Texture(Gdx.files.internal("healButton1.png"));
+        powershotButton = new Texture(Gdx.files.internal("powershotButton2.png"));
+        powershotButtonActive = new Texture(Gdx.files.internal("powershotButton1.png"));
+        sunstrikeButton = new Texture(Gdx.files.internal("sunstrikeButton2.png"));
         sunstrikeButtonActive = new Texture(Gdx.files.internal("sunstrikeButton1.png"));
 
         defenceButton = new Texture(Gdx.files.internal("defenceButton1.png"));
@@ -208,14 +213,19 @@ public class MultiplayerScreen implements Screen {
             batch.draw(background, 0, 0);
             batch.draw(attackbutton, VBOI_X, VBOI_Y, VBOI_WIDTH, VBOI_HEIGTH);
             GameObject myHero = myCharacters.get(WHOWILLATTACK);
-            if (myHero.getName().equals("Warrior")) {
-                batch.draw(defenceButton, VBOI_X, VBOI_Y - 70, VBOI_WIDTH, VBOI_HEIGTH);
-            } else if (myHero.getName().equals("Archer")) {
-                batch.draw(powershotButton, VBOI_X, VBOI_Y - 70, VBOI_WIDTH, VBOI_HEIGTH);
-            } else if (myHero.getName().equals("Wizard")) {
-                batch.draw(sunstrikeButton, VBOI_X, VBOI_Y - 70, VBOI_WIDTH, VBOI_HEIGTH);
-            } else if (myHero.getName().equals("Paladin")) {
-                batch.draw(healButton, VBOI_X, VBOI_Y - 70, VBOI_WIDTH, VBOI_HEIGTH);
+            switch (myHero.getName()) {
+                case "Warrior":
+                    batch.draw(defenceButton, VBOI_X, VBOI_Y - 70, VBOI_WIDTH, VBOI_HEIGTH);
+                    break;
+                case "Archer":
+                    batch.draw(powershotButton, VBOI_X, VBOI_Y - 70, VBOI_WIDTH, VBOI_HEIGTH);
+                    break;
+                case "Wizard":
+                    batch.draw(sunstrikeButton, VBOI_X, VBOI_Y - 70, VBOI_WIDTH, VBOI_HEIGTH);
+                    break;
+                case "Paladin":
+                    batch.draw(healButton, VBOI_X, VBOI_Y - 70, VBOI_WIDTH, VBOI_HEIGTH);
+                    break;
             }
 
             this.enemyWhoAttacked = client.characterWhoAttacked;
