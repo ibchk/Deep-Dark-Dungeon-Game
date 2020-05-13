@@ -210,8 +210,9 @@ public class MultiplayerScreen implements Screen {
                 goodCharacter4 = myCharacters.get(3);
 
             }
-
-            client.canIAttack();
+            if (!client.myTurn) {
+                client.canIAttack();
+            }
             Gdx.gl.glClearColor(135 / 255f, 206 / 255f, 235 / 255f, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             batch.begin();

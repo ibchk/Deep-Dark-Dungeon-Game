@@ -93,6 +93,7 @@ public class MPClient {
     public void canIAttack() {
         Packets.AllowToAttack ask = new Packets.AllowToAttack();
         ask.gamer = myPlace;
+        myTurn = false;
         client.sendTCP(ask);
     }
 
