@@ -13,7 +13,7 @@ import java.util.List;
 public class MPClient {
     int udpC = 5200;
     public int tcpC = 5201;
-    String IPConnection = "193.40.255.16"; //193.40.255.16  java -jar main-1.0.1.jar
+    String IPConnection = "193.40.255.16"; //193.40.255.16
 
     public List<Integer> myPlace;
     public boolean game = false;
@@ -26,6 +26,8 @@ public class MPClient {
 
 
     public Client client;
+
+    public boolean gameOver = false;
 
     public MPClient(final List<String> chars) {
 
@@ -75,6 +77,7 @@ public class MPClient {
                     // после мы делаем свой удар и шлем Packets.GameInfo на сервер, в ответ мы ничего не получаем.
                     // далее начинаем посылать Packets.AllowToAttack пока не получим в ответ Packets.GameInfo чтобы походить
                     // самим
+                    gameOver = ((Packets.GameInfo) o).gameOver;
                     myTurn = true;
                     characterWhoAttacked = ((Packets.GameInfo) o).characterWhoBeat;
                     attachedCharacter = ((Packets.GameInfo) o).damagedCharacter;
@@ -97,7 +100,7 @@ public class MPClient {
         client.sendTCP(ask);
     }
 
-    public void sendGameInfo(int characterWhoAttacked, int attackedCharacter, boolean skill) {
+    public void sendGameInfo(int characterWhoAttacked, int attackedCharacter, boolean skill, boolean gameOver) {
         System.out.println("Game info sended");
         myTurn = false;
         Packets.GameInfo myInfo = new Packets.GameInfo();
@@ -105,6 +108,7 @@ public class MPClient {
         myInfo.characterWhoBeat = characterWhoAttacked;
         myInfo.damagedCharacter = attackedCharacter;
         myInfo.animation = skill;
+        myInfo.gameOver = gameOver;
         client.sendTCP(myInfo);
     }
 

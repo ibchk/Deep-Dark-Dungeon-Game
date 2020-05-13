@@ -444,7 +444,7 @@ public class MultiplayerScreen implements Screen {
                     calculateDamage = true;
                     animationStarted = true;
                     currentAnimation = agrAnimation;
-                    client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true);
+                    client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true, false);
                 }
                 for (GameObject monster : enemyCharacters) {
                     if (Gdx.input.getX() > monster.getX() && Gdx.input.getX() < monster.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > monster.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < monster.getY() + 300) {
@@ -515,7 +515,7 @@ public class MultiplayerScreen implements Screen {
         animationStarted = true;
         currentAnimation = powershotAnimation;
         WHOWILLATTACK++;
-        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true);
+        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true, false);
     }
 
     private void powerShotUs(GameObject gameObject) {
@@ -541,7 +541,7 @@ public class MultiplayerScreen implements Screen {
         animationStarted = true;
         skillIsPressed = false;
         currentAnimation = heroAttackAnimation;
-        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), false);
+        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), false, false);
     }
 
     private void attackUs(GameObject gameObject) {
@@ -569,7 +569,7 @@ public class MultiplayerScreen implements Screen {
         calculateDamage = true;
         WHOWILLATTACK++;
         addManaMonsters = true;
-        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true);
+        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true, false);
     }
 
     private void sunstrikeUs(GameObject gameObject1, GameObject gameObject2, GameObject gameObject3) {
@@ -602,7 +602,7 @@ public class MultiplayerScreen implements Screen {
         calculateDamage = true;
         addManaMonsters = true;
         skillIsPressed = false;
-        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true);
+        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true, false);
     }
 
     private void sunstrike2Us(GameObject gameObject1, GameObject gameObject2) {
@@ -638,7 +638,7 @@ public class MultiplayerScreen implements Screen {
         WHOWILLATTACK++;
         animationStarted = true;
         currentAnimation = heroHealAnimation;
-        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true);
+        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true, false);
     }
 
     private void healThem() {
