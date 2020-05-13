@@ -697,16 +697,16 @@ public class MultiplayerScreen implements Screen {
             GameObject enemy = null;
             switch (name) {
                 case "Warrior":
-                    enemy = new Warrior(new Texture(Gdx.files.internal("GoodCharacter1Reversed.png")), "Warrior", 100, 100, x, y, 200, 277, GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD1, place);
+                    enemy = new Warrior(new Texture(Gdx.files.internal("GoodCharacter1Reversed.png")), "Warrior", 200, 15, x, y, 200, 277, GameObject.CharacterClass.WARIOR, GameObject.CharacterType.GOOD1, place);
                     break;
                 case "Archer":
-                    enemy = new Archer(new Texture(Gdx.files.internal("GoodCharacter2Reversed.png")), "Archer", 100, 100, x, y, 200, 277, GameObject.CharacterClass.ARCHER, GameObject.CharacterType.GOOD2, place);
+                    enemy = new Archer(new Texture(Gdx.files.internal("GoodCharacter2Reversed.png")), "Archer", 120, 20, x, y, 200, 277, GameObject.CharacterClass.ARCHER, GameObject.CharacterType.GOOD2, place);
                     break;
                 case "Wizard":
-                    enemy = new Magic(new Texture(Gdx.files.internal("GoodCharacter3Reversed.png")), "Wizard", 200, 100, x, y, 200, 277, GameObject.CharacterClass.MAGIC, GameObject.CharacterType.GOOD3, place);
+                    enemy = new Magic(new Texture(Gdx.files.internal("GoodCharacter3Reversed.png")), "Wizard", 100, 30, x, y, 200, 277, GameObject.CharacterClass.MAGIC, GameObject.CharacterType.GOOD3, place);
                     break;
                 case "Paladin":
-                    enemy = new Paladin(new Texture(Gdx.files.internal("GoodCharacter4Reversed.png")), "Paladin", 100, 100, x, y, 200, 277, GameObject.CharacterClass.PALADIN, GameObject.CharacterType.GOOD4, place);
+                    enemy = new Paladin(new Texture(Gdx.files.internal("GoodCharacter4Reversed.png")), "Paladin", 75, 25, x, y, 200, 277, GameObject.CharacterClass.PALADIN, GameObject.CharacterType.GOOD4, place);
                     break;
             }
             enemyCharacterList.add(enemy);
