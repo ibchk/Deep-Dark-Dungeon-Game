@@ -495,6 +495,9 @@ public class MultiplayerScreen implements Screen {
                 }
             }
             batch.end();
+        } else if (!client.client.isConnected()){
+            client.client.close();
+            game.setScreen(new MainMenuScreen(game, openLevelNumber, music, false));
         }
     }
 
