@@ -267,7 +267,7 @@ public class MultiplayerScreen implements Screen {
                     batch.draw(mainMenuButton2, 835, 385, 228, 95);
                     if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                         client.client.close();
-                        game.setScreen(new MainMenuScreen(game, openLevelNumber, music, false)); // TODO: хуй его знает что делать с openLevelNumber, после игры в мультиплеер он будет 1; нужно дисконнектнуться от сервера
+                        game.setScreen(new MainMenuScreen(game, openLevelNumber, music, false));
                     }
                 }
             }
