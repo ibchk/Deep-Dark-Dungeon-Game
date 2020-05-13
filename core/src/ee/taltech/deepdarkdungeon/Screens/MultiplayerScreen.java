@@ -195,21 +195,21 @@ public class MultiplayerScreen implements Screen {
                 WHOWILLATTACK = 0;
             }
         }
-        if (client.game) {
-            if (write) {
-                List<String> enemyCharactersString = client.enemy;
-                write = false;
-                this.enemyCharacters = createEnemies(enemyCharactersString);
-                badCharacter1 = enemyCharacters.get(0);
-                badCharacter2 = enemyCharacters.get(1);
-                badCharacter3 = enemyCharacters.get(2);
-                badCharacter4 = enemyCharacters.get(3);
-                goodCharacter1 = myCharacters.get(0);
-                goodCharacter2 = myCharacters.get(1);
-                goodCharacter3 = myCharacters.get(2);
-                goodCharacter4 = myCharacters.get(3);
+        if (write) {
+            List<String> enemyCharactersString = client.enemy;
+            write = false;
+            this.enemyCharacters = createEnemies(enemyCharactersString);
+            badCharacter1 = enemyCharacters.get(0);
+            badCharacter2 = enemyCharacters.get(1);
+            badCharacter3 = enemyCharacters.get(2);
+            badCharacter4 = enemyCharacters.get(3);
+            goodCharacter1 = myCharacters.get(0);
+            goodCharacter2 = myCharacters.get(1);
+            goodCharacter3 = myCharacters.get(2);
+            goodCharacter4 = myCharacters.get(3);
 
-            }
+        }
+        if (client.game) {
             if (!client.myTurn) {
                 client.canIAttack();
             }
