@@ -61,6 +61,12 @@ public class MultiplayerScreen implements Screen {
     private Texture mainMenuButton2;
     private Texture attackbutton;
     private Texture attackbuttonacitve;
+    private Texture healButton;
+    private Texture healButtonActive;
+    private Texture powershotButton;
+    private Texture powershotButtonActive;
+    private Texture sunstrikeButton;
+    private Texture sunstrikeButtonActive;
     private Texture defenceButton;
     private Texture aciveDefenceButton;
     private GameObject goodCharacter1;
@@ -137,8 +143,17 @@ public class MultiplayerScreen implements Screen {
         background = new Texture(Gdx.files.internal("GameBackground.png"));
         attackbutton = new Texture(Gdx.files.internal("atackButton1.png"));
         attackbuttonacitve = new Texture(Gdx.files.internal("atackButton2.png"));
+
+        healButton = new Texture(Gdx.files.internal("healButton2.png"));
+        healButtonActive = new Texture(Gdx.files.internal("healButton1.png"));
+        powershotButton = new Texture(Gdx.files.internal("powershotButton2.png"));
+        powershotButtonActive = new Texture(Gdx.files.internal("powershotButton1.png"));
+        sunstrikeButton = new Texture(Gdx.files.internal("sunstrikeButton2.png"));
+        sunstrikeButtonActive = new Texture(Gdx.files.internal("sunstrikeButton1.png"));
+
         defenceButton = new Texture(Gdx.files.internal("defenceButton1.png"));
         aciveDefenceButton = new Texture(Gdx.files.internal("defenceButton2.png"));
+
         powershotSheet = new Texture(Gdx.files.internal("powershot.png"));
         monstersWinScreen = new Texture(Gdx.files.internal("YouLostScreen.png"));
         mainMenuButton2 = new Texture(Gdx.files.internal("MainMenuSelected2.png"));
@@ -160,6 +175,15 @@ public class MultiplayerScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        if (WHOWILLATTACK >= 4) {
+            WHOWILLATTACK = 0;
+        }
+        while (myCharacters.get(WHOWILLATTACK).getHealth() == 0) {
+            WHOWILLATTACK++;
+            if (WHOWILLATTACK >= 4) {
+                WHOWILLATTACK = 0;
+            }
+        }
         if (client.game) {
             if (write) {
                 List<String> enemyCharactersString = client.enemy;
@@ -183,7 +207,17 @@ public class MultiplayerScreen implements Screen {
             batch.begin();
             batch.draw(background, 0, 0);
             batch.draw(attackbutton, VBOI_X, VBOI_Y, VBOI_WIDTH, VBOI_HEIGTH);
-            batch.draw(defenceButton, VBOI_X, VBOI_Y - 70, VBOI_WIDTH, VBOI_HEIGTH);
+            GameObject myHero = myCharacters.get(WHOWILLATTACK);
+            if (myHero.getName().equals("Warrior")) {
+                batch.draw(defenceButton, VBOI_X, VBOI_Y - 70, VBOI_WIDTH, VBOI_HEIGTH);
+            } else if (myHero.getName().equals("Archer")) {
+                batch.draw(powershotButton, VBOI_X, VBOI_Y - 70, VBOI_WIDTH, VBOI_HEIGTH);
+            } else if (myHero.getName().equals("Wizard")) {
+                batch.draw(sunstrikeButton, VBOI_X, VBOI_Y - 70, VBOI_WIDTH, VBOI_HEIGTH);
+            } else if (myHero.getName().equals("Paladin")) {
+                batch.draw(healButton, VBOI_X, VBOI_Y - 70, VBOI_WIDTH, VBOI_HEIGTH);
+            }
+
             this.enemyWhoAttacked = client.characterWhoAttacked;
             this.myAttackedCharacter = client.attachedCharacter;
             this.enemyUsedSkill = client.skillUsed;
@@ -198,6 +232,136 @@ public class MultiplayerScreen implements Screen {
             }
             font.draw(batch, messageForMonsters, 100, 950);
 
+            if (client.myTurn) {
+                font.draw(batch, "Your turn! ", 100, 1000);
+            } else {
+                font.draw(batch, "Enemy turn! ", 100, 1000);
+            }
+            if ((client.myTurn) && !gameOver && !animationStarted) {
+                if (addManaMonsters) {
+                    for (GameObject monster :myCharacters) {
+                        if (monster.getHealth() > 0 && monster.getMana() < 100) {
+                            monster.setMana(monster.getMana() + 10);
+                            if (monster.getMana() > 100) {
+                                monster.setMana(100);
+                            }
+                        }
+                    }
+                    addManaMonsters = false;
+                }
+
+                GameObject badCharacter = null;
+                GameObject myAttackedHero = null;
+
+                for (GameObject enemy : enemyCharacters) {
+                    if (enemy.getPlace() == enemyWhoAttacked) {
+                        badCharacter = enemy;
+                        break;
+                    }
+                }
+                for (GameObject hero : myCharacters) {
+                    if (hero.getPlace() == myAttackedCharacter) {
+                        myAttackedHero = hero;
+                        break;
+                    }
+                }
+                if (calculateDamage && !enemyUsedSkill && !(myAttackedHero == null) && !(badCharacter == null)) {
+                    attacker = badCharacter;
+                    attackUs(myAttackedHero);
+                }
+                if (calculateDamage && enemyUsedSkill && !(myAttackedHero == null) && !(badCharacter == null)) {
+                    attacker = badCharacter;
+                    if ((badCharacter.getSkill().equals("powershot") && attacker.getMana() >= 100)) {
+                        powerShotUs(myAttackedHero);
+                    } else if ((badCharacter.getSkill().equals("sunstrike") && badCharacter.getMana() >= 100)) {
+                        if (myAttackedCharacter == 2) {
+                            sunstrikeUs(goodCharacter1, myAttackedHero, goodCharacter3);
+                        } else if (myAttackedCharacter == 3) {
+                            sunstrikeUs(goodCharacter2, myAttackedHero, goodCharacter4);
+                        } else if (myAttackedCharacter == 1) {
+                            sunstrike2Us(myAttackedHero, goodCharacter2);
+                        } else {
+                            sunstrike2Us(goodCharacter3, myAttackedHero);
+                        }
+                    } else if (badCharacter.getSkill().equals("purification")) {
+                        healThem();
+                    } else if (badCharacter.getSkill().equals("berserk call")){
+                        agr(attacker);
+                    }
+                }
+                attacker = myCharacters.get(WHOWILLATTACK);
+                font.draw(batch, "Health: ", 300, 200);
+                font.draw(batch, attacker.getHealth() + "", 360, 200);
+                font.draw(batch, "Mana: ", 300, 150);
+                font.draw(batch, attacker.getMana() + "", 360, 150);
+                batch.draw(attacker.getTexture(), 40, 130, 200, 220);
+                if (agrUsed && heroUsedAgr != null) {
+                    agrUsed = false;
+                    System.out.println(heroUsedAgr.getPlace()); //TODO: короче, ошибка здесь, он не переписывает героя который юзал агр, как исправлять я не ебу, время 3 часа ночи бляд
+                    defAttack(heroUsedAgr);
+                }
+                if (Gdx.input.getX() < VBOI_X + VBOI_WIDTH && Gdx.input.getX() > VBOI_X && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() <= VBOI_Y + VBOI_HEIGTH + 30 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() >= VBOI_Y + 25) {
+                    batch.draw(attackbuttonacitve, VBOI_X, VBOI_Y, VBOI_WIDTH, VBOI_HEIGTH);
+                    if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                        canbeattacked = true;
+                        if (skillIsPressed) {
+                            skillIsPressed = false;
+                        }
+                    }
+                }
+                //  || ||  attacker.getSkill().equals("berserk call") && attacker.getMana() >= 40
+                if (Gdx.input.getX() < VBOI_X + VBOI_WIDTH && Gdx.input.getX() > VBOI_X && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() <= VBOI_Y - 70 + VBOI_HEIGTH + 30 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() >= VBOI_Y - 70 + 25) {
+                    if (attacker.getSkill().equals("powershot") && attacker.getMana() >= 100) {
+                        batch.draw(powershotButtonActive, VBOI_X, VBOI_Y - 70, VBOI_WIDTH, VBOI_HEIGTH);
+                    } else if (attacker.getSkill().equals("sunstrike") && attacker.getMana() >= 50) {
+                        batch.draw(sunstrikeButtonActive, VBOI_X, VBOI_Y - 70, VBOI_WIDTH, VBOI_HEIGTH);
+                    } else if (attacker.getSkill().equals("purification") && attacker.getMana() >= 40) {
+                        batch.draw(healButtonActive, VBOI_X, VBOI_Y - 70, VBOI_WIDTH, VBOI_HEIGTH);
+                    } else if (attacker.getSkill().equals("berserk call") && attacker.getMana() >= 40) {
+                        batch.draw(aciveDefenceButton, VBOI_X, VBOI_Y - 70, VBOI_WIDTH, VBOI_HEIGTH);
+                    }
+                    if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                        skillIsPressed = true;
+                        if (canbeattacked) {
+                            canbeattacked = false;
+                        }
+                    }
+                }
+                if (skillIsPressed && attacker.getSkill().equals("purification")) {
+                    heal();
+                }
+                if (skillIsPressed && attacker.getSkill().equals("berserk call")) {
+                    attackedMonster = attacker;
+                    skillIsPressed = false;
+                    WHOWILLATTACK++;
+                    attacker.setMana(attacker.getMana() - 40);
+                    messageForMonsters = attacker.getName() + " used berserk call";
+                    monsterDamage = "";
+                    calculateDamage = true;
+                    animationStarted = true;
+                    currentAnimation = agrAnimation;
+                    client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true);
+                }
+                for (GameObject monster : enemyCharacters) {
+                    if (Gdx.input.getX() > monster.getX() && Gdx.input.getX() < monster.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > monster.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < monster.getY() + 300) {
+                        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked && monster.getHealth() > 0) {
+                            defAttack(monster);
+                        } else if (skillIsPressed && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && monster.getHealth() > 0) {
+                            if (attacker.getSkill().equals("powershot")) {
+                                powerShot(monster);
+                            } else if (attacker.getSkill().equals("sunstrike") && enemyCharacters.indexOf(monster) == 0) {
+                                sunstrike2(badCharacter1, badCharacter2);
+                            } else if (attacker.getSkill().equals("sunstrike") && enemyCharacters.indexOf(monster) == 3) {
+                                sunstrike2(badCharacter3, badCharacter4);
+                            } else if (attacker.getSkill().equals("sunstrike") && enemyCharacters.indexOf(monster) == 2) {
+                                sunstrike(badCharacter2, badCharacter3, badCharacter4);
+                            } else if (attacker.getSkill().equals("sunstrike") && enemyCharacters.indexOf(monster) == 1) {
+                                sunstrike(badCharacter1, badCharacter2, badCharacter3);
+                            }
+                        }
+                    }
+                }
+            }
             if (animationStarted) {
                 if (currentAnimation.equals(sunstrikeAnimation)) {
                     if (attackedMonster.equals(enemyCharacters.get(0))) {
@@ -282,139 +446,6 @@ public class MultiplayerScreen implements Screen {
                     batch.draw(mainMenuButton2, 835, 385, 228, 95);
                     if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && gameOver) {
                         game.setScreen(new MainMenuScreen(game, openLevelNumber, music, false)); // TODO: хуй его знает что делать с openLevelNumber, после игры в мультиплеер он будет 1; нужно дисконнектнуться от сервера
-                    }
-                }
-            }
-
-            if (client.myTurn) {
-                font.draw(batch, "Your turn! ", 100, 1000);
-            } else {
-                font.draw(batch, "Enemy turn! ", 100, 1000);
-            }
-            if ((client.myTurn) && !gameOver && !animationStarted) {
-                if (addManaMonsters) {
-                    for (GameObject monster :myCharacters) {
-                        if (monster.getHealth() > 0 && monster.getMana() < 100) {
-                            monster.setMana(monster.getMana() + 10);
-                            if (monster.getMana() > 100) {
-                                monster.setMana(100);
-                            }
-                        }
-                    }
-                    addManaMonsters = false;
-                }
-
-                GameObject badCharacter = null;
-                GameObject myAttackedHero = null;
-
-                for (GameObject enemy : enemyCharacters) {
-                    if (enemy.getPlace() == enemyWhoAttacked) {
-                        badCharacter = enemy;
-                        break;
-                    }
-                }
-                for (GameObject hero : myCharacters) {
-                    if (hero.getPlace() == myAttackedCharacter) {
-                        myAttackedHero = hero;
-                        break;
-                    }
-                }
-                if (WHOWILLATTACK >= 4) {
-                    WHOWILLATTACK = 0;
-                }
-                while (myCharacters.get(WHOWILLATTACK).getHealth() == 0) {
-                    WHOWILLATTACK++;
-                    if (WHOWILLATTACK >= 4) {
-                        WHOWILLATTACK = 0;
-                    }
-                }
-                if (calculateDamage && !enemyUsedSkill && !(myAttackedHero == null) && !(badCharacter == null)) {
-                    attacker = badCharacter;
-                    attackUs(myAttackedHero);
-                }
-                if (calculateDamage && enemyUsedSkill && !(myAttackedHero == null) && !(badCharacter == null)) {
-                    attacker = badCharacter;
-                    if ((badCharacter.getSkill().equals("powershot") && attacker.getMana() >= 100)) {
-                        powerShotUs(myAttackedHero);
-                    } else if ((badCharacter.getSkill().equals("sunstrike") && badCharacter.getMana() >= 100)) {
-                        if (myAttackedCharacter == 2) {
-                            sunstrikeUs(goodCharacter1, myAttackedHero, goodCharacter3);
-                        } else if (myAttackedCharacter == 3) {
-                            sunstrikeUs(goodCharacter2, myAttackedHero, goodCharacter4);
-                        } else if (myAttackedCharacter == 1) {
-                            sunstrike2Us(myAttackedHero, goodCharacter2);
-                        } else {
-                            sunstrike2Us(goodCharacter3, myAttackedHero);
-                        }
-                    } else if (badCharacter.getSkill().equals("purification")) {
-                        healThem();
-                    } else if (badCharacter.getSkill().equals("berserk call")){
-                        agr(attacker);
-                    }
-                }
-                attacker = myCharacters.get(WHOWILLATTACK);
-                font.draw(batch, "Health: ", 300, 200);
-                font.draw(batch, attacker.getHealth() + "", 360, 200);
-                font.draw(batch, "Mana: ", 300, 150);
-                font.draw(batch, attacker.getMana() + "", 360, 150);
-                batch.draw(attacker.getTexture(), 40, 130, 200, 220);
-                if (agrUsed && heroUsedAgr != null) {
-                    agrUsed = false;
-                    System.out.println(heroUsedAgr.getPlace()); //TODO: короче, ошибка здесь, он не переписывает героя который юзал агр, как исправлять я не ебу, время 3 часа ночи бляд
-                    defAttack(heroUsedAgr);
-                }
-                if (Gdx.input.getX() < VBOI_X + VBOI_WIDTH && Gdx.input.getX() > VBOI_X && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() <= VBOI_Y + VBOI_HEIGTH + 30 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() >= VBOI_Y + 25) {
-                    batch.draw(attackbuttonacitve, VBOI_X, VBOI_Y, VBOI_WIDTH, VBOI_HEIGTH);
-                    if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                        canbeattacked = true;
-                        if (skillIsPressed) {
-                            skillIsPressed = false;
-                        }
-                    }
-                }
-                if (Gdx.input.getX() < VBOI_X + VBOI_WIDTH && Gdx.input.getX() > VBOI_X && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() <= VBOI_Y - 70 + VBOI_HEIGTH + 30 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() >= VBOI_Y - 70 + 25) {
-                    if (attacker.getSkill().equals("powershot") && attacker.getMana() >= 100 || attacker.getSkill().equals("sunstrike") && attacker.getMana() >= 50 || attacker.getSkill().equals("purification") && attacker.getMana() >= 40 || attacker.getSkill().equals("berserk call") && attacker.getMana() >= 40) {
-                        batch.draw(aciveDefenceButton, VBOI_X, VBOI_Y - 70, VBOI_WIDTH, VBOI_HEIGTH);
-                        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                            skillIsPressed = true;
-                            if (canbeattacked) {
-                                canbeattacked = false;
-                            }
-                        }
-                    }
-                }
-                if (skillIsPressed && attacker.getSkill().equals("purification")) {
-                    heal();
-                }
-                if (skillIsPressed && attacker.getSkill().equals("berserk call")) {
-                    attackedMonster = attacker;
-                    skillIsPressed = false;
-                    WHOWILLATTACK++;
-                    attacker.setMana(attacker.getMana() - 40);
-                    messageForMonsters = attacker.getName() + " used berserk call";
-                    monsterDamage = "";
-                    calculateDamage = true;
-                    animationStarted = true;
-                    currentAnimation = agrAnimation;
-                    client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true);
-                }
-                for (GameObject monster : enemyCharacters) {
-                    if (Gdx.input.getX() > monster.getX() && Gdx.input.getX() < monster.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > monster.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < monster.getY() + 300) {
-                        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canbeattacked && monster.getHealth() > 0) {
-                            defAttack(monster);
-                        } else if (skillIsPressed && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && monster.getHealth() > 0) {
-                            if (attacker.getSkill().equals("powershot")) {
-                                powerShot(monster);
-                            } else if (attacker.getSkill().equals("sunstrike") && enemyCharacters.indexOf(monster) == 0) {
-                                sunstrike2(badCharacter1, badCharacter2);
-                            } else if (attacker.getSkill().equals("sunstrike") && enemyCharacters.indexOf(monster) == 3) {
-                                sunstrike2(badCharacter3, badCharacter4);
-                            } else if (attacker.getSkill().equals("sunstrike") && enemyCharacters.indexOf(monster) == 2) {
-                                sunstrike(badCharacter2, badCharacter3, badCharacter4);
-                            } else if (attacker.getSkill().equals("sunstrike") && enemyCharacters.indexOf(monster) == 1) {
-                                sunstrike(badCharacter1, badCharacter2, badCharacter3);
-                            }
-                        }
                     }
                 }
             }
