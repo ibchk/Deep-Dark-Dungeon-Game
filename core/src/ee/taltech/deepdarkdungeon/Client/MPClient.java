@@ -13,9 +13,9 @@ import java.util.List;
 public class MPClient {
     int udpC = 5200;
     public int tcpC = 5201;
-    String IPConnection = "193.40.255.16"; //193.40.255.16
+    String IPConnection = "localhost"; //193.40.255.16
 
-    public int myPlace;
+    public List<Integer> myPlace;
     public boolean game = false;
     public List<String> enemy;
     public boolean myTurn;
