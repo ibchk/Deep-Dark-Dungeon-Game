@@ -42,7 +42,8 @@ public class InfoAboutUsScreen implements Screen, InputProcessor {
     Texture SUNSTRIKEBUTTON = new Texture("sunstrikeButton1.png");
     Texture DEFBUTTON = new Texture("defenceButton1.png");
 
-    String text = "HOW TO START???\n" +
+    String text = "-----------------------------------------------------------KOLM ANNAT COMPANY----------------------------------------------------------------\n" +
+            "HOW TO START???\n" +
             "\n" +
             "1. Choose between single and multiplayer game.\n" +
             "\n" +
@@ -55,6 +56,8 @@ public class InfoAboutUsScreen implements Screen, InputProcessor {
             "3. If single game, choose level.\n" +
             "\n" +
             "4. Click ==>> START\n" +
+            "\n" +
+            "5. If multiplayer game, just wait for another character for a while\n" +
             "\n" +
             "HOW TO PLAY???\n" +
             "\n" +
@@ -76,7 +79,20 @@ public class InfoAboutUsScreen implements Screen, InputProcessor {
             "\n" +
             "4. Warrior - BERSERK CALL ==>> The next blow of the opponent will be on this character.\n" +
             "\n" +
-            "If single game and you win, the next lvl will be unlocked.";
+            "If single game and you win, the next lvl will be unlocked.\n" +
+            "\n" +
+            "\n" +
+            "ABOUT US\n" +
+            "\n" +
+            "Creators:\n" +
+            "Nikita Birjukovs\n" +
+            "Ilya Boichuk\n" +
+            "Artur-Aleksander Pärnoja\n" +
+            "\n" +
+            "Speccial thanks to:\n" +
+            "Anna Grund\n" +
+            "Janar Keit Jaakson\n" +
+            "-----------------------------------------------------------KOLM ANNAT COMPANY----------------------------------------------------------------";
 
     private static final int TEXTHEIGHESTPLACE = 950;
     private static int TEXTLOWESTPLACE = 0;
@@ -90,15 +106,15 @@ public class InfoAboutUsScreen implements Screen, InputProcessor {
     private static final int SCREENSHOT_X = 1000;
     private static int SCREENSHOT_Y = 500;
     private static final int ATTACKBUTTON_X = 540;
-    private static int ATTACKBUTTON_Y = 207;
+    private static int ATTACKBUTTON_Y = 87;
     private static final int HEALBUTTON_X = 900;
-    private static int HEALBUTTON_Y = -193;
+    private static int HEALBUTTON_Y = -313;
     private static final int POWERSHOTBUTTON_X = 940;
-    private static int POWERSHOTBUTTON_Y = -40;
+    private static int POWERSHOTBUTTON_Y = -160;
     private static final int SUNSTRIKEBUTTON_X = 1290;
-    private static int SUNSTRIKEBUTTON_Y = -120;
+    private static int SUNSTRIKEBUTTON_Y = -240;
     private static final int DEFBUTTON_X = 1390;
-    private static int DEFBUTTON_Y = -270;
+    private static int DEFBUTTON_Y = -390;
 
     private static final int DOWN_BUTTON_WIDTH = 112;
     private static final int DOWN_BUTTON_HEIGHT = 100;
