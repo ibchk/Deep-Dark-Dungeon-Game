@@ -186,6 +186,16 @@ public class MultiplayerScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        if (client.gameOver) {
+            batch.draw(monstersWinScreen, LOST_SCREEN_X, LOST_SCREEN_Y, LOST_SCREEN_WIDTH, LOST_SCREEN_HEIGHT);
+            if (Gdx.input.getX() > MAIN_MENU2_X_START && Gdx.input.getX() < MAIN_MENU2_X_END && Gdx.input.getY() > MAIN_MENU2_Y_START && Gdx.input.getY() < MAIN_MENU2_Y_END) {
+                batch.draw(mainMenuButton2, 835, 385, 228, 95);
+                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                    client.client.close();
+                    game.setScreen(new MainMenuScreen(game, openLevelNumber, music, false)); // TODO: хуй его знает что делать с openLevelNumber, после игры в мультиплеер он будет 1; нужно дисконнектнуться от сервера
+                }
+            }
+        }
         if (WHOWILLATTACK >= 4) {
             WHOWILLATTACK = 0;
         }
@@ -324,15 +334,9 @@ public class MultiplayerScreen implements Screen {
                     }
                 }
             }
-            if (((badCharacter1.getHealth() == 0 && badCharacter2.getHealth() == 0 && badCharacter3.getHealth() == 0 && badCharacter4.getHealth() == 0) || goodCharacter1.getHealth() == 0 && goodCharacter2.getHealth() == 0 && goodCharacter3.getHealth() == 0 && goodCharacter4.getHealth() == 0) && !animationStarted) {
+            if ((goodCharacter1.getHealth() == 0 && goodCharacter2.getHealth() == 0 && goodCharacter3.getHealth() == 0 && goodCharacter4.getHealth() == 0)) {
                 gameOver = true;
-                batch.draw(monstersWinScreen, LOST_SCREEN_X, LOST_SCREEN_Y, LOST_SCREEN_WIDTH, LOST_SCREEN_HEIGHT);
-                if (Gdx.input.getX() > MAIN_MENU2_X_START && Gdx.input.getX() < MAIN_MENU2_X_END && Gdx.input.getY() > MAIN_MENU2_Y_START && Gdx.input.getY() < MAIN_MENU2_Y_END) {
-                    batch.draw(mainMenuButton2, 835, 385, 228, 95);
-                    if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && gameOver) {
-                        client.client.close();
-                        game.setScreen(new MainMenuScreen(game, openLevelNumber, music, false)); // TODO: хуй его знает что делать с openLevelNumber, после игры в мультиплеер он будет 1; нужно дисконнектнуться от сервера
-                    }
+                client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), false, gameOver);
                 }
             }
             font.draw(batch, messageForMonsters, 100, 950);
@@ -444,7 +448,7 @@ public class MultiplayerScreen implements Screen {
                     calculateDamage = true;
                     animationStarted = true;
                     currentAnimation = agrAnimation;
-                    client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true, false);
+                    client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true, gameOver);
                 }
                 for (GameObject monster : enemyCharacters) {
                     if (Gdx.input.getX() > monster.getX() && Gdx.input.getX() < monster.getX() + 200 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() > monster.getY() && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() < monster.getY() + 300) {
@@ -467,7 +471,6 @@ public class MultiplayerScreen implements Screen {
                 }
             }
             batch.end();
-        }
     }
 
     @Override
@@ -515,7 +518,7 @@ public class MultiplayerScreen implements Screen {
         animationStarted = true;
         currentAnimation = powershotAnimation;
         WHOWILLATTACK++;
-        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true, false);
+        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true, gameOver);
     }
 
     private void powerShotUs(GameObject gameObject) {
@@ -541,7 +544,7 @@ public class MultiplayerScreen implements Screen {
         animationStarted = true;
         skillIsPressed = false;
         currentAnimation = heroAttackAnimation;
-        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), false, false);
+        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), false, gameOver);
     }
 
     private void attackUs(GameObject gameObject) {
@@ -569,7 +572,7 @@ public class MultiplayerScreen implements Screen {
         calculateDamage = true;
         WHOWILLATTACK++;
         addManaMonsters = true;
-        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true, false);
+        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true, gameOver);
     }
 
     private void sunstrikeUs(GameObject gameObject1, GameObject gameObject2, GameObject gameObject3) {
@@ -602,7 +605,7 @@ public class MultiplayerScreen implements Screen {
         calculateDamage = true;
         addManaMonsters = true;
         skillIsPressed = false;
-        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true, false);
+        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true, gameOver);
     }
 
     private void sunstrike2Us(GameObject gameObject1, GameObject gameObject2) {
@@ -638,7 +641,7 @@ public class MultiplayerScreen implements Screen {
         WHOWILLATTACK++;
         animationStarted = true;
         currentAnimation = heroHealAnimation;
-        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true, false);
+        client.sendGameInfo(attacker.getPlace(), attackedMonster.getPlace(), true, gameOver);
     }
 
     private void healThem() {
