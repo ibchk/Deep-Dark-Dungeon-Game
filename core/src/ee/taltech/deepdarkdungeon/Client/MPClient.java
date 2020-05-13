@@ -4,8 +4,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-import javafx.scene.ParallelCamera;
-import javafx.scene.layout.Pane;
+
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -14,7 +13,7 @@ import java.util.List;
 public class MPClient {
     int udpC = 5200;
     public int tcpC = 5201;
-    String IPConnection = "193.40.255.16";
+    String IPConnection = "localhost"; //193.40.255.16
 
     public int myPlace;
     public boolean game = false;

@@ -9,7 +9,7 @@ public class Archer extends GameObject {
         this.name = name;
         this.health = health;
         this.mana = 100;
-        this.power = 5;
+        this.power = power;
         this.x = x;
         this.y = y;
         this.width = width;
