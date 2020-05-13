@@ -19,6 +19,7 @@ import ee.taltech.deepdarkdungeon.animation.AnimationClass;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 public class MultiplayerScreen implements Screen {
     private static final int VBOI_X = 300;
@@ -27,10 +28,8 @@ public class MultiplayerScreen implements Screen {
     private static final int VBOI_WIDTH = 50;
     private SpriteBatch batch;
     BitmapFont font = new BitmapFont();
-    private Texture background;
     private boolean write = true;
     private List<GameObject> myCharacters;
-    private List<String> heroNames;
     private MPClient client;
     private int WHOWILLATTACK = 0;
     private static final int LOST_SCREEN_X = 650;
@@ -84,6 +83,7 @@ public class MultiplayerScreen implements Screen {
     private Texture backgroundIcons;
     private Texture heroIcon;
 
+    private Texture usedBackground;
 
     public int enemyWhoAttacked;
     public int myAttackedCharacter;
@@ -99,26 +99,6 @@ public class MultiplayerScreen implements Screen {
 
     private boolean agrUsed = false;
     public GameObject heroUsedAgr;
-
-
-    public MultiplayerScreen(List<GameObject> myChars, DeepDarkDungeonGame game, PutMusic music, int openLevelNumber) {
-        this.game = game;
-        this.music = music;
-        this.openLevelNumber = openLevelNumber;
-        this.myCharacters = myChars;
-        heroNames = new LinkedList<>();
-        for (GameObject hero : myChars) {
-            heroNames.add(hero.name);
-        }
-        this.client = new MPClient(heroNames);
-        boolean playing = music.isPlaying();
-        this.music.setMusic("gameMelody.mp3");
-        if (playing) {
-            this.music.playMusic();
-        } else {
-            this.music.stopMusic();
-        }
-    }
 
     Texture heroAttackSheet;
     AnimationClass heroAttackAnimation;
@@ -138,6 +118,27 @@ public class MultiplayerScreen implements Screen {
     AnimationClass currentAnimation;
     boolean animationStarted = false;
 
+    private List<Texture> backgroundList = new LinkedList<>();
+    Random random = new Random();
+
+    public MultiplayerScreen(List<GameObject> myChars, DeepDarkDungeonGame game, PutMusic music, int openLevelNumber) {
+        this.game = game;
+        this.music = music;
+        this.openLevelNumber = openLevelNumber;
+        this.myCharacters = myChars;
+        List<String> heroNames = new LinkedList<>();
+        for (GameObject hero : myChars) {
+            heroNames.add(hero.name);
+        }
+        this.client = new MPClient(heroNames);
+        boolean playing = music.isPlaying();
+        this.music.setMusic("gameMelody.mp3");
+        if (playing) {
+            this.music.playMusic();
+        } else {
+            this.music.stopMusic();
+        }
+    }
 
     @Override
     public void show() {
@@ -169,9 +170,14 @@ public class MultiplayerScreen implements Screen {
         heroHealSheet = new Texture(Gdx.files.internal("heroHealAnimation.png"));
         agrSheet = new Texture(Gdx.files.internal("agrAnimation.png"));
 
-        background = new Texture(Gdx.files.internal("dungeonBackground.png"));
+        Texture background = new Texture(Gdx.files.internal("dungeonBackground.png"));
+        Texture background2 = new Texture(Gdx.files.internal("background2.png"));
+
         heroIcon = new Texture(Gdx.files.internal("heroIcon.png"));
         backgroundIcons = new Texture(Gdx.files.internal("backgroundIcons.png"));
+        Texture background5 = new Texture(Gdx.files.internal("background5.png"));
+        Texture background3 = new Texture(Gdx.files.internal("background3.png"));
+        Texture background4 = new Texture(Gdx.files.internal("background4.png"));
 
         heroAttackAnimation = new AnimationClass(heroAttackSheet, HERO_FRAME_ROWS, HERO_FRAME_COLS);
 
@@ -182,14 +188,27 @@ public class MultiplayerScreen implements Screen {
         heroHealAnimation = new AnimationClass(heroHealSheet, FRAME_ROWS_HERO_HEAL, FRAME_COLS_HERO_HEAL);
 
         agrAnimation = new AnimationClass(agrSheet, FRAME_ROWS_AGR, FRAME_COLS_AGR);
+
+        backgroundList.add(background);
+        backgroundList.add(background2);
+        backgroundList.add(background5);
+        backgroundList.add(background3);
+        backgroundList.add(background4);
     }
 
     @Override
     public void render(float delta) {
-
-
-        System.out.println("perezashol");
         if (client.game) {
+            if (!client.client.isConnected()) {
+                batch.draw(monstersWinScreen, LOST_SCREEN_X, LOST_SCREEN_Y, LOST_SCREEN_WIDTH, LOST_SCREEN_HEIGHT);
+                if (Gdx.input.getX() > MAIN_MENU2_X_START && Gdx.input.getX() < MAIN_MENU2_X_END && Gdx.input.getY() > MAIN_MENU2_Y_START && Gdx.input.getY() < MAIN_MENU2_Y_END) {
+                    batch.draw(mainMenuButton2, 835, 385, 228, 95);
+                    if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                        client.client.close();
+                        game.setScreen(new MainMenuScreen(game, openLevelNumber, music, false));
+                    }
+                }
+            }
             if (write) {
                 List<String> enemyCharactersString = client.enemy;
                 write = false;
@@ -202,6 +221,7 @@ public class MultiplayerScreen implements Screen {
                 goodCharacter2 = myCharacters.get(1);
                 goodCharacter3 = myCharacters.get(2);
                 goodCharacter4 = myCharacters.get(3);
+                usedBackground = backgroundList.get(random.nextInt(backgroundList.size()));
             }
             if (!client.myTurn) {
                 client.canIAttack();
@@ -218,7 +238,6 @@ public class MultiplayerScreen implements Screen {
                 if (goodCharacter1.getHealth() == 0 && goodCharacter2.getHealth() == 0 && goodCharacter3.getHealth() == 0 && goodCharacter4.getHealth() == 0) {
                     break;
                 }
-                System.out.println("NIkita pidr");
                 WHOWILLATTACK++;
                 if (WHOWILLATTACK >= 4) {
                     WHOWILLATTACK = 0;
@@ -227,7 +246,7 @@ public class MultiplayerScreen implements Screen {
             Gdx.gl.glClearColor(135 / 255f, 206 / 255f, 235 / 255f, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             batch.begin();
-            batch.draw(background, 0, 0, 1920, 1080);
+            batch.draw(usedBackground, 0, 0, 1920, 1080);
             batch.draw(heroIcon, 30, 120);
             batch.draw(backgroundIcons, 250, 113);
             batch.draw(attackbutton, VBOI_X, VBOI_Y, VBOI_WIDTH, VBOI_HEIGTH);
@@ -261,7 +280,6 @@ public class MultiplayerScreen implements Screen {
                 font.draw(batch, "Hp: " + monster.getHealth(), monster.getX() + 50, monster.getY() - 10);
             }
             if (client.gameOver) {
-                System.out.println("ja ebal");
                 batch.draw(monstersWinScreen, LOST_SCREEN_X, LOST_SCREEN_Y, LOST_SCREEN_WIDTH, LOST_SCREEN_HEIGHT);
                 if (Gdx.input.getX() > MAIN_MENU2_X_START && Gdx.input.getX() < MAIN_MENU2_X_END && Gdx.input.getY() > MAIN_MENU2_Y_START && Gdx.input.getY() < MAIN_MENU2_Y_END) {
                     batch.draw(mainMenuButton2, 835, 385, 228, 95);
@@ -353,7 +371,6 @@ public class MultiplayerScreen implements Screen {
             } else {
                 font.draw(batch, "Enemy turn! ", 100, 1000);
             }
-            System.out.println("hui");
             if ((client.myTurn) && !gameOver && !animationStarted) {
                 if (addManaMonsters) {
                     for (GameObject monster : myCharacters) {
@@ -384,7 +401,6 @@ public class MultiplayerScreen implements Screen {
                 }
                 if (calculateDamage && !enemyUsedSkill && !(myAttackedHero == null) && !(badCharacter == null)) {
                     attacker = badCharacter;
-                    System.out.println("pizda");
                     attackUs(myAttackedHero);
 
                 }
@@ -416,7 +432,6 @@ public class MultiplayerScreen implements Screen {
                 batch.draw(attacker.getTexture(), 40, 130, 200, 220);
                 if (agrUsed && heroUsedAgr != null) {
                     agrUsed = false;
-                    System.out.println(heroUsedAgr.getPlace()); //TODO: короче, ошибка здесь, он не переписывает героя который юзал агр, как исправлять я не ебу, время 3 часа ночи бляд
                     defAttack(heroUsedAgr);
                 }
                 if (Gdx.input.getX() < VBOI_X + VBOI_WIDTH && Gdx.input.getX() > VBOI_X && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() <= VBOI_Y + VBOI_HEIGTH + 30 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() >= VBOI_Y + 25) {
@@ -428,7 +443,6 @@ public class MultiplayerScreen implements Screen {
                         }
                     }
                 }
-                //  || ||  attacker.getSkill().equals("berserk call") && attacker.getMana() >= 40
                 if (Gdx.input.getX() < VBOI_X + VBOI_WIDTH && Gdx.input.getX() > VBOI_X && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() <= VBOI_Y - 70 + VBOI_HEIGTH + 30 && DeepDarkDungeonGame.HEIGHT - Gdx.input.getY() >= VBOI_Y - 70 + 25) {
                     if (attacker.getSkill().equals("powershot") && attacker.getMana() >= 100) {
                         batch.draw(powershotButtonActive, VBOI_X, VBOI_Y - 70, VBOI_WIDTH, VBOI_HEIGTH);
@@ -560,7 +574,6 @@ public class MultiplayerScreen implements Screen {
     }
 
     private void attackUs(GameObject gameObject) {
-        System.out.println(gameObject.getName());
         messageForMonsters = "Your " + gameObject.getName() + " was attacked!";
         attackedMonster = gameObject;
         monsterDamage = "-" + attacker.getPower() + " HP";
@@ -568,7 +581,6 @@ public class MultiplayerScreen implements Screen {
         calculateDamage = false;
         animationStarted = true;
         currentAnimation = heroAttackAnimation;
-        System.out.println("Ilya");
     }
 
     private void sunstrike(GameObject gameObject1, GameObject gameObject2, GameObject gameObject3) {
