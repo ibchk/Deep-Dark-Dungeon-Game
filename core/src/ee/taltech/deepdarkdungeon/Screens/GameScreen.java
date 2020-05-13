@@ -11,6 +11,7 @@ import ee.taltech.deepdarkdungeon.DeepDarkDungeonGame;
 import ee.taltech.deepdarkdungeon.Models.GameObject;
 import ee.taltech.deepdarkdungeon.Models.PutMusic;
 import ee.taltech.deepdarkdungeon.animation.AnimationClass;
+import org.w3c.dom.Text;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.Random;
 public class GameScreen implements Screen {
     private static int WHOWILLATTACK = 0;
     private static final int VBOI_X = 300;
-    private static final int VBOI_Y = 300;
+    private static final int VBOI_Y = 280;
     private static final int VBOI_HEIGTH = 50;
     private static final int VBOI_WIDTH = 50;
     private static final int WIN_SCREEN_X = 650;
@@ -82,6 +83,7 @@ public class GameScreen implements Screen {
     private Texture sunstrikeButton;
     private Texture sunstrikeButtonActive;
     private Texture background;
+    private Texture heroIcon;
     private Texture defenceButton;
     private Texture aciveDefenceButton;
     private SpriteBatch batch;
@@ -94,6 +96,7 @@ public class GameScreen implements Screen {
     private GameObject badCharacter3;
     private GameObject badCharacter4;
     private GameObject attacker;
+    private Texture backgroundIcons;
     PutMusic music;
     int openLevelNumber;
     int lvlPlaying;
@@ -162,7 +165,9 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         batch = new SpriteBatch();
-        background = new Texture(Gdx.files.internal("GameBackground.png"));
+        background = new Texture(Gdx.files.internal("dungeonBackground.png"));
+        heroIcon = new Texture(Gdx.files.internal("heroIcon.png"));
+        backgroundIcons = new Texture(Gdx.files.internal("backgroundIcons.png"));
         attackbutton = new Texture(Gdx.files.internal("atackButton1.png"));
         attackbuttonacitve = new Texture(Gdx.files.internal("atackButton2.png"));
         defenceButton = new Texture(Gdx.files.internal("defenceButton1.png"));
@@ -215,7 +220,9 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(135 / 255f, 206 / 255f, 235 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
-        batch.draw(background, 0, 0);
+        batch.draw(background, 0, 0, 1920, 1080);
+        batch.draw(heroIcon, 30, 120);
+        batch.draw(backgroundIcons, 250, 113);
         batch.draw(attackbutton, VBOI_X, VBOI_Y, VBOI_WIDTH, VBOI_HEIGTH);
         GameObject myHero = heroes.get(WHOWILLATTACK);
         switch (myHero.getName()) {
@@ -262,7 +269,7 @@ public class GameScreen implements Screen {
             font.draw(batch, "Mana: ", 300, 150);
             font.draw(batch, attacker.getMana() + "", 360, 150);
             font.draw(batch, "Your turn! " + stepCount, 100, 1000); // Вызывает текст, тут например power персанажа
-            batch.draw(attacker.getTexture(), 40, 130, 200, 220);
+            batch.draw(attacker.getTexture(), 40, 130, 180, 200);
             monsterDamage = "-" + attacker.getPower() + " HP";
             if (stepCount > 1) {
                 font.draw(batch, "In last step " + message, 100, 900);

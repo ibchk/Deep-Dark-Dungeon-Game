@@ -22,7 +22,7 @@ import java.util.List;
 
 public class MultiplayerScreen implements Screen {
     private static final int VBOI_X = 300;
-    private static final int VBOI_Y = 300;
+    private static final int VBOI_Y = 280;
     private static final int VBOI_HEIGTH = 50;
     private static final int VBOI_WIDTH = 50;
     private SpriteBatch batch;
@@ -80,6 +80,9 @@ public class MultiplayerScreen implements Screen {
     private GameObject attacker;
     private PutMusic music;
     private int openLevelNumber;
+
+    private Texture backgroundIcons;
+    private Texture heroIcon;
 
 
     public int enemyWhoAttacked;
@@ -140,7 +143,6 @@ public class MultiplayerScreen implements Screen {
     @Override
     public void show() {
         batch = new SpriteBatch();
-        background = new Texture(Gdx.files.internal("GameBackground.png"));
         attackbutton = new Texture(Gdx.files.internal("atackButton1.png"));
         attackbuttonacitve = new Texture(Gdx.files.internal("atackButton2.png"));
 
@@ -167,6 +169,10 @@ public class MultiplayerScreen implements Screen {
         heroHealSheet = new Texture(Gdx.files.internal("heroHealAnimation.png"));
         agrSheet = new Texture(Gdx.files.internal("agrAnimation.png"));
 
+        background = new Texture(Gdx.files.internal("dungeonBackground.png"));
+        heroIcon = new Texture(Gdx.files.internal("heroIcon.png"));
+        backgroundIcons = new Texture(Gdx.files.internal("backgroundIcons.png"));
+
         heroAttackAnimation =  new AnimationClass(heroAttackSheet, HERO_FRAME_ROWS, HERO_FRAME_COLS);
 
         sunstrikeAnimation = new AnimationClass(sunstrikeSheet, FRAME_ROWS, FRAME_COLS);
@@ -192,8 +198,6 @@ public class MultiplayerScreen implements Screen {
         if (client.game) {
             if (write) {
                 List<String> enemyCharactersString = client.enemy;
-                System.out.println(heroNames);
-                System.out.println(enemyCharactersString);
                 write = false;
                 this.enemyCharacters = createEnemies(enemyCharactersString);
                 badCharacter1 = enemyCharacters.get(0);
@@ -210,7 +214,9 @@ public class MultiplayerScreen implements Screen {
             Gdx.gl.glClearColor(135 / 255f, 206 / 255f, 235 / 255f, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             batch.begin();
-            batch.draw(background, 0, 0);
+            batch.draw(background, 0, 0, 1920, 1080);
+            batch.draw(heroIcon, 30, 120);
+            batch.draw(backgroundIcons, 250, 113);
             batch.draw(attackbutton, VBOI_X, VBOI_Y, VBOI_WIDTH, VBOI_HEIGTH);
             GameObject myHero = myCharacters.get(WHOWILLATTACK);
             switch (myHero.getName()) {
