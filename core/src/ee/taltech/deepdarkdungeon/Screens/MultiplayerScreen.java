@@ -399,22 +399,27 @@ public class MultiplayerScreen implements Screen {
                 }
                 if (calculateDamage && enemyUsedSkill && !(myAttackedHero == null) && !(badCharacter == null)) {
                     attacker = badCharacter;
-                    if ((badCharacter.getSkill().equals("powershot") && attacker.getMana() >= 100)) {
-                        powerShotUs(myAttackedHero);
-                    } else if ((badCharacter.getSkill().equals("sunstrike") && badCharacter.getMana() >= 100)) {
-                        if (myAttackedCharacter == 2) {
-                            sunstrikeUs(goodCharacter1, myAttackedHero, goodCharacter3);
-                        } else if (myAttackedCharacter == 3) {
-                            sunstrikeUs(goodCharacter2, myAttackedHero, goodCharacter4);
-                        } else if (myAttackedCharacter == 1) {
-                            sunstrike2Us(myAttackedHero, goodCharacter2);
-                        } else {
-                            sunstrike2Us(goodCharacter3, myAttackedHero);
-                        }
-                    } else if (badCharacter.getSkill().equals("purification")) {
-                        healThem();
-                    } else if (badCharacter.getSkill().equals("berserk call")) {
-                        agr(attacker);
+                    switch (badCharacter.getSkill()) {
+                        case "powershot":
+                            powerShotUs(myAttackedHero);
+                            break;
+                        case "sunstrike":
+                            if (myAttackedCharacter == 2) {
+                                sunstrikeUs(goodCharacter1, myAttackedHero, goodCharacter3);
+                            } else if (myAttackedCharacter == 3) {
+                                sunstrikeUs(goodCharacter2, myAttackedHero, goodCharacter4);
+                            } else if (myAttackedCharacter == 1) {
+                                sunstrike2Us(myAttackedHero, goodCharacter2);
+                            } else {
+                                sunstrike2Us(goodCharacter3, myAttackedHero);
+                            }
+                            break;
+                        case "purification":
+                            healThem();
+                            break;
+                        case "berserk call":
+                            agr(attacker);
+                            break;
                     }
                 }
                 System.out.println("agrUsed: " + agrUsed);
@@ -526,6 +531,7 @@ public class MultiplayerScreen implements Screen {
     }
 
     private void agr(GameObject gameObject) {
+        monsterDamage = "";
         animationStarted = true;
         currentAnimation = agrAnimation;
         attackedMonster = gameObject;
