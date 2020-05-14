@@ -146,7 +146,7 @@ public class GameScreen implements Screen {
 
     public GameScreen(List<GameObject> goodCharacters, List<GameObject> badCharacters, DeepDarkDungeonGame game, PutMusic music, int openLevelNumber, int lvlPlaying) {
         this.lvlPlaying = lvlPlaying;
-        this.openLevelNumber = 4;
+        this.openLevelNumber = openLevelNumber;
         this.music = music;
         this.game = game;
         heroes = goodCharacters;
