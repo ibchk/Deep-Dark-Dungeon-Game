@@ -65,9 +65,9 @@ public class GameScreen implements Screen {
     boolean gameOver = false;
     boolean canbeattacked = false;
     boolean skillIsPressed = false;
+    BitmapFont font;
     String message;
     String messageForMonsters;
-    BitmapFont font = new BitmapFont();
     private long stepCount = 1;
     private Texture monstersWinScreen;
     private Texture mainMenuButton2;
@@ -171,6 +171,7 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         batch = new SpriteBatch();
+        font = new BitmapFont();
 
         background = new Texture(Gdx.files.internal("dungeonBackground.png"));
         background2 = new Texture(Gdx.files.internal("background2.png"));

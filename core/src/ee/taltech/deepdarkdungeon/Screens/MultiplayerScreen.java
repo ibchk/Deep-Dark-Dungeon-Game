@@ -120,6 +120,7 @@ public class MultiplayerScreen implements Screen {
 
     private List<Texture> backgroundList = new LinkedList<>();
     Random random = new Random();
+    public boolean enemyUsedAgr = false;
 
     public MultiplayerScreen(List<GameObject> myChars, DeepDarkDungeonGame game, PutMusic music, int openLevelNumber) {
         this.game = game;
@@ -351,8 +352,9 @@ public class MultiplayerScreen implements Screen {
                 if (currentAnimation.animation.isAnimationFinished(currentAnimation.stateTime)) {
                     animationStarted = false;
                     currentAnimation.stateTime = 0f;
-                    if (currentAnimation.equals(agrAnimation)) {
+                    if (currentAnimation.equals(agrAnimation) && enemyUsedAgr) {
                         agrUsed = true;
+                        enemyUsedAgr = false;
                     }
                 }
             }
@@ -415,6 +417,8 @@ public class MultiplayerScreen implements Screen {
                         agr(attacker);
                     }
                 }
+                System.out.println("agrUsed: " + agrUsed);
+
                 attacker = myCharacters.get(WHOWILLATTACK);
                 font.draw(batch, "Health: ", 300, 200);
                 font.draw(batch, attacker.getHealth() + "", 360, 200);
@@ -422,6 +426,8 @@ public class MultiplayerScreen implements Screen {
                 font.draw(batch, attacker.getMana() + "", 360, 150);
                 batch.draw(attacker.getTexture(), 40, 130, 200, 220);
                 if (agrUsed && heroUsedAgr != null) {
+                    System.out.println("Hero: " + heroUsedAgr.getPlace());
+                    System.out.println("Agr damage");
                     agrUsed = false;
                     defAttack(heroUsedAgr);
                 }
@@ -525,6 +531,7 @@ public class MultiplayerScreen implements Screen {
         attackedMonster = gameObject;
         calculateDamage = false;
         heroUsedAgr = attackedMonster;
+        enemyUsedAgr = true;
     }
 
     private void powerShot(GameObject gameObject) {
