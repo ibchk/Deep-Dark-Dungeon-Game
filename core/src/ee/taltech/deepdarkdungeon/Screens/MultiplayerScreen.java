@@ -399,18 +399,22 @@ public class MultiplayerScreen implements Screen {
                 }
                 if (calculateDamage && enemyUsedSkill && !(myAttackedHero == null) && !(badCharacter == null)) {
                     attacker = badCharacter;
+                    System.out.println("bad hero: " + badCharacter.getName());
+                    System.out.println("bad hero place: " + badCharacter.getPlace());
+                    System.out.println("my attacked hero: "+ myAttackedHero.getName());
+                    System.out.println("my attacked hero place: " + myAttackedHero.getPlace());
                     switch (badCharacter.getSkill()) {
                         case "powershot":
                             powerShotUs(myAttackedHero);
                             break;
                         case "sunstrike":
-                            if (myAttackedCharacter == 2) {
+                            if (myAttackedHero.getPlace() == 2) {
                                 sunstrikeUs(goodCharacter1, myAttackedHero, goodCharacter3);
-                            } else if (myAttackedCharacter == 3) {
+                            } else if (myAttackedHero.getPlace() == 3) {
                                 sunstrikeUs(goodCharacter2, myAttackedHero, goodCharacter4);
-                            } else if (myAttackedCharacter == 1) {
+                            } else if (myAttackedHero.getPlace() == 1) {
                                 sunstrike2Us(myAttackedHero, goodCharacter2);
-                            } else {
+                            } else if (myAttackedHero.getPlace() == 4){
                                 sunstrike2Us(goodCharacter3, myAttackedHero);
                             }
                             break;
@@ -422,7 +426,6 @@ public class MultiplayerScreen implements Screen {
                             break;
                     }
                 }
-                System.out.println("agrUsed: " + agrUsed);
 
                 attacker = myCharacters.get(WHOWILLATTACK);
                 font.draw(batch, "Health: ", 300, 200);
@@ -431,8 +434,6 @@ public class MultiplayerScreen implements Screen {
                 font.draw(batch, attacker.getMana() + "", 360, 150);
                 batch.draw(attacker.getTexture(), 40, 130, 200, 220);
                 if (agrUsed && heroUsedAgr != null) {
-                    System.out.println("Hero: " + heroUsedAgr.getPlace());
-                    System.out.println("Agr damage");
                     agrUsed = false;
                     defAttack(heroUsedAgr);
                 }
