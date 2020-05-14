@@ -273,6 +273,11 @@ public class MultiplayerScreen implements Screen {
             if (!client.client.isConnected() || client.gameOver) {
                 gameOver = true;
                 batch.draw(monstersWinScreen, LOST_SCREEN_X, LOST_SCREEN_Y, LOST_SCREEN_WIDTH, LOST_SCREEN_HEIGHT);
+                if(goodCharacter1.getHealth() == 0 && goodCharacter2.getHealth() == 0 && goodCharacter3.getHealth() == 0 && goodCharacter4.getHealth() == 0) {
+                    font.draw(batch, "You loose!", 910, 540);
+                } else {
+                    font.draw(batch, "You win!", 910, 540);
+                }
                 if (Gdx.input.getX() > MAIN_MENU2_X_START && Gdx.input.getX() < MAIN_MENU2_X_END && Gdx.input.getY() > MAIN_MENU2_Y_START && Gdx.input.getY() < MAIN_MENU2_Y_END) {
                     batch.draw(mainMenuButton2, 835, 385, 228, 95);
                     if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
@@ -399,10 +404,6 @@ public class MultiplayerScreen implements Screen {
                 }
                 if (calculateDamage && enemyUsedSkill && !(myAttackedHero == null) && !(badCharacter == null)) {
                     attacker = badCharacter;
-                    System.out.println("bad hero: " + badCharacter.getName());
-                    System.out.println("bad hero place: " + badCharacter.getPlace());
-                    System.out.println("my attacked hero: "+ myAttackedHero.getName());
-                    System.out.println("my attacked hero place: " + myAttackedHero.getPlace());
                     switch (badCharacter.getSkill()) {
                         case "powershot":
                             powerShotUs(myAttackedHero);
