@@ -269,7 +269,7 @@ public class MultiplayerScreen implements Screen {
             for (GameObject monster : enemyCharacters) {
                 batch.draw(monster.getTexture(), monster.getX(), monster.getY(), 200, 220);
                 font.draw(batch, "Hp: " + monster.getHealth(), monster.getX() + 50, monster.getY() - 10);
-            }//TODO
+            }
             if (!client.client.isConnected() || client.gameOver) {
                 gameOver = true;
                 batch.draw(monstersWinScreen, LOST_SCREEN_X, LOST_SCREEN_Y, LOST_SCREEN_WIDTH, LOST_SCREEN_HEIGHT);
