@@ -9,9 +9,11 @@ import java.io.IOException;
 public class DesktopLauncher {
 	public DesktopLauncher() {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = DeepDarkDungeonGame.WIDTH;
-		config.height = DeepDarkDungeonGame.HEIGHT;
+		config.setFromDisplayMode(LwjglApplicationConfiguration.getDesktopDisplayMode());
+		config.fullscreen = false;
 		config.resizable = false;
-		new LwjglApplication(new DeepDarkDungeonGame(), config);
+		System.out.println(config.width);
+		System.out.println(config.height);
+		new LwjglApplication(new DeepDarkDungeonGame(config.width, config.height), config);
 	}
 }

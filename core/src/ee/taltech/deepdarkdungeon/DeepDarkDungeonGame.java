@@ -5,9 +5,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ee.taltech.deepdarkdungeon.Screens.MainMenuScreen;
 
 public class DeepDarkDungeonGame extends Game {
-    public static final int WIDTH = 1920;
-    public static final int HEIGHT = 1080;
+    //Gdx.graphics.getWidth();
+    //Gdx.graphics.getHeight();
+    public static int WIDTH;
+    public static int HEIGHT;
     public SpriteBatch batch;
+
+    public DeepDarkDungeonGame(double width, double height) {
+        DeepDarkDungeonGame.WIDTH = (int) width;
+        DeepDarkDungeonGame.HEIGHT = (int) height;
+    }
 
     @Override
     public void create() {
