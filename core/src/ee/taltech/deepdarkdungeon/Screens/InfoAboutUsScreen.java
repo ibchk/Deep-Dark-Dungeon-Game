@@ -10,14 +10,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import ee.taltech.deepdarkdungeon.DeepDarkDungeonGame;
 import ee.taltech.deepdarkdungeon.Models.PutMusic;
 
-import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.StringReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -134,7 +126,12 @@ public class InfoAboutUsScreen implements Screen, InputProcessor {
         this.music = musicToStop;
         Pattern pattern = Pattern.compile("\n");
         Matcher matcher = pattern.matcher(text);
-        TEXTLOWESTPLACE = (int) (matcher.results().count() + 1) * 40;
+        int count = 0;
+        while (matcher.find()) {
+            count++;
+            count *= 40;
+        }
+        TEXTLOWESTPLACE = count;
         Gdx.input.setInputProcessor(this);
         font.setColor(new Color(Color.rgb888(0f, 0f, 72f)));
         font.getData().setScale(2);
