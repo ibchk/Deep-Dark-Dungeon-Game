@@ -10,10 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.TimeUtils;
 import ee.taltech.deepdarkdungeon.DeepDarkDungeonGame;
 import ee.taltech.deepdarkdungeon.Models.PutMusic;
-import ee.taltech.deepdarkdungeon.Screens.GameScreen;
-import ee.taltech.deepdarkdungeon.Screens.SingleGameChooseScreen;
 
-import java.lang.reflect.GenericArrayType;
 
 public class MainMenuScreen implements Screen {
     private static final int PLAY_BUTTON_WIDTH = 396;

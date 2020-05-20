@@ -1,25 +1,11 @@
 package ee.taltech.deepdarkdungeon.Models;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import ee.taltech.deepdarkdungeon.Models.BadCgaracterClasses.Necromancer;
-import ee.taltech.deepdarkdungeon.Models.BadCgaracterClasses.SkeletonArcher;
-import ee.taltech.deepdarkdungeon.Models.BadCgaracterClasses.SkeletonWarrior;
-import ee.taltech.deepdarkdungeon.Models.BadCgaracterClasses.Zombie;
-import ee.taltech.deepdarkdungeon.Models.characterClasses.Archer;
-import ee.taltech.deepdarkdungeon.Models.characterClasses.Magic;
-import ee.taltech.deepdarkdungeon.Models.characterClasses.Paladin;
-import ee.taltech.deepdarkdungeon.Models.characterClasses.Warrior;
-
-import java.awt.*;
 
 public abstract class GameObject {
     public int mana;
     public String skills;
     public BadCharacterClass badCharacterClass;
-    public Rectangle bounds;
-    public Sprite object;
     public Texture texture;
     public String name;
     public CharacterType characterType;
