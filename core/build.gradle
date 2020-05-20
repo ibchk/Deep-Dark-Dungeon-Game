@@ -4,3 +4,10 @@ sourceCompatibility = 1.7
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 sourceSets.main.java.srcDirs = [ "src/" ]
+
+apply plugin: 'idea'
+idea {
+    module {
+        testSourceDirs += sourceSets.test.java.srcDirs
+    }
+}
