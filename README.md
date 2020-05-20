@@ -4,11 +4,12 @@
 
 <h2>Installation</h2>
 
-<p>At the moment game can't be installed, release date is 14.05.2020.</p>
+<p>Just download jar file and run it.</p>
+<p>Link to the installation is <a href="https://drive.google.com/file/d/143r8EWtxTJ7-jzCPyJFsUYbPk79WOdrV/view">here</a></p>
 
 <h2>Built With</h2>
 
-<p>Used LibGdx framework</h5>
+<p>Used LibGdx framework</p>
 <p>Created on:</p>
 <ul>
 <li><p>Java</p></li>
@@ -42,3 +43,7 @@
 <p>Artur-Aleksanrd Pärnoja</p>
 <p>Ilja Boitšuk</p>
 <p>Nikita Birjukovs</p>
+
+<h4>Speccial thanks to:</h4>
+<p>Anna Grund</p>
+<p>Janar Keit Jaakson</p>
