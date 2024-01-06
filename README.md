@@ -39,7 +39,7 @@
 </ul>
 
 <h2>Textures</h2>
-<p>Most of textures were made in <a href="http://pixelartmaker.com">Pixel Art Maker</a>, special thanks to <a href="https://www.gamasutra.com/blogs/author/DavidYork/1013700/">David York</a> for characters sprites.</p>
+<p>Most of textures were made in <a href="http://pixelartmaker.com">Pixel Art Maker</a>, special thanks to <a href="https://www.linkedin.com/in/davideyork/">David York</a> for characters sprites.</p>
 
 <h2>AI</h2>
 <p>Our AI is interesting and at the same time smart, at his turn he analyzes who is the most strongest enemy and strikes him
